@@ -1,0 +1,494 @@
+{% if template == 'collection.24' %}
+{% assign collection_limit = 24 -%}
+{% elsif template == 'collection.48' %}
+{% assign collection_limit = 48 -%}
+{% elsif template == 'collection.80' %}
+{% assign collection_limit = 80 -%}
+{% else %}
+{% assign collection_limit = 12 -%}
+{% endif %}
+{% assign collection_infinite_scrolling = section.settings.pagination_option %}
+
+<section class="collection-wrapper {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+  <div class="container">
+    <div class="row">
+      {% if section.settings.collection_sidebar == 'left' %}
+      {% include 'sidebar' %}
+      {% endif %}
+      {% paginate collection.products by collection_limit %}
+          <div class="collection-content col">
+            <!-- div contenant l'emplacement actuel-->
+              <div class="container">
+                <div class="row inner-page-header">
+                  <div class="col-sm-6">
+                     {% assign data_title = collection.title | split: '|' | first %}
+                    {% assign data_json = collection.title | split: '|' | last %}
+                    <h2 {% if settings.enable_lang_switcher %}class="title-font lang_trans" data-trans="#{{collection.id}}_collection_title"{% endif %} style="color:black;">
+                      {{ data_title | truncatewords: 10 }}
+                    </h2>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="{{collection.id}}_collection_title">{{ data_json | raw }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="col-sm-6">
+                    {% include 'breadcrumb' %}
+                  </div>
+                </div>
+              </div>
+              <div class="page-main-content">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="top-banner-wrapper text-center">
+                        {% if section.settings.banner_img != blank %}
+                        <a href="{{ section.settings.banner_url }}">
+                     
+                        {% assign block_image = section.settings.banner_img %} 
+                        <div class="banner-section">
+                          {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                          <img src="{{ block_image | img_url: 'master' }}" 
+                          data-src="{{ img_url }}" 
+                          data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                          data-aspectratio="{{ block_image.aspect_ratio }}" 
+                          data-sizes="auto" 
+                          class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid {% if section.settings.img_width == "full" %} w-100{% endif %}" alt="{{block_image.alt}}" >
+                        </div>
+                        </a>
+                        {% endif %}
+                        <div class="top-banner-content text-left">
+                          {% if collection.description != '' %}
+                           {{ collection.description | truncate: 200 | strip_html }}
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="collection-product-wrapper">
+                        {% if section.settings.sort_enable %}
+                        {% include 'shortbar-collection' %}
+                        {% endif %}
+                        <div class="product-wrapper-ajax">
+                          <div class="product-wrapper collection-grid">
+
+                              <div class="collection_ajax_loader">
+                                <img src="{{ 'Spinner-loder.gif' | asset_url }}" alt="{{ image.alt }}" alt="loader_img" />
+                              </div>
+
+                              <div class="row">
+                                {% assign product_count = 0 -%}
+                                {% for product in collection.products %}
+                                <div class="col-xl-3 col-md-6 col-sm-6 col-grid-box {% if collection_infinite_scrolling == 'auto_loadmore' %} collection-product-item {% endif %}">
+                                  {% include 'grid-layout' %}
+                                </div>
+                                {% assign product_count = product_count | plus: 1 %}
+                                {% endfor %}
+
+                                {% if product_count < 1 %}
+                                <div class="col-sm-12">
+                                
+                                  <div class="text-center">
+                                  <img src="{{ 'no.png' | asset_url }}" alt="{{ image.alt }}" alt="loader_img" />
+                                  </div>
+                                 
+                                </div>
+                                {% endif %}
+                              </div>
+                          </div>
+                             <!--div class="product-pagination">
+                                <div class="theme-paggination-block">
+                                  <div class="container p-0">
+                                    <div class="row">
+                                      <div class="{% if collection_infinite_scrolling == 'default' %}col-xl-6 col-md-6 {% else %} text-center {% endif %} col-sm-12">
+                                        {% include 'pagination-style' %}
+                                      </div>
+                                      {% if collection_infinite_scrolling == 'default' %}
+                                      <div class="col-xl-6 col-md-6 col-sm-12">
+                                        <div class="product-search-count-bottom">
+                                          {% assign current_first_item = paginate.current_offset | plus:1 %}
+                                          {% if paginate.pages == paginate.current_page %}
+                                          {% assign current_displayed = paginate.items | modulo:paginate.page_size %}
+                                          {% assign current_last_item = paginate.items %}
+                                          {% else %}
+                                          {% assign current_displayed = paginate.page_size %}
+                                          {% assign current_last_item = paginate.current_offset | plus:paginate.page_size %}
+                                          {% endif %}
+                                          <h5>Showing Products{% assign current_first_item = paginate.current_offset | plus:1 %}
+                                            {% if paginate.pages == paginate.current_page %}
+                                            {% assign current_displayed = paginate.items | modulo:paginate.page_size %}
+                                            {% assign current_last_item = paginate.items %}
+                                            {% else %}
+                                            {% assign current_displayed = paginate.page_size %}
+                                            {% assign current_last_item = paginate.current_offset | plus:paginate.page_size %}
+                                            {% endif %}
+                                            {{ current_first_item }} - {{ current_last_item }} of {{ paginate.items }} Results</h5>
+                                        </div>
+                                      </div>
+                                      {% endif %}
+                                    </div>
+                                  </div>
+                                </div>
+                             </div-->
+                          
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+      {% endpaginate %}
+      
+      {% if collection_infinite_scrolling == 'auto_loadmore' %}
+       {% paginate collection.products by collection_limit %}
+            <div class="component-pagination" style="display: none;">
+                {%- if paginate.next -%}
+                <span class="next-page-wrapper">
+                    <a href="{{ paginate.next.url }}" id="paginatie-next">More posts</a>
+                </span>
+                {%- endif -%}
+                {%- if paginate.previous -%}
+                <span>
+                    <a href="{{ paginate.previous.url }}" id="paginatie-previous">Previous posts</a>
+                </span>
+                {%- endif -%}
+            </div>
+        {% endpaginate %}
+         {% endif %}
+
+      {% if section.settings.collection_sidebar == 'right' %}
+      {% include 'sidebar' %}
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<script>
+
+  $('.collapse-block-title').on('click', function(e) {
+    e.preventDefault;
+    var speed = 300;
+    var thisItem = $(this).parent(),
+        nextLevel = $(this).next('.collection-collapse-block-content');
+    if (thisItem.hasClass('open')){
+      thisItem.removeClass('open');
+      nextLevel.slideUp(speed);
+    }
+    else {
+      thisItem.addClass('open');
+      nextLevel.slideDown(speed);
+    }
+  })
+
+  //list layout view
+  $('.list-layout-view').on('click', function(e) {
+    $('.collection-grid-view').hide();
+    $(this).parent().addClass('active');
+    $(this).parent().siblings().removeClass('active');
+    $(".collection-wrapper").css("opacity","0.2");
+    $('.shop-cart-ajax-loader').css("display","block");
+    $('.product-wrapper').addClass("list-view");
+    $(".product-wrapper").children().children().removeClass();
+    $(".product-wrapper").children().children().addClass("col-xl-12");
+    setTimeout(function(){
+      $(".collection-wrapper").css("opacity","1");
+      $('.shop-cart-ajax-loader').css("display","none");
+    }, 500);
+  });
+
+  //grid layout view
+
+  $('.grid-layout-view').on('click', function(e) {
+    $('.collection-grid-view').show();
+    $(this).parent().addClass('active');
+    $(this).parent().siblings().removeClass('active');
+    $('.product-wrapper').removeClass("list-view");
+    $(".product-wrapper").children().children().removeClass();
+    $(".product-wrapper").children().children().addClass("col-xl-3");
+    //$(".product-wrapper").children().find("col-xl-3").first().addClass('abcd');
+
+  });
+
+  $('.product-2-layout-view').on('click', function(e) {
+    if($('.product-wrapper').hasClass("list-view")) {}
+    else{
+      $(".product-wrapper").children().children().removeClass();
+      $(".product-wrapper").children().children().addClass("col-xl-6");
+    }
+  });
+  $('.product-3-layout-view').on('click', function(e) {
+    if($('.product-wrapper').hasClass("list-view")) {}
+    else{
+      $(".product-wrapper").children().children().removeClass();
+      $(".product-wrapper").children().children().addClass("col-xl-4");
+    }
+  });
+  $('.product-4-layout-view').on('click', function(e) {
+    if($('.product-wrapper').hasClass("list-view")) {}
+    else{
+      $(".product-wrapper").children().children().removeClass();
+      $(".product-wrapper").children().children().addClass("col-xl-3");
+    }
+  });
+  $('.product-6-layout-view').on('click', function(e) {
+    if($('.product-wrapper').hasClass("list-view")) {}
+    else{
+      $(".product-wrapper").children().children().removeClass();
+      $(".product-wrapper").children().children().addClass("col-xl-2");
+    }
+  });
+
+  //filter show
+  $('.filter-btn').on('click', function(e) {
+    $('.collection-filter').css("left","0px");
+  });
+  $('.filter-back').on('click', function(e) {
+    $('.collection-filter').css("left","-300px");
+  });
+</script>
+
+{% if collection_infinite_scrolling == 'auto_loadmore' %}
+{% paginate collection.products by collection_limit %}
+{% if paginate.pages > 1 %}
+<script>
+  $(function () {
+    var itemsWrapper = '.collection-grid .row';
+
+    //Scrolling loading example
+    var scrollingLoadingOptions = {
+      selectors              : {
+        itemsWrapper     : itemsWrapper,
+        item             : '.collection-product-item',
+        nextPageLink     : '#paginatie-next',
+        previousPageLink : '#paginatie-previous',
+        paginationWrapper: '.component-pagination'
+        //scrollableElem: itemsWrapper, YOU CAN SPECIFY THIS
+      },
+      waitForImagesToBeLoaded: false,
+      //throttleDelay: 100, YOU CAN SPECIFY THIS
+      callBacks              : {
+        onAllPagesLoaded: function () {
+          $('.component-pagination').css("display", "none");
+          $('.loading-more').text("All products loaded.").addClass('active');
+          $('.loading-more').show();
+        },
+        beforePageLoad  : function () {
+          $('.loading-more').show();
+        },
+        onPageLoad      : function (items) {
+          $('.loading-more').show();
+          if (window.product_image_resize) {
+            $(".product-wrapper .img-block img").fakecrop({
+              fill: window.images_size.is_crop,
+              widthSelector: ".product-wrapper .product-box .img-block",
+              ratioWrapper: window.images_size
+            })
+          }
+        }
+      }
+    };
+    $(itemsWrapper).t3PageLoad(scrollingLoadingOptions);
+    //End scrolling loading example
+  });
+
+
+
+</script>
+{% endif %}
+{% endpaginate %}
+{% endif %}
+
+{% schema %}
+{
+   "name":"Collection Template",
+   "settings":[
+      {
+         "type":"header",
+         "content":"Collectoin Top banner"
+      },
+      {
+         "type":"image_picker",
+         "id":"banner_img",
+         "label":"Banner image",
+         "info":"1230x260PX Image"
+      },
+      {
+         "type":"url",
+         "id":"banner_url",
+         "label":"Banner Link"
+      },
+      {
+        "type": "select",
+        "id": "pagination_option",
+        "label": "Pagination Style option",
+        "default": "default",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default Pagination"
+          },
+          {
+            "value": "click_loadmore",
+            "label": "Infinite Scrolling (Show More Button)"
+          },
+          {
+            "value": "auto_loadmore",
+            "label": "Auto Infinite Scrolling"
+          }
+        ]
+      },
+      {
+         "type":"select",
+         "id":"collection_sidebar",
+         "label":"Collection Sidebar Position",
+         "default":"left",
+         "options":[
+            {
+               "value":"none",
+               "label":"None"
+            },
+            {
+               "value":"left",
+               "label":"Left"
+            },
+            {
+               "value":"right",
+               "label":"Right"
+            }
+         ]
+      },
+      {
+         "type":"checkbox",
+         "id":"sort_enable",
+         "label":"Enable sorting",
+         "default":true
+      },
+ {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+         "type": "radio",
+         "id": "img_width",
+         "options": [
+         {
+          "value": "full",
+          "label": "Image width Full"
+         },
+         {
+          "value": "auto",
+          "label": "Image Width Auto"
+         }
+      ],
+      "label": "Image width option",
+    "info": "This option will work if Use height for images option will be disabled."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use equal height for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      }
+   ]
+}
+{% endschema %}
+
+
+

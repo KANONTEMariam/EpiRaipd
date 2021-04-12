@@ -1,0 +1,47 @@
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+{{ 'jquery.products.min.js' | asset_url | script_tag }}
+{% if section.settings.show_resent_products %}
+<section class="pt-0 ratio_square product-related">
+  <div class="container">
+    <div class="row m-0">
+      <div class="col-12">
+      <div id="recently-viewed-products" class="collection clearfix row w-100" style="display:none">
+       <h2 class="title" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{sectionId}}_resent_pro_title"{% endif %}>
+          {{ section.settings.resent_product_title }}
+        </h2>
+        {% if settings.enable_lang_switcher %}
+        <span class="hide" id="{{sectionId}}_resent_pro_title">{{ section.settings.trans_resent_product_title| raw }}</span>
+        {% endif %}
+       
+      </div>
+      </div>
+      </div>
+  </div>
+</section>
+{% endif %}
+
+{% raw %}
+<script id="recently-viewed-product-template"  type="text/x-jquery-tmpl">
+
+<div class="col-lg-2 col-sm-4 col-6 p-0">
+<div id="product-${handle}" class="product-box product-select-box ">
+  <div clas="image img-block">
+    <a href="${url}">
+      <img class="blur-up lazyload img-fluid bg-img" src="${Shopify.Products.resizeImage(featured_image, "medium")}" />
+    </a>
+  
+   <div class="product-info">
+    <a href="${url}">
+      <h6 class="lang_trans" data-trans="#recently-product-{{product.id}}">${title}</h6>
+            <span class="hide" id="recently-product-{{product.id}}">${name_josn}</span>
+    </a>
+    <h5 class="money">{{if price_varies}} {{/if}}${Shopify.formatMoney(price)}</h5>
+  </div>
+</div>
+</div>
+</script>
+{% endraw %}
+
+<script>
+  Shopify.Products.showRecentlyViewed( { howManyToShow:{{section.settings.resent_product_product_length}} } );
+</script>

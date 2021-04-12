@@ -1,0 +1,260 @@
+
+<div class="container sticky">
+  <header>
+    <div class="mid-header mid-header-layout-2">
+      <div class="container">
+        <div class="row" >
+          <div class="logo" itemscope itemtype="http://schema.org/Organization" style="margin-right: 1px;">
+            <meta itemprop="name" content="{{ shop.name }}" />
+            {% if section.settings.logo %}
+            <a href="/" itemprop="url" >
+              <img src="{{ section.settings.logo | img_url:'master' }}" alt="{{ shop.name }}" style="max-width:{{ section.settings.logo_max_width }}px" itemprop="Image"/>
+            </a>
+            {% else %}
+            <h1 itemprop="logo"><a href="/" itemprop="url">{{ shop.name }}</a></h1>
+            {% endif %}
+          </div>
+          <!--div class="popup" id="popup-1">
+        <div class="content">
+            <div class="close-btn" onclick="togglePopup()">
+                ×</div>
+
+            <h1>votre emplacement</h1>
+            <p>Sélectionnez votre lieu de livraison pour voir les options de livraison</p>
+            <button class="identification">Identifiez-vous pour voir vos adresses</button>
+            <p style="paddind-top:30px;">Ou entrez votre code postal</p>
+            <div class="codepostal" style="paddind-top:30px;">
+                <input type="text" name="code" style="height: 25px;width: 180px;">
+                <button class="actualiser" style="height: 28px;width: 90px;"> Actualiser</button>
+            </div>
+            <!--*div class="input-field"><input value="Email" type="text" class="validate"></!--*div>
+            <button-- class="second-button">Sign in</button>
+
+
+
+        </div>
+    </div-->
+        
+          <!--div class="map" style="margin-left: 1px;margin-right:25px;">
+              
+              <a href=javascript:void(0); onclick=togglePopup() style="color:black;">
+                <img src="{{ section.settings.map_img | img_url: '15x' }}"  alt="Cart-icon" />
+                Adresse de livraison
+              </a>
+
+          </div-->
+          <div class="popup" id="popup-1">
+   <div class="content">
+    <div class="close-btn" onclick="togglePopup()">
+     ×</div>
+     
+<h1 style="color:#ff822e">Connexion</h1> 
+  <div class="input-field"><input type="text" class="validate" placeholder="Email"></div>
+  <div class="input-field"><input type="password" class="validate" placeholder="Mot de Passe"></div>
+    <button class="second-button" >Connexion</button>
+    <p>Avez vous un compte? <a href="/signup.html" style="color:#ff822e">Inscription</a></p>
+      
+     
+   </div>
+  </div>
+          
+           <div class="map" style="margin-left: 1px;margin-right:25px;">
+              
+              <a href="#" onclick="togglePopup()" style="color:black;">
+                <img src="{{ section.settings.map_img | img_url: '15x' }}"  alt="Cart-icon" />
+                Adresse de livraison
+              </a>
+
+          </div>
+          
+          <div  style="margin-left: 1px;margin-right:25px;">
+            {% if section.settings.search_enable %}
+            <form class="form-header"  action="/search" method="get" role="search">
+               <div class="input-group" >
+        		<!--div class="fruit">
+          <div class="dropfruit">
+          
+          <span class="select">
+          
+          catégorie
+         </span>
+            <i class="fa fa-caret-down icon">
+          
+          
+         </i>
+         </div>
+          <div class="droplist">
+          	<div class="fruitlist">Fruits</div>
+            <div class="fruitlist">Légumes</div>
+            <div class="fruitlist">Boissons</div>
+            <div class="fruitlist">Animaux</div>
+            <div class="fruitlist">Céréales</div>
+            <div class="fruitlist">Matières grasses</div>
+          </div>
+         </div-->
+                 <!--div class="input-group-prepend fruit" >
+          
+          <select id="oCategorie" name="oCategorie" class="form-control dropfruit" style="height:40px;background-color:#EEF2F4;widht:20px;font-family:roboto;">
+           <div style="background-color:blue;weidth:300px; padding-left:100px;">
+            <option selected="selected" value="1" class="fruitlist">Fruits</option>
+            <option value="1" class="fruitlist" style="padding-left:100px;">Légumes                                </option>
+            <option value="1" class="fruitlist" style="padding-left:100px;">Boissons</option>
+            <option value="1" class="fruitlist" style="padding-left:100px;">Animaux</option>
+            <option value="1" class="fruitlist" style="padding-left:100px;">Céréales</option>
+            <option value="1" class="fruitlist" style="padding-left:100px;">Matières grasses</option>
+             </div>
+          </select>
+        </div-->
+                 
+        <div class="select-box mega-menu ">
+
+            <div class="options-container ">
+
+                <div class="option">
+                    <input type="radio" class="radio" id="Fruit" name="category" />
+                    <label for="Fruit">Fruit</label>
+                </div>
+                <div class="option">
+                    <input type="radio" class="radio" id="Cereales" name="category" />
+                    <label for="Cereales">Céréales</label>
+                </div>
+                <div class="option">
+                    <input type="radio" class="radio" id="legume" name="category" />
+                    <label for="legume">Légumes</label>
+                </div>
+                <div class="option">
+                    <input type="radio" class="radio" id="Animaux" name="category" />
+                    <label for="Animaux">Animaux</label>
+                </div>
+                <div class="option">
+                    <input type="radio" class="radio" id="Boissons" name="category" />
+                    <label for="Boissons">Boissons</label>
+                </div>
+                <div class="option">
+                    <input type="radio" class="radio" id="matiereGrasse" name="category" />
+                    <label for="matiereGrasse">Matières grasses</label>
+                </div>
+            </div>
+
+            <div class="selected fleche">
+              <p style="color:#f5fafa;padding-buttom:2px;" >
+                CATEGORIES
+              </p>
+            </div>
+        </div>
+                      
+    
+        <input type="search" class="form-control " style="height:40px;font-size:15px;color:#b4b4b4;widht:300px;" name="q" placeholder="Search Products......" aria-label="{{ 'general.search.placeholder' | t }}">
+        <div class="input-group-append">
+                  <button class="btn btn-secondary btn-layout-2 " style="height:40px;"><i class="fa fa-search"></i>Search</button>
+                </div>
+      </div>
+            </form>
+           {% endif %}
+          </div>
+          
+          <div style="margin-left: 15px;">
+            {% if settings.show_catelogue != true %}
+            <div class="media pull-right onhover-dropdown">
+              <a href="/cart">
+                <img src="{{ section.settings.cart_img | img_url: '42x' }}" class="cart-icon" alt="Cart-icon" />
+              </a>
+              <div class="media-body align-self-center cart-section cart-section-layout-2">
+                <h3 class="mt-0 f-bold">{{ section.settings.cart_text }}</h3>
+                <h5>
+                  (<span class="cart_qty_cls">
+                  {{ cart.item_count }}
+                  </span>)
+                  <span class="items_carts"></span>
+                </h5>
+                {% if section.settings.cart_redirect == 'ajax_cart' %}
+                <ul class="cart-dropdown onhover-show-div" id="cart_container_id" style="color:grey;"></ul>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+
+
+{% schema %}
+{
+   "name":"Header",
+   "settings":[
+      {
+         "type":"header",
+         "content":"Main header"
+      },
+      {
+         "type":"checkbox",
+         "id":"search_enable",
+         "label":"Search Enabled?",
+         "default":true
+      },
+      {
+         "type":"image_picker",
+         "id":"logo",
+         "label":"Logo image"
+      },
+      {
+         "type":"text",
+         "id":"logo_max_width",
+         "label":"Custom logo width (in pixels)",
+         "default":"170"
+      },
+      {
+         "type":"header",
+         "content":"Shopping Cart"
+      },
+      {
+         "type":"text",
+         "id":"cart_text",
+         "label":"Cart Title",
+         "default":"Shopping Cart"
+      },
+
+       {  
+         "type":"textarea",
+         "id":"trans_cart_text",
+         "label":"Translate shopping cart"
+      },
+      {
+         "type":"image_picker",
+         "id":"cart_img",
+         "label":"Cart image"
+      },
+	  {
+         "type":"image_picker",
+         "id":"map_img",
+         "label":"Map image"
+      },
+      {
+         "type":"select",
+         "id":"cart_redirect",
+         "label":"Cart Option",
+         "options":[
+            {
+               "label":"Ajax Cart",
+               "value":"ajax_cart"
+            },
+            {
+               "label":"Redirect Cart Page",
+               "value":"redirect_to_cart"
+            }
+         ],
+         "default":"ajax_cart"
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

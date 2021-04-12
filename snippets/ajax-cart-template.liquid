@@ -1,0 +1,39 @@
+<script id="CartTemplate" type="text/template"> 
+{% raw %}
+<form action="/cart" method="post" novalidate class="cart_ajax_silder_form">
+  {{#items}}
+  <li>
+    <div class="media">
+    <div class="close-circle">
+      <a href="javascript:void(0)" class="cart_remove_item" data-id="{{key}}" data-line="{{line}}">
+       <i class="fa fa-times"></i>
+      </a>
+    </div>
+      <a href="{{url}}">
+        <img class="align-self-center cart-img lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" src="{{img}}" alt="{{name}}">
+      </a>
+      <div class="align-self-center media-body cart-contain">
+        <a href="{{url}}"><h6 class="mt-0">{{name}}</h6></a>
+         {{#if variation}}
+		<span class="ajaxcart__product-meta">{{variation}}</span>
+      {{/if}}
+     
+        <div class="cart-price">
+          <span>{{itemQty}}</span>
+          <span>X</span>
+          <span class="money">{{price}}</span>  
+        </div>
+      </div>
+    </div>
+  </li>  
+  {{/items}}
+  <li class="mt-0 mb-0">
+    <h6 class="subtotal text-uppercase">Total<span class="float-right money">{{totalPrice}}</span></h6>
+  </li>
+  <li class="text-center">
+    <a href="/cart" class="btn-theme btn-block cart_link_btn">View Cart</a>
+    <button type="submit" name="checkout" class="btn-secondary btn-block my-2">Checkout</button>
+  </li>
+</form>
+{% endraw %}
+</script>

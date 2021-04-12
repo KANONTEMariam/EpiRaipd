@@ -1,0 +1,302 @@
+{% if section.settings.faq_enabled %}
+<!--section start-->
+<section class="">
+  <div class="container">
+    <div class="row inner-page-header section-b-space">
+      <div class="col-sm-6">
+        <div class="col-sm-6">
+          {% assign data_title = page_title | split: '|' | first %}
+          {% assign data_json = page_title | split: '|' | last %}
+          <h2 {% if settings.enable_lang_switcher %}class=" title-font mb-0 lang_trans"{% endif %} {% if settings.enable_lang_switcher %}data-trans="#{{ data_title | handleize }}_breadcrumb_page_title"{% endif %}>
+            {{ data_title | truncatewords: 10 }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="hide" id="{{ data_title | handleize }}_breadcrumb_page_title">{{ data_json | raw }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-sm-6">
+        {% include 'breadcrumb' %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+
+          {% if section.settings.general_question_title != blank %}
+          <h2  {% if settings.enable_lang_switcher %} class="inner-title lang_trans "{% endif %}  {% if settings.enable_lang_switcher %}data-trans="#sub_page_title123"{% endif %}>
+            {{ section.settings.general_question_title }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="hide" id="sub_page_title123">{{ section.settings.trans_question_title | raw }}</span>
+          {% endif %}
+
+          {% endif %}
+        <div class="accordion theme-accordion" id="accordionExample">
+          {% for block in section.blocks %}
+          {% if block.type == 'general_question' %}
+          <div class="card">
+            <div class="card-header" id="{{ 'genereal-' | append:  forloop.index }}">
+              <h5 class="mb-0">
+                <button class="btn btn-link {% if settings.enable_lang_switcher %}lang_trans{% endif %}" type="button" data-toggle="collapse" {% if settings.enable_lang_switcher %}data-trans="#faq_{{blockId}}_ques"{% endif %} data-target="#{{ 'collapse-' | append:  forloop.index }}" aria-expanded="false" aria-controls="{{ 'collapse-' | append:  forloop.index }}">
+                  {% if block.settings.question_title %}
+                  {{ block.settings.question_title }}
+                  {% endif %}
+                </button>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="faq_{{blockId}}_ques">{{ block.settings.trans_question_title | raw }}</span>
+                {% endif %}
+              </h5>
+            </div>
+            <div id="{{ 'collapse-' | append:  forloop.index }}" class="collapse {% if forloop.first == true %} show {% endif %}" aria-labelledby="{{ 'genereal-' | append:  forloop.index }}" data-parent="#accordionExample">
+              <div class="card-body">
+                {% if block.settings.question_desc %}
+                <p {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#faq_{{blockId}}_ans"{% endif %}>
+                  {{ block.settings.question_desc }}
+                </p>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="faq_{{blockId}}_ans">{{ block.settings.trans_question_desc | raw }}</span>
+                {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        {% if section.settings.seller_question_title != blank %}
+          <h2  {% if settings.enable_lang_switcher %} class="inner-title lang_trans " {% endif %} {% if settings.enable_lang_switcher %} data-trans="#sub_page_title2" {% endif %}>
+            {{ section.settings.seller_question_title }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="title-font mb-0 hide" id="sub_page_title2">{{ section.settings.trans_question_title | raw }}</span>
+          {% endif %}
+          {% endif %}
+        
+        <div class="accordion theme-accordion" id="accordionExample">
+          {% for block in section.blocks %}
+          {% if block.type == 'seller_question' %}
+          <div class="card">
+            <div class="card-header" id="{{ 'seller-' | append:  forloop.index }}">
+              <h5 class="mb-0">
+                <button class="btn btn-link {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#faq_{{blockId}}_ques"{% endif %} type="button" data-toggle="collapse" data-target="#{{ 'collapse-' | append:  forloop.index }}" aria-expanded="false" aria-controls="{{ 'collapse-' | append:  forloop.index }}">
+                  {% if block.settings.question_title %}
+                  {{ block.settings.question_title }}
+                  {% endif %}
+                </button>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="faq_{{blockId}}_ques">{{ block.settings.trans_seller_question_title | raw }}</span>
+                {% endif %}
+              </h5>
+            </div>
+
+            <div id="{{ 'collapse-' | append:  forloop.index }}" class="collapse {% if forloop.first == true %} show {% endif %}" aria-labelledby="{{ 'seller-' | append:  forloop.index }}" data-parent="#accordionExample">
+              <div class="card-body">
+                {% if block.settings.question_desc %}
+                <p {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#faq_{{blockId}}_ans"{% endif %}>
+                  {{ block.settings.question_desc }}
+                </p>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="faq_{{blockId}}_ans">{{ block.settings.trans_question_desc | raw }}</span>
+                {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        {% if section.settings.customer_question_title != blank %}
+
+          <h2  {% if settings.enable_lang_switcher %} class="inner-title lang_trans"{% endif %}  {% if settings.enable_lang_switcher %}data-trans="#sub_page_title3"{% endif %}>
+            {{ section.settings.customer_question_title }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="title-font mb-0 hide" id="sub_page_title3">{{ section.settings.trans_customer_question_title | raw }}</span>
+          {% endif %}
+
+          {% endif %}
+        <div class="accordion theme-accordion" id="accordionExample">
+          {% for block in section.blocks %}
+          {% if block.type == 'customer_question' %}
+          <div class="card">
+            <div class="card-header" id="{{ 'customer-' | append:  forloop.index }}">
+              <h5 class="mb-0">
+                <button class="btn btn-link {% if settings.enable_lang_switcher %}lang_trans{% endif %}" type="button" {% if settings.enable_lang_switcher %}data-trans="#faq_{{blockId}}_ques"{% endif %} data-toggle="collapse" data-target="#{{ 'collapse-' | append:  forloop.index }}" aria-expanded="false" aria-controls="{{ 'collapse-' | append:  forloop.index }}">
+                  {% if block.settings.question_title %}
+                  {{ block.settings.question_title }}
+                  {% endif %}
+                </button>
+
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="faq_{{blockId}}_ques">{{ block.settings.trans_question_title | raw }}</span>
+                {% endif %}
+              </h5>
+            </div>
+            <div id="{{ 'collapse-' | append:  forloop.index }}" class="collapse {% if forloop.first == true %} show {% endif %}" aria-labelledby="{{ 'customer-' | append:  forloop.index }}" data-parent="#accordionExample">
+              <div class="card-body">
+                {% if block.settings.question_desc %}
+                <p {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#faq_{{blockId}}_ans"{% endif %}>
+                  {{ block.settings.question_desc }}
+                </p>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="faq_{{blockId}}_ans">{{ block.settings.trans_question_desc | raw }}</span>
+                {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Section ends-->
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Faq Template",
+    "settings": [
+      {
+         "type":"checkbox",
+         "id":"faq_enabled",
+         "default":true,
+         "label":"Enabled"
+      },
+      {
+         "type":"text",
+         "id":"general_question_title",
+         "default":"GENERAL QUESTIONS",
+         "label":"Page Title"
+      },
+      {
+          "type": "textarea",
+          "id": "trans_question_title",
+          "label": "Translate Question"
+      },
+      {
+         "type":"text",
+         "id":"seller_question_title",
+         "default":"QUESTIONS FOR SELLERS",
+         "label":"Page Title"
+      }, {
+            "type": "textarea",
+            "id": "trans_seller_question_title",
+            "label": "Translate Question"
+          },
+      {
+         "type":"text",
+         "id":"customer_question_title",
+         "default":"QUESTIONS FOR CUSTOMER",
+         "label":"Page Title"
+      },
+      {
+            "type": "textarea",
+            "id": "trans_customer_question_title",
+            "label": "Translate Question"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "general_question",
+        "name": "General Question",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question_title",
+            "label": "Question Title" 
+          },
+          {
+            "type": "textarea",
+            "id": "trans_question_title",
+            "label": "Translate Question"
+          },
+          {
+            "type": "textarea",
+            "id": "question_desc",
+            "label": "Question Description"
+          },
+          {
+            "type": "textarea",
+            "id": "trans_question_desc",
+            "label": "Translate Answer"
+          }
+        ]
+      },
+      {
+        "type": "seller_question",
+        "name": "Seller Question",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question_title",
+            "label": "Question Title"
+          },
+          
+           {
+            "type": "textarea",
+            "id": "trans_question_title",
+            "label": "Translate Question"
+          },
+          {
+            "type": "textarea",
+            "id": "question_desc",
+            "label": "Question Description"
+          },
+          {
+            "type": "textarea",
+            "id": "trans_question_desc",
+            "label": "Translate Answer"
+          }
+       
+        ]
+      },
+      {
+        "type": "customer_question",
+        "name": "Customer Question",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question_title",
+            "label": "Question Title"
+          },
+          {
+            "type": "textarea",
+            "id": "trans_question_title",
+            "label": "Translate Question"
+          },
+          {
+            "type": "textarea",
+            "id": "question_desc",
+            "label": "Question Description"
+          },
+          {
+            "type": "textarea",
+            "id": "trans_question_desc",
+            "label": "Translate Answer"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,304 @@
+{% if section.settings.enabled %}
+<section class="exclusive theme-bg section-b-space {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+    <div class="container">
+        {% if section.settings.title != blank %}
+          <h2 class="title title-borderless {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#featured_tab_{{sectionId}}title"{% endif %}>
+          {{  section.settings.title }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="hide" id="featured_tab_{{sectionId}}title">{{ section.settings.trans_title| raw }}</span>
+          {% endif %}
+        {% endif %}
+      {% case section.settings.cat_per_row %}
+      {% when '3' %}
+      {% assign column_grid_width = 'col-xl-4' %}
+      {% when '4' %}
+      {% assign column_grid_width = 'col-xl-3' %}
+      {% endcase %}
+
+        <div class="row">
+            {%- for block in section.blocks-%}
+                {% assign= collection = collections[block.settings.collection] %}
+                <div class="{{column_grid_width}} col-lg-6">
+                    <a href="{{collection.url}}" title="{{block.title}}">
+                        <div class="exclusive-block">
+                            <div class="media">
+                                {%  if block.settings.cot_image == blank %}
+                                       {% capture current %}{% cycle 1,2,3,4 %}{% endcapture %}
+                                       {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                     {% else %}
+                                      {% if section.settings.use_equal_height %}
+                                    <div>
+                                      <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: block.settings.cot_image %}" data-sizes="auto" data-parent-fit="cover"></span>
+                                    </div>        
+                                    {% else %}
+                                    {% assign block_image = block.settings.cot_image %}
+                                    {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                    <img src="{{ block_image | img_url: 'original' }}" 
+                                         data-src="{{ img_url }}" 
+                                         data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                                         data-aspectratio="{{  block_image.aspect_ratio }}" 
+                                         data-sizes="auto" 
+                                         class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                                         width="100%">
+                                    {% endif %}
+                                {% endif %}
+                                <div class="media-body">
+                                     {% if block.settings.subheading %}
+                                    <h6  {% if settings.enable_lang_switcher %}class="title-font lang_trans" data-trans="#subheading{{blockId}}_heading"{% endif %}>{{ block.settings.subheading }}</h6>
+                                    {% if settings.enable_lang_switcher %}
+                                    <span class="hide" id="subheading{{blockId}}_heading">
+                                    {{ settings.trans_subheading | raw }}</span>
+                                    {% endif %}
+                                     {% endif %}
+                                     {% if block.settings.title %}
+                                      <h2 class="add-font title-fon {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#title_{{blockId}}_title"{% endif %}>
+                                      {{ block.settings.title }}
+                                      </h2>
+                                      {% if settings.enable_lang_switcher %}
+                                     <span class="hide" id="title{{blockId}}_title">{{ block.settings.trans_title | raw }}</span>
+                                     {% endif %}
+                                      {% endif %}
+                                      {% if block.settings.btn_txt %}
+                                      <span  {%  if settings.enable_lang_switcher %}class="lang_trans" data-trans="#title_{{blockId}}btn_txt" {% endif %}>{{block.settings.btn_txt}}
+                                     </span>
+                                      {% if settings.enable_lang_switcher %}
+                                       <span class="hide" id="title{{blockId}}btn_txt">{{ block.settings.trans_btn_txt | raw }}</span>
+                                     {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+         {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+<!--Exclusive categorie start-->
+
+{% schema %}
+{
+   "name":"Featured Categories",
+   "max_blocks":12,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled"
+      },
+       {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position2",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      },
+      {
+         "type":"text",
+         "id":"title",
+         "label":"Heading",
+         "default":"Exclusive Categories"
+      },
+      {
+       "type": "textarea",
+       "id": "trans_title",
+       "label": "Translate Title"
+      },
+      {
+         "type":"select",
+         "id":"cat_per_row",
+         "label":"Category Per Row",
+         "options":[
+            {
+               "label":"3",
+               "value":"3"
+            },
+            {
+               "label":"4",
+               "value":"4"
+            }
+         ],
+         "default":"4"
+      }
+   ],
+   "blocks":[
+      {
+         "type":"collection",
+         "name":"Category",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"cot_image",
+               "label":"Category Image",
+               "info":"Please use 1920x900px size"
+            },
+            {
+               "type":"collection",
+               "id":"collection",
+               "label":"Select collection"
+            },
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Heading",
+               "default":"coffee"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_title",
+               "label": "Translate Main Title"
+            },
+            {
+               "type":"text",
+               "id":"subheading",
+               "label":"Sale title",
+               "default":"10% off"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_subheading",
+               "label": "Translate Title"
+            },
+            {
+               "type":"text",
+               "id":"btn_txt",
+               "label":"Button Text",
+               "default":"Shop Now"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_btn_txt",
+               "label": "Translate Button Text"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Featured Categories",
+         "category":"Collection",
+         "settings":{
+
+         },
+         "blocks":[
+            {
+               "type":"collection"
+            },
+            {
+               "type":"collection"
+            },
+            {
+               "type":"collection"
+            },
+            {
+               "type":"collection"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+

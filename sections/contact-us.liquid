@@ -1,0 +1,143 @@
+{% if section.settings.contact_enable %}
+	<!--section start-->
+	<section class="contact-page">
+		<div class="container">
+			<div class="row inner-page-header">
+				<div class="col-sm-6">
+					<h2 class="title title-borderless title-layout-2 mb-0 p-0">{{ page.title }}</h2>
+				</div>
+				<div class="col-sm-6">
+					{% include 'breadcrumb' %}
+				</div>
+			</div>
+			<div class="row section-b-space">
+				<div class="col-lg-7">
+					{% if section.settings.google_map_iframe != blank %}
+						{{ section.settings.google_map_iframe }}
+					{% endif %}
+					{% comment %}<img  src="assets/images/map.png" class="img-fluid" alt="{{ image.alt }}"/>{% endcomment %}
+				</div>
+				<div class="col-lg-5">
+					<ul class="contact-right">
+						{% for block in section.blocks %}
+							<li>
+								<div class="contact-icon">
+									{% if block.settings.services_image != blank %}
+				                        <img src="{{ block.settings.services_image | img_url: 'original' }}" alt="{{ image.alt }}" class="img-fluid">
+				                    {% endif %}
+
+									{% if block.settings.service_title != blank %}
+										<h6>
+											{{ block.settings.service_title }}
+										</h6>
+									{% endif %}
+								</div>
+								<div>
+									{% if block.settings.service_desc != blank %}
+										{{ block.settings.service_desc }}
+									{% endif %}
+								</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					{% form 'contact', class: 'theme-form' %}
+
+						{% if form.posted_successfully? %}
+				            <p class="alert alert-success">
+				              {{ 'contact.form.post_success' | t }}
+				            </p>
+				        {% endif %}
+
+				        {{ form.errors | default_errors }}
+
+						<div class="form-row">
+							<div class="col-md-6">
+								<label for="name">Nom</label>
+								<input type="text" class="form-control" placeholder="Nom" id="ContactFormName" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" required="">
+							</div>
+							<div class="col-md-6">
+								<label for="email">Email</label>
+								<input type="email" required="" class="form-control" placeholder="Email" id="ContactFormEmail" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+							</div>
+							<div class="col-md-12">
+								<label for="review">Numéro de téléphone</label>
+								<input type="tel" class="form-control" placeholder="Numéro de téléphone" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}" required="">
+							</div>
+							<div class="col-md-12">
+								<label for="review">Ecrivez votre message</label>
+								<textarea class="form-control" placeholder="Message" id="ContactFormMessage" name="contact[body]" rows="6"></textarea>
+							</div>
+							<div class="col-md-12">
+								<button id="submit" class="btn btn-theme" name="submit">Envoyer</button>
+							</div>
+						</div>
+					{% endform %}
+				</div>
+			</div>
+
+		</div>
+	</section>
+<!--Section ends-->
+{% endif %}
+
+
+
+{% schema %}
+  {
+    "name": "Contact Us",
+    "max_blocks": 4,
+    "settings": [
+	  {
+         "type":"header",
+         "content":"Contact Us"
+	  },
+	  {
+	     "type":"checkbox",
+	     "id":"contact_enable",
+	     "label":"Enabled",
+	     "default":true
+	  },
+	  {
+		   "type": "html",
+		   "id": "google_map_iframe",
+		   "label": "Google Map"
+	 }
+	],
+	"blocks":[
+		{
+         "type":"Services",
+         "name":"Services",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"services_image",
+               "label":"Image"
+            },
+            {
+               "type":"text",
+               "id":"service_title",
+               "label":"Title",
+               "default":"CONTACT US"
+            },
+            {
+               "type":"html",
+               "id":"service_desc",
+               "label":"Description",
+               "default":"<p>+91 123 - 456 - 7890</p><p>+86 163 - 451 - 7894</p>"
+            }
+         ]
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

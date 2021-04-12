@@ -1,0 +1,15 @@
+{% if settings.filter_by_color_enable %}
+<div class="collection-collapse-block open">
+  <h3 class="collapse-block-title">{{ settings.filter_color_title }}</h3>
+  <div class="collection-collapse-block-content">
+    <div class="color-selector">
+      {% assign colors = settings.filter_by_color_option | split: ',' -%}
+      <ul class="sidebar_filter_cls sidebar_color">
+        {% for color in colors limit: color_category_limit %}
+        <li class="{{color}}" data-value="{{color}}" data-link-collection></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}

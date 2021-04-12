@@ -1,0 +1,29 @@
+<div class="container section-t-space">
+  <div class="row inner-page-header section-b-space">
+    <div class="col-sm-6">
+      <h2 class="title title-borderless title-layout-2 mb-0 p-0">{{ page.title }}</h2>
+    </div>
+    <div class="col-sm-6">
+      {% include 'breadcrumb' %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="page-content col-sm-12">
+      {{ page.content }}
+      <div class="wrapper">
+        <div class="survey_options ">
+            <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Produit">
+            <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Produit">
+            <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Produit">
+            <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Produit">
+        </div>
+        <div class="controls">
+            <a href="#" id="add_more_fields"><i class="fa fa-plus"></i>Add More</a>
+            <a href="#" id="remove_fields"><i class="fa fa-plus"></i>Remove</a>
+        </div>
+    </div>
+    </div>
+
+    </div>
+  </div>
+</div>

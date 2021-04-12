@@ -1,0 +1,450 @@
+ <!--Mix section start-->
+ {% if section.settings.enabled %}
+    <section class="pt-0 section-b-space tab-collection {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="theme-card pb-0 pro_mix_equal">
+                       {% if section.settings.tab_title != "blank" %}
+                           <h2 class="title pt-1 title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#product_{{sectionId}}trans_tab_title"{% endif %}>
+                              {{ section.settings.tab_title }}
+                            </h2>
+                            {% if settings.enable_lang_switcher %}
+                            <span class="hide" id="product_{{sectionId}}trans_tab_title">{{ section.settings.trans_tab_title | raw }}</span>
+                            {% endif %}
+                          {% endif %}
+                        <div class="theme-tab theme-tab-layout-2 tab-pills">
+                            <span id="mob_tab_cls">+</span>
+                            <ul class="tabs">
+                                {% assign main_index = 1  %}
+                                {% for block in section.blocks %}
+                                   {% if block.type == 'Tab' %}
+                                        {%- assign collection = collections[block.settings.tab_collection] -%}
+                                           {% if collection.empty?%}
+                                              <li  {% if forloop.first == true %}class="current"{% endif %} >
+                                                <a href="tab-{{forloop.index}}{{main_index}}" {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.collection_title"{%endif%} >{{ 'homepage.onboarding.collection_title' | t }}</a>
+                                              </li>
+                                              {% else %}
+                                              <li {% if forloop.first == true %} class="current" {% endif %}>
+                                                <a href="tab-{{forloop.index}}{{main_index}}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#tab_slidr_{{blockId}}_title"{% endif %}>{{ block.settings.title }}</a>
+                                                 {% if settings.enable_lang_switcher %}
+                                                <span class="hide" id="tab_slidr_{{blockId}}_title">{{ block.settings.trans_title | raw }}</span>
+                                                {% endif %}
+                                              </li>
+                                            {% endif %}
+                                             {% assign main_index = main_index | plus: 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                             </ul>
+                             <div class="tab-content-cls">
+                                {% assign main_index = 1 %}
+                                {% for block in section.blocks %}
+                                {% if block.type == 'Tab'  %}
+                                {% assign collection = collections[block.settings.tab_collection] %}
+                                {% assign collection_available = collections[block.settings.tab_collection] %}
+                                <div id="tab-{{ forloop.index }}{{main_index}}" class="tab-content default" >
+                                  <div class="theme-slider slide-1">
+                                    <div>
+                                      <div class="row ">
+                                        {% if collection_available.empty? %}
+                                        {% capture current %}{% cycle 1,2,3,4,1,2 %}{% endcapture %}
+                                        {% for i in (1..4) %}
+                                        <div class="col-md-6">
+                                          <div class="product-box  product-box-layout-2" itemscope itemtype="http://schema.org/Product">
+                                            <div class="img-block">
+                                              <div class="cart-info">
+                                                <button  data-toggle="tooltip" data-placement="left" title="Add to cart"><i class="icon-shopping-cart"></i></button>
+                                                <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Wishlist"><i class="icon-heart"></i></a>
+                                                <a href="#" data-toggle="tooltip" data-placement="left" title="Quick View"><i class="icon-zoom-in"></i></a>
+                                              </div>
+                                              <a href="#" >
+                                                {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}   
+                                              </a>
+                                            </div>
+                                            <div class="product-details text-center">
+                                              <div class="rating three-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                              </div>
+                                              <a href="#" >
+                                                <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6>  
+                                              </a>
+                                              <h4 class="price" >
+                                                {{ '$20.00' }}
+                                              </h4>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% else %}
+                                        {% if collection.products.size > 7 %}
+                                        {% for product in collection.products limit:8 %}
+                                        {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+                                        {% if thecycle == 'odd' %}
+                                        <div class="col-md-6">
+                                          {% include  'grid-layout' %}
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %} 
+                                        {% else %}
+                                        {% for product in collection.products limit:8 %}
+                                        <div class="col-md-6">
+                                          {% include  'grid-layout' %}
+                                        </div>
+                                        {% endfor %} 
+                                        {% endif %}
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                    {% if collection.products.size > 7 %}
+                                    <div>
+                                      <div class="row ">
+                                        {% if collection_available.empty? %}
+                                        {% capture current %}{% cycle 1,2,3,4,1,2 %}{% endcapture %}
+                                        {% for i in (1..4) %}
+                                        <div class="col-md-6">
+                                          <div class="product-box  product-box-layout-4" itemscope itemtype="http://schema.org/Product">
+                                            <div class="img-block">
+                                              <div class="cart-info">
+                                                <button  data-toggle="tooltip" data-placement="left" title="Add to cart"><i class="icon-shopping-cart"></i></button>
+                                                <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Wishlist"><i class="icon-heart"></i></a>
+                                                <a href="#" data-toggle="tooltip" data-placement="left" title="Quick View"><i class="icon-zoom-in"></i></a>
+                                              </div>
+                                              <a href="#" >
+                                                {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}   
+                                              </a>
+                                            </div>
+                                            <div class="product-details text-center">
+                                              <div class="rating three-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                              </div>
+                                              <a href="#" >
+                                                <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6>  
+                                              </a>
+                                              <h4 class="price" >
+                                                {{ '$20.00' }}
+                                              </h4>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% else %}
+                                        {% for product in collection.products limit:8 %}
+                                        {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+                                        {% if thecycle == 'even' %}
+                                        <div class="col-md-6">
+                                          {% include  'grid-layout' %}
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}  
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                    {% endif %}
+                                  </div>
+                                </div>
+                                {% assign main_index = main_index | plus: 1 %}
+                                {% endif %}
+                                {% endfor %}         
+                              </div>
+                        </div>
+                    </div>
+                </div>
+               
+                  {% for block in section.blocks %}
+                    {% if block.type == 'Banner'  %}
+                    <div class="col-xl-6">
+                      <div class="big-banner pro_tab_bnr_equal">
+                        <div class="new">
+                            {{ block.settings.custom_html }}
+                            {% if section.settings.title != "blank" %}
+                            <div class="btn btn-theme {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#product_tab{{sectionId}}_title"{% endif %} tabindex="0">{{block.settings.title}}</div>
+                            {% if settings.enable_lang_switcher %}
+                            <span class="hide" id="product_tab{{sectionId}}_title">{{ section.settings.trans_button_title | raw }}</span>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                       </div>
+                      <a href="{{ block.settings.url }}">
+                       {% if section.settings.use_equal_height %}
+                       <div>
+                         <span class=" bnr_img lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: block.settings.banner_img  %}" data-sizes="auto" data-parent-fit="cover"></span>
+                       </div>        
+                     {% else %}
+                  
+                    {% assign img_url = block.settings.banner_img  | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                   <img src="{{ img_url | img_url: 'master' }}" 
+                        data-src="{{ img_url }}" 
+                        data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                        data-aspectratio="{{   article.image.aspect_ratio }}" 
+                        data-sizes="auto" 
+                        class="bnr_img lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                        style="width: 100%" 
+                        >
+                        {% endif %}
+                          </a>
+                        </div>
+                        {% endif %}
+                  {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!--Mix section ends-->
+
+<script>
+
+  $(document).ready(function() {
+
+    $("#mob_tab_cls").click(function(){
+      $(this).toggleClass('active');
+      if($(this).text() == '+')
+      {
+        $(this).text('-');
+      }
+      else
+      {
+        $(this).text('+');
+      }
+      $(this).next('ul.tabs').slideToggle();
+      $('.tab-content-cls').toggleClass('active');
+    });
+
+  });
+
+</script>
+
+
+
+{% schema %}
+{
+   "name":"Product Tab With Banner",
+   "max_blocks":6,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Tab Heading",
+         "default":"Exclusive Collections"
+      },
+      {
+         "type": "textarea",
+         "id": "trans_tab_title",
+         "label": "Translate Main Title"
+      },
+      
+      {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      }
+
+   ],
+   "blocks":[
+      {
+         "type":"Tab",
+         "name":"Tab Collection",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Heading",
+               "default":"Product Tab"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_title",
+               "label": "Translate Main Title"
+            },
+            {
+               "type":"collection",
+               "id":"tab_collection",
+               "label":"Select Collection"
+            }
+         ]
+      },
+      {
+         "type":"Banner",
+         "name":"Banner Image",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"banner_img",
+               "label":"Banner Image",
+               "info":"Image Size (770x890PX)"
+            },
+                  {
+               "type":"html",
+               "id":"custom_html",
+               "label":"Custom Html",
+               "default":"<h2> Best </h2><h1>Vegetable<span>50%</span><span>off</span></h1><span>Offer Limited</span>"
+            },
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Button text",
+               "default":"Shop now"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_button_title",
+               "label": "Translate Button Title"
+            },
+            {
+               "type":"url",
+               "id":"url",
+               "label":"Banner Link"
+            }
+            
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Product Tab With Banner",
+         "category":"Product",
+         "settings":{
+
+         },
+         "blocks":[
+            {
+               "type":"Tab"
+            },
+            {
+               "type":"Tab"
+            },
+            {
+               "type":"Tab"
+            },
+            {
+               "type":"Tab"
+            },
+            {
+               "type":"Banner"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

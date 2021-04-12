@@ -1,0 +1,187 @@
+<!--Header 4 start-->
+<header class="header-layout-4 sticky">
+  <div class="top-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 header-contact">
+          <ul>
+            {% if section.settings.announcement_text != blank %}
+            <li {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#header4_{{sectionId}}_announcement_text"{% endif %}>
+              {{ section.settings.announcement_text }}
+            </li>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="header4_{{sectionId}}_announcement_text">{{ section.settings.trans_announcement_text | raw }}</span>
+            {% endif %}
+            {% endif %}
+            {% if section.settings.phone_number != blank %}
+            <li><i class="fa fa-phone" aria-hidden="true"></i>
+              <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#header4_{{sectionId}}_phone_number"{% endif %}>
+                {{ section.settings.phone_number }}
+              </span>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="header4_{{sectionId}}_phone_number">{{ section.settings.trans_phone_number | raw }}</span>
+              {% endif %}
+            </li>
+            {% endif %}
+      
+          </ul>
+        </div>
+        <div class="col-lg-6 text-right">
+          <ul class="header-dropdown">
+            {% if section.settings.show_currency_picker %}
+            {% include 'currency-picker' %}
+            {% endif %}
+            {% if section.settings.show_language_picker %}
+            <li class="onhover-dropdown">
+              <span>Language</span> 
+              <ul class="onhover-show-div" id="translate">
+                  {% include 'language-picker' %}
+              </ul>
+            </li>
+            {% endif %}
+           {% if settings.show_catelogue != true %}
+                <li class="onhover-dropdown">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <span {% if settings.enable_lang_switcher %}data-trans-key="customer.account.title"{%endif%}>{{ 'customer.account.title' | t }}</span>
+                  <ul class="onhover-show-div">
+                    <li>
+                      {% if customer %}
+                      <a href="/account/logout" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.log_out"{%endif%}>
+                        {{ 'layout.customer.log_out' | t }}
+                      </a>
+                      {% else %}
+                      <a href="/account/login" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.log_in"{%endif%}>
+                        {{ 'layout.customer.log_in' | t }}
+                      </a>
+                      {% endif %}
+                    </li>
+                    <li>
+                      {% if customer %}
+                      <a href="/account" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.account"{%endif%}>
+                        {{ 'layout.customer.account' | t }}
+                      </a>
+                      {% else %}
+                      <a href="/account/register" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.create_account"{%endif%}>
+                        {{ 'layout.customer.create_account' | t }}
+                      </a>
+                      {% endif %}
+                    </li>
+                  </ul>
+                </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mid-header {% if section.settings.eneble_black_bg %}black-bg {% endif %}">
+    <div class="container">
+      <div class="row">
+        <div class="col logo" itemscope itemtype="http://schema.org/Organization">
+          <meta itemprop="name" content="{{ shop.name }}" />
+          {% if section.settings.logo %}
+          <a href="/" itemprop="url">
+            <img src="{{ section.settings.logo | img_url:'master' }}"  alt="{{ shop.name }}" style="max-width:{{ section.settings.logo_max_width }}px" itemprop="Image"/>
+          </a>
+          {% else %}
+          <h1 itemprop="logo"><a href="/" itemprop="url">{{ shop.name }}</a></h1>
+          {% endif %}
+        </div>
+        <div class="col-xl-7 col-lg-5 col-md-7">          
+          {% if section.settings.eneble_serach %}
+          <form class="form-header" action="/search" method="get" role="search">
+            <div class="input-group  mb-3">
+              <input type="search" class="form-control" name="q" placeholder="Search Products......" aria-label="{{ 'general.search.placeholder' | t }}">
+              <div class="input-group-append">
+                <button class="btn btn-secondary"><i class="fa fa-search"></i>Search</button>
+              </div>
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</header>
+<!--Header 4 start-->
+
+{% schema %}
+{
+   "name":"Header",
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"eneble_black_bg",
+         "label":"Enable Black background",
+         "default":true
+      },
+	    {
+         "type":"header",
+         "content":"Announcement Bar"
+      },
+       {
+         "type":"text",
+         "id":"announcement_text",
+         "label":"Announcement text",
+         "default":"Announce something here"
+      },
+        {  
+         "type":"textarea",
+         "id":"trans_announcement_text",
+         "label":"Translate Announcement text"
+      },
+    
+      {
+         "type":"text",
+         "id":"phone_number",
+         "label":"Contact Number",
+         "default":"CALL US: 123-456-7890"
+      },
+       {  
+         "type":"textarea",
+         "id":"trans_phone_number",
+         "label":"Translate Contact Number"
+      },
+      {
+         "type":"checkbox",
+         "id":"show_currency_picker",
+         "label":"Show currency picker",
+         "default":true
+      },
+      {
+         "type":"checkbox",
+         "id":"show_language_picker",
+         "label":"Show Language Change",
+         "default":false
+      },
+      {
+         "type":"checkbox",
+         "id":"eneble_serach",
+         "label":"Eneble Serach",
+         "default":true
+      },
+      {
+         "type":"header",
+         "content":"Main header"
+      },
+      {
+         "type":"image_picker",
+         "id":"logo",
+         "label":"Logo image"
+      },
+      {
+         "type":"text",
+         "id":"logo_max_width",
+         "label":"Custom logo width (in pixels)",
+         "default":"250"
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

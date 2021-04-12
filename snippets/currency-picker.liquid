@@ -1,0 +1,92 @@
+<li style="padding: 0;width: 0;display: none;">
+  <select class="currency-picker" name="currencies"  style="display:block; width: auto; visibility:hidden; height:0; padding:0; margin:0; min-height:0px; border: none;">
+    {% assign codes = 'XAF,USD,EUR' | split: ',' %}
+    {% assign supported_codes = settings.supported_currencies | split: ' ' %}
+    <option value="{{ shop.currency }}" selected="selected">  {{ shop.currency }}</option>
+    {% for code in supported_codes %}
+    {% if code != shop.currency and codes contains code %}
+    <option value="{{ code }}">{{ code }}</option>
+    {% endif %}
+    {% endfor %}
+  </select>
+</li>
+
+{% assign codes = 'XAF,USD,EUR' | split: ',' %}
+{% assign supported_codes = settings.supported_currencies | split: ' ' %}
+
+<li class="onhover-dropdown currency_picker_cls">
+  <a href="javascript:void(0)" class="selected_currency"  onchange="onFlagChange(this.options[this.selectedIndex].value)" style="padding-right:0px;">
+   {{ shop.currency }}
+  </a>
+  <ul class="onhover-show-div">
+    
+    {% for code in supported_codes %}
+    {% if code != shop.currency and codes contains code %}
+    <li class="currency_li_cls_2">
+      <a href="javascript:void(0)"  data-value="{{ code }}" onchange="onFlagChange(this.options[this.selectedIndex].value)" class="langecolor"> <span>
+      <img src="https://cdn.shopify.com/s/files/1/0033/7956/0537/files/{{ code }}.png" id="flags" >
+    </span>{{ code }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</li>
+
+<script>
+    function onFlagChange(userSelection){
+    var newUrl;
+    var optionUrl =
+        [
+          {key:"USD",value:"https://cdn.shopify.com/s/files/1/0033/7956/0537/files/USD.png?39208"},
+          {key:"GBP",value:"https://cdn.shopify.com/s/files/1/0033/7956/0537/files/GBP.png?39208"},
+          
+          {key:"XAF",value:"https://cdn.shopify.com/s/files/1/0033/7956/0537/files/XAF.png?39208"}
+        ]
+       
+      var pick = optionUrl.find(function(e) { return e.key === userSelection; });
+      if (pick) {
+        newUrl = pick.value;
+      }
+      $('#flags').attr('src',newUrl);
+      var selected_currency = $( '#currencies' ).val();
+      $( '#currencies' ).prev().children( 'img' ).attr( 'src', 'https://cdn.shopify.com/s/files/1/0033/7956/0537/files/' + selected_currency + '.png'  );
+  }
+  
+  $(document).ready(function() {
+    function change_class_2(){
+      $('.currency_li_cls_2 a').each(function(){
+        $(this).removeClass('selected');
+        var cookie_val = $.cookie("currency");
+        if($(this).attr('data-value') == cookie_val){
+          var temp_val = '';
+          var code = ''
+          code = ''+$(this).attr('data-value');
+          $(".selected_currency").html(code);
+          //$("#map").append("<img id="flags" src="'https://cdn.shopify.com/s/files/1/0033/7956/0537/files/INR+'"/>");
+          //   console.log(img);
+          //var selected_currency = $( '#currencies' ).val();
+         // $( '#currencies' ).prev().children( 'img' ).attr( 'src', 'https://cdn.shopify.com/s/files/1/2078/5043/t/59/assets/' + selected_currency + '.png'  );
+          $(this).addClass('selected');
+        }
+      });
+    }
+    
+    change_class_2();
+    
+    var shop_domain = '{{ shop.url }}';
+    shop_domain = shop_domain.replace(/(^\w+:|^)\/\//, '');
+    var cookie_domain = '.'+shop_domain;
+    
+    $('.currency_li_cls_2 a').click(function(){
+      var cty_opt = $(this).attr('data-value');
+      $.cookie('currency', cty_opt, { domain: cookie_domain });
+      $('.currency-picker option[value="'+cty_opt+'"]').attr('selected','selected').siblings().removeAttr('selected');
+      $(this).addClass('selected');
+      $('.currency-picker').trigger('change');
+      change_class_2();
+    });
+
+  });
+
+
+</script>

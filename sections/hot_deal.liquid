@@ -1,0 +1,522 @@
+<!--Section two start-->
+{% if section.settings.enabled %}
+<section class="hot-deal mb-0 {% if section.settings.bottom_space %} section-b-space {% endif %}">
+  <div class="container">
+    <div class="row ">
+      {% if section.settings.enabled_slidercolums %}
+      <div class="col-xl-3 col-md-12">
+        <div class="theme-card">
+          <h2 class="title title-layout-2 mb-0 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}_title"{% endif %}>
+            {{ section.settings.title }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="hide" id="hot_deal{{sectionId}}_title">{{ section.settings.trans_title | raw }}</span>
+          {% endif %}
+        
+          <div class="offer-slider offer-slider-layout-2 slide-1 theme-slider">
+            {% assign collection = collections[section.settings.sale_collection] %}
+            {% if collection.empty? %}
+            {% capture current %}{% cycle 1,2,3,4,1,2 %}{% endcapture %}
+            <div>
+              {% for i in (1..2) %}
+              <div class="media">
+                <a href="#" >
+                  {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                </a>
+                <div class="media-body align-self-center">
+                  <a href="#" >
+                    <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6> 
+                  </a>
+                  <h4>{{ '$20.00' }}</h4>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div>
+              {% for product in collection.products limit:4 %}
+                {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+                 {% if thecycle == 'odd' %}
+                    <div class="media">
+                      <a href="{{ product.url | within: collection }}" >
+                        <img class="" src="{{ product.featured_image | img_url:'125x' }}" alt="{{ product.title }}" >
+                      </a>
+                      <div class="media-body align-self-center">
+                        <a href="{{ product.url | within: collection }}">
+                          {% assign data_title = product.title | split: '|' | first %}
+                          {% assign data_json = product.title | split: '|' | last %}
+                          <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                            {{ data_title | truncatewords: 10 }}
+                          </h6>
+                          {% if settings.enable_lang_switcher %}
+                          <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+                          {% endif %}
+                        </a>
+                        {% if settings.eneble_login_price %}
+                           {% if customer %}
+                                {% if product.available %}
+                                <h4 class="price">{{ product.price | money }}
+                                  {% if product.price < product.compare_at_price %} 
+                                  <del>{{ product.compare_at_price | money }}</del>
+                                  {% endif %}
+                                </h4>
+                                {% else %}
+                                <h4 class="price">Sold</h4>
+                                {% endif %}
+                             {% else %}
+                             <span class="login-price" {% if settings.enable_lang_switcher %}data-trans-key="products.product.login_to_see_price"{%endif%}>{{ 'products.product.login_to_see_price' | t }}</span>
+                             {% endif %}
+                             {% elsif settings.show_catelogue  %}
+                                {% if settings.show_catelogue_price %}
+                                  {% if product.available %}
+                                      <h4 class="price">{{ product.price | money }}
+                                        {% if product.price < product.compare_at_price %} 
+                                        <del>{{ product.compare_at_price | money }}</del>
+                                        {% endif %}
+                                      </h4>
+                                      {% else %}
+                                        <h4 class="price">Sold</h4>
+                                 {% endif %}
+                                {% endif %}
+                                {% else %}
+                                 {% if product.available %}
+                                  <h4 class="price">{{ product.price | money }}
+                                    {% if product.price < product.compare_at_price %} 
+                                    <del>{{ product.compare_at_price | money }}</del>
+                                    {% endif %}
+                                  </h4>
+                                  {% else %}
+                                  <h4 class="price">Sold</h4>
+                                  {% endif %}
+                          {% endif %}
+                      </div>
+                    </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% if collection.products.size > 3 %}
+             {% if collection.empty? %}
+            <div>
+              {% for i in (1..2) %}
+              <div class="media">
+                <a href="#" >
+                  {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                </a>
+                <div class="media-body align-self-center">
+                  <a href="#" >
+                      <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6> 
+                  </a>
+                  <h4>{{ '$20.00' }}</h4>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div>
+              {% for product in collection.products limit:4 %}
+              {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+              {% if thecycle == 'even' %}
+              <div class="media">
+                <a href="{{ product.url | within: collection }}" >
+                  <img class="" src="{{ product.featured_image | img_url:'125x' }}" alt="{{ product.title }}" >
+                </a>
+                <div class="media-body align-self-center">
+                  <a href="{{ product.url | within: collection }}">
+                    {% assign data_title = product.title | split: '|' | first %}
+                    {% assign data_json = product.title | split: '|' | last %}
+                    <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                      {{ data_title | truncatewords: 10 }}
+                    </h6>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+                    {% endif %}
+                  </a>
+                  {% if settings.eneble_login_price %}
+                     {% if customer %}
+                          {% if product.available %}
+                          <h4 class="price">{{ product.price | money }}
+                            {% if product.price < product.compare_at_price %} 
+                            <del>{{ product.compare_at_price | money }}</del>
+                            {% endif %}
+                          </h4>
+                          {% else %}
+                          <h4 class="price">Sold</h4>
+                          {% endif %}
+                       {% else %}
+                       <span class="login-price" {% if settings.enable_lang_switcher %}data-trans-key="products.product.login_to_see_price"{%endif%}>{{ 'products.product.login_to_see_price' | t }}</span>
+                       {% endif %}
+                       {% elsif settings.show_catelogue  %}
+                          {% if settings.show_catelogue_price %}
+                            {% if product.available %}
+                                <h4 class="price">{{ product.price | money }}
+                                  {% if product.price < product.compare_at_price %} 
+                                  <del>{{ product.compare_at_price | money }}</del>
+                                  {% endif %}
+                                </h4>
+                                {% else %}
+                                  <h4 class="price">Sold</h4>
+                           {% endif %}
+                          {% endif %}
+                          {% else %}
+                           {% if product.available %}
+                            <h4 class="price">{{ product.price | money }}
+                              {% if product.price < product.compare_at_price %} 
+                              <del>{{ product.compare_at_price | money }}</del>
+                              {% endif %}
+                            </h4>
+                            {% else %}
+                            <h4 class="price">Sold</h4>
+                            {% endif %}
+                    {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+             {% endif %}
+          </div>
+          <div class="text-right">
+              <a href="{{ collection.url }}" {% if settings.enable_lang_switcher %}data-trans-key="collections.general.view_more"{%endif%}>{{ 'collections.general.view_more' | t }}</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <div class=" {% if section.settings.enabled_slidercolums == false  %}col-xl-12 {% else %} col-xl-9 {% endif %} col-md-12">
+        <div class="hot-deal-right hot-deal-right-layout-2">
+           {% if section.settings.tab_title != "blank" %}
+             <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+                {{ section.settings.tab_title }}
+              </h2>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="hot_deal{{sectionId}}trans_tab_title">{{ section.settings.trans_tab_title | raw }}</span>
+              {% endif %}
+            {% endif %}
+          <div class="theme-tab theme-tab-layout-2">
+            <ul class="tabs  best-product">
+              {% for block in section.blocks %}
+              {% if block.type == 'Tab'  %}
+              {% assign collection = collections[block.settings.tab_collection] %}
+              {% if collection.empty? %}
+              <li  {% if forloop.first == true %}class="current"{% endif %} >
+                <a href="tab-{{forloop.index}}" {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.collection_title"{%endif%} >{{ 'homepage.onboarding.collection_title' | t }}</a>
+              </li>
+              {% else %}
+              <li {% if forloop.first == true %} class="current" {% endif %}>
+                <a href="tab-{{forloop.index}}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#tab_slidr_{{blockId}}_title"{% endif %}>{{ block.settings.title }}</a>
+                 {% if settings.enable_lang_switcher %}
+                <span class="hide" id="tab_slidr_{{blockId}}_title">{{ block.settings.trans_title | raw }}</span>
+                {% endif %}
+              </li>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
+            </ul>
+
+            <div class="tab-content-cls">
+              {% assign count = 0 %}
+              {% for block in section.blocks %}
+              {% if block.type == 'Tab'  %}
+              {% assign collection = collections[block.settings.tab_collection] %}
+              {% assign count = count | plus: 1 %}
+              <div id="tab-{{ forloop.index }}" class="tab-content default" >
+                <div class="tab_product_slider theme-slider">
+                  {% if collection.empty? %}
+                  {% capture current %}{% cycle 1,2,3,4,1,2 %}{% endcapture %}
+                  {% for i in (1..4) %}
+
+                  <div class="inner-slide">
+                    <div class="media">
+                      <a href="#">
+                        {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                      </a>
+                      <div class="media-body align-self-center">
+                        <div class="product-details">
+                          <a href="#">
+                            <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6> 
+                          </a>                          
+                          <div class="rating three-star">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                          </div>                          
+                          <h2>{{ '$20.00' }}</h2>
+                          <p>{{ '$20.00' }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% endfor %}
+                  {% else %}
+                  {% for product in collection.products limit:8 %}
+                  <div class="inner-slide"> 
+                    <div class="media">
+                      <a href="">
+                        <img class="img-fluid" src="{{ product.featured_image | img_url:'760x1000' }}" alt="{{ product.title }}" >
+                      </a>
+                      <div class="media-body align-self-center">
+                        <div class="product-details">
+                          <a href="{{ product.url | within: collection }}">
+                            {% assign data_title = product.title | split: '|' | first %}
+                            {% assign data_json = product.title | split: '|' | last %}
+                            <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                              {{ data_title | truncatewords: 10 }}
+                            </h6>
+                            {% if settings.enable_lang_switcher %}
+                            <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+                            {% endif %}
+                          </a>
+                          {% if block.settings.display_rating %}
+                          <div class="rating three-star">
+                            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                          </div>
+                          {% endif %}
+                          <h2>{{ product.price | money }}
+                            {% if product.price < product.compare_at_price %}
+                            <del>{{ product.compare_at_price | money }}</del>
+                            {% endif %}
+                          </h2>
+                          {% if block.settings.display_desc %}
+                          {% assign word_limit = block.settings.desc_words %}
+                          <p>
+                            {{ product.description | html_strip | truncate: word_limit }}
+                          </p>
+                          {% endif %}
+                          {% if block.settings.display_timer %}
+                          <div class="timer">
+                            <span>{{ block.settings.timer_title }}</span>
+                            <div class="timer_date">{{ block.settings.timer_date }}</div>
+                            <div id="timer_{{count}}" class="timer_{{count}}"></div>
+                          </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!--Section two ends-->
+
+{% assign count = 0 %}
+{% for block in section.blocks %}
+{% assign count = count | plus: 1 %}
+
+<script type="text/javascript">
+  var countDownDate_{{count}} = new Date("{{ block.settings.timer_date }}").getTime();
+                                         var x = setInterval(function() {
+    var now_{{count}} = new Date().getTime();
+    var distance_{{count}} = countDownDate_{{count}} - now_{{count}};
+    var days_{{count}} = Math.floor(distance_{{count}} / (1000 * 60 * 60 * 24));
+    var hours_{{count}} = Math.floor((distance_{{count}} % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes_{{count}} = Math.floor((distance_{{count}} % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds_{{count}} = Math.floor((distance_{{count}} % (1000 * 60)) / 1000);
+
+    // document.getElementById("timer_{{count}}").innerHTML = "<span>" + days_{{count}} + "<span class='timer-cal'>Days</span></span> " + "<span>" + hours_{{count}} + "<span class='timer-cal'>Hrs</span></span> " + "<span>" + minutes_{{count}} + "<span class='timer-cal'>Min</span></span> " + "<span>" + seconds_{{count}} + "<span class='timer-cal'>Sec</span></span> ";
+
+    var timer_data_{{count}} = "<span>" + days_{{count}} + "<span class='timer-cal'>Days</span></span> " + "<span>" + hours_{{count}} + "<span class='timer-cal'>Hrs</span></span> " + "<span>" + minutes_{{count}} + "<span class='timer-cal'>Min</span></span> " + "<span>" + seconds_{{count}} + "<span class='timer-cal'>Sec</span></span> ";
+
+    $('.timer_{{count}}').html(timer_data_{{ count }} );
+
+    if (distance_{{count}} < 0) {
+      clearInterval(x);
+      document.getElementById("timer_{{count}}").innerHTML = "EXPIRED";
+                              }
+                              }, 1000);
+
+</script>
+{% endfor %}
+
+<style>
+  {% if section.settings.media_space %}
+  @media (max-width: 991px){
+    section.hot-deal {
+      padding-top: 50px ;
+    }
+  }
+  
+  @media (max-width: 767px){
+section.hot-deal {
+    padding-top: 50px !important;
+}
+    
+    {% endif %}
+</style>
+{% schema %}
+{
+   "name":"Product Tab with slider",
+   "max_blocks":10,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+   {
+         "type":"checkbox",
+         "id":"bottom_space",
+         "default":true,
+         "label":"Enabled Bottom space "
+      },
+    {
+         "type":"checkbox",
+         "id":"media_space",
+         "default":true,
+         "label":"Enabled "
+      },
+ {
+         "type":"checkbox",
+         "id":"enabled_slidercolums",
+         "default":false,
+         "label":"Enabled colum slider "
+      },
+     
+    {
+         "type":"header",
+         "content":"Left Product Sidebar option"
+      },
+      {
+         "type":"text",
+         "id":"title",
+         "label":"Left Sidebar Heading",
+         "default":"Sale"
+      },
+       {
+         "type": "textarea",
+         "id": "trans_title",
+         "label": "Translate Main Title"
+      },
+      {
+         "type":"collection",
+         "id":"sale_collection",
+         "label":"Select Collection"
+      },
+      {
+         "type":"header",
+         "content":"Right Product Tab option"
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Product Tabs Heading",
+         "default":"Today's Hot Deal"
+      },
+      {
+         "type": "textarea",
+         "id": "trans_tab_title",
+         "label": "Today's Hot Deal"
+      },
+      {
+         "type":"checkbox",
+         "id":"display_sale_slider",
+         "label":"Show Sale Slider",
+         "default":true
+      }
+   ],
+   "blocks":[
+      {
+         "type":"Tab",
+         "name":"Tab Collection",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Heading",
+               "default":"Product Tab"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_title",
+               "label": "Heading"
+            },
+            {
+               "type":"collection",
+               "id":"tab_collection",
+               "label":"Select Collection"
+            },
+            {
+               "type":"checkbox",
+               "id":"display_rating",
+               "label":"Show Review rating",
+               "default":true
+            },
+            {
+               "type":"checkbox",
+               "id":"display_desc",
+               "label":"Show Description",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"desc_words",
+               "label":"Description Word Limit",
+               "default":"100"
+            },
+            {
+               "type":"checkbox",
+               "id":"display_timer",
+               "label":"Show Timer",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"timer_title",
+               "label":"Timer Title",
+               "default":"Timer Reminder"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_timer_title",
+               "label": "Timer Title"
+            },
+            {
+               "type":"text",
+               "id":"timer_date",
+               "label":"Timer Date",
+               "default":"Sep 5, 2018",
+               "info":"Ex. Sep 5, 2018"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Product Tab with slider",
+         "category":"Product",
+         "settings":{
+
+         },
+         "blocks":[
+            {
+               "type":"Tab"
+            },
+            {
+               "type":"Tab"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

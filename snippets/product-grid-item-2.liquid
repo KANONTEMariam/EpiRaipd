@@ -1,0 +1,126 @@
+
+  <div class="product-box product-select-box " data-pro-id="{{ product.id }}">
+    <div class="img-block">
+        <a href="{{ product.url | within: collection }}">
+       {% if section.settings.use_equal_height %}
+      <div>
+        <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" 
+              data-bgset="{% include 'bg-set', image: product.featured_image.src  %}" data-sizes="auto" data-parent-fit="cover"
+              style="background-image: url('{{ product.featured_image.src  | img_url: 'master' }}');"></span>
+      </div>        
+      {% else %}
+      {% assign block_image = product.featured_image.src  %}
+      <img src="{{ product.featured_image.src  | img_url: 'master' }}" 
+           class="lazyload   {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid {% if section.settings.img_width == "full" %} w-100{% endif %}" {% if section.settings.img_width == "full" %} w-100{% endif %}alt="{{block_image.alt}}" >
+      {% endif %}
+    </a>
+      <div class="cart-details">
+        {% if settings.show_quickview %}
+        <a class="quick-view" href="#quick-view-product" data-id="{{ product.id }}" data-handle="{{ product.handle }}"  title="Quick View"><i class="ti-search" aria-hidden="true"></i></a>
+        {% endif %}
+        {% if settings.show_compare %}
+        <a href="#" class="compare" data-placement="left" data-pid="{{ product.handle  }}"  title="Compare"><i class="ti-reload" aria-hidden="true"></i></a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="product-info">
+      <div>
+      <a href="{{ product.url | within: collection }}">
+        {% assign data_title = product.title | split: '|' | first %}
+        {% assign data_json = product.title | split: '|' | last %}
+        <h6 itemprop="name" {% if settings.enable_lang_switcher %}class=" lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+          {{ data_title | truncatewords: 2 }}
+        </h6>
+        {% if settings.enable_lang_switcher %}
+        <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+        {% endif %}
+      </a>  
+      {% if settings.eneble_login_price %}
+      {% if customer %}
+      <h5 data-id="{{ product.id }}" data-price="{{ product.price }}">
+        {{ product.price | money }}
+        {% if product.compare_at_price > product.price %}
+        <del>{{ product.variants[0].compare_at_price | money }}</del>
+        {% endif %}
+      </h5>
+      {% else %}
+      <span class="login-price" {% if settings.enable_lang_switcher %}data-trans-key="products.product.login_to_see_price"{%endif%}>{{ 'products.product.login_to_see_price' | t }}</span>
+      {% endif %}
+
+      {% elsif settings.show_catelogue  %}
+      {% if settings.show_catelogue_price %}
+      <h5 data-id="{{ product.id }}" data-price="{{ product.price }}">
+        {{ product.price | money }}
+        {% if product.compare_at_price > product.price %}
+        <del>{{ product.variants[0].compare_at_price | money }}</del>
+        {% endif %}
+      </h5>
+      {% endif %}
+      {% else %}
+      <h5 data-id="{{ product.id }}" data-price="{{ product.price }}">
+        {{ product.price | money }}
+        {% if product.compare_at_price > product.price %}
+        <del>{{ product.variants[0].compare_at_price | money }}</del>
+        {% endif %}
+      </h5>
+      {% endif %}
+      </div>
+      
+    </div>
+    {% if settings.add_cart_btn == 'advanced' %}
+    {% if product.available and product.variants.size > 1 %}
+    <div class="advanced_add_cart select-dropdown">
+      <select name="id" id="productSelect" class="variantsList">
+        {% for variant in product.variants %}
+        {% if variant.available %}
+        <option value="{{ variant.id }}">
+          {{ variant.title }}
+        </option>
+        {% else %}
+        <option disabled="disabled" value="{{ variant.id }}">{{ variant.title }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>     
+      {% if settings.show_catelogue != true %}
+      <form method="post" enctype="multipart/form-data" action="/cart/add" class="product_grid_cart_form_1 hide" id="product_grid_id_{{ product.variants.first.id }}">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}" class="variant_val" />
+        <button  data-toggle="tooltip" data-placement="top" title="Add to cart" class="add_to_cart_btn_cls fly_addtocart" {% unless product.variants[0].available%}disabled{% endunless %}>
+          <i class="ti-shopping-cart" ></i>
+        </button>
+      </form>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endif %}
+
+
+    {% if settings.add_cart_btn == 'advanced' %}
+    {% if settings.show_catelogue != true %}
+    <div class="qty-add-box">
+      <div class="qty-box">
+        <label>qty:</label>
+        <form method="post" enctype="multipart/form-data" action="/cart/add" class="product_grid_cart_form_1 d-flex" id="product_grid_id_{{ product.variants.first.id }}">
+          <div class="input-group">
+            <input type="number" name="quantity" class="form-control input-number" value="1" max="100" min="1">
+          </div>
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}" class="variant_val" />
+          <button  data-toggle="tooltip" data-placement="top" title="Add to cart" class="add_to_cart_btn_cls fly_addtocart" {% unless product.variants[0].available%}disabled{% endunless %}>
+           add <i class="icon-shopping-cart" ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <script>
+        {% if settings.add_cart_btn == 'advanced' %}
+      $(document).ready(function(e) {
+        $('.variantsList').on('change', function() {
+          var _val = $(this).val();
+          $(this).next('.product_grid_cart_form_1').find('.variant_val').val(_val);
+        });
+      });  
+      {% endif %}
+    </script>
+  </div>

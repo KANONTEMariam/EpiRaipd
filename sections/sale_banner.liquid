@@ -1,0 +1,399 @@
+<!--Sale Banner start-->
+{% if section.settings.enabled %}
+<section class="{% if section.settings.enabled_top_space %}section-t-space{% else %} pt-0 {% endif %}section-b-space">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <a href="{{ section.settings.link }}">
+          <div class="banner-effect wow {{ section.settings.animation_style }} {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}" data-wow-delay="{{ section.settings.animation_time }}" >
+
+            {% if section.settings.banner_img == blank %}
+              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+              {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% else %}
+           {% if section.settings.use_equal_height %}
+            <div>
+              <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: section.settings.banner_img %}" data-sizes="auto" data-parent-fit="cover"></span>
+            </div>        
+            {% else %}
+            {% assign block_image = section.settings.banner_img %}
+            {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <img src="{{ block_image | img_url: 'master' }}" 
+                 data-src="{{ img_url }}" 
+                 data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                 data-aspectratio="{{  block_image.aspect_ratio }}" 
+                 data-sizes="auto" 
+                 class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                 width="100%">
+            {% endif %}
+            {% endif %}
+
+            {% if section.settings.info_enabled %}
+              <div class="big-banner-details">
+                <div>
+                  {{ section.settings.title }}
+                  {% if section.settings.subtitle != blank %}
+                  <h6 class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#sale_{{sectionId}}_subtitle"{% endif %}>
+                  {{ section.settings.subtitle }}
+                  </h6>
+                  {% if settings.enable_lang_switcher %}
+                  <span class="hide" id="sale_{{sectionId}}_subtitle">{{ section.settings.trans_subtitle | raw }}</span>
+                  {% endif %}
+                  {% endif %}
+                  <button class="btn btn-dark {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#sale_{{sectionId}}btn_txt"{% endif %}>
+                    {{ section.settings.btn_txt }}
+                  </button>
+                  {% if settings.enable_lang_switcher %}
+                  <span class="hide" id="sale_{{sectionId}}btn_txt">{{ section.settings.trans_subtitle | raw }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+   "name":"Sale banner",
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+      {
+         "type":"checkbox",
+         "id":"enabled_top_space",
+         "default":false,
+         "label":"Enabled Top space"
+      },
+       {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      },
+    {
+         "type":"select",
+         "id":"animation_style",
+         "label":"Animation style",
+         "options":[
+            {
+               "value":"fadeIn",
+               "label":"fadeIn"
+            },
+            {
+               "value":"fadeInDown",
+               "label":"fadeInDown"
+            },
+            {
+               "value":"fadeInLeft",
+               "label":"fadeInLeft"
+            },
+            {
+               "value":"fadeInRight",
+               "label":"fadeInRight"
+            },
+            {
+               "value":"fadeInUp",
+               "label":"fadeInUp"
+            },
+            {
+               "value":"fadeOut",
+               "label":"fadeOut"
+            },
+            {
+               "value":"fadeOutDown",
+               "label":"fadeOutDown"
+            },
+            {
+               "value":"fadeOutLeft",
+               "label":"fadeOutLeft"
+            },
+            {
+               "value":"fadeOutRight",
+               "label":"fadeOutRight"
+            },
+            {
+               "value":"fadeOutUp",
+               "label":"fadeOutUp"
+            },
+            {
+               "value":"lightSpeedIn",
+               "label":"lightSpeedIn"
+            },
+            {
+               "value":"lightSpeedOut",
+               "label":"lightSpeedOut"
+            },
+            {
+               "value":"rotateIn",
+               "label":"rotateIn"
+            },
+            {
+               "value":"rotateOut",
+               "label":"rotateOut"
+            },
+            {
+               "value":"slideInUp",
+               "label":"slideInUp"
+            },
+            {
+               "value":"slideInDown",
+               "label":"slideInDown"
+            },
+            {
+               "value":"slideInLeft",
+               "label":"slideInLeft"
+            },
+            {
+               "value":"slideInRight",
+               "label":"slideInRight"
+            },
+            {
+               "value":"slideOutUp",
+               "label":"slideOutUp"
+            },
+            {
+               "value":"slideOutDown",
+               "label":"slideOutDown"
+            },
+            {
+               "value":"slideOutLeft",
+               "label":"slideOutLeft"
+            },
+            {
+               "value":"slideOutRight",
+               "label":"slideOutRight"
+            },
+            {
+               "value":"zoomInUp",
+               "label":"zoomInUp"
+            },
+            {
+               "value":"hinge",
+               "label":"hinge"
+            },
+            {
+               "value":"jackInTheBox",
+               "label":"jackInTheBox"
+            },
+            {
+               "value":"pulse",
+               "label":"pulse"
+            }
+           ],
+         "default":"slideInUp"
+      },
+      {
+           "type":"select",
+           "id":"animation_time",
+           "label":"Animation Time",
+           "options":[
+              {
+                 "value":"0.1s",
+                 "label":"0.1s"
+              },
+              {
+                 "value":"0.3s",
+                 "label":"0.3s"
+              },
+              {
+                 "value":"0.5s",
+                 "label":"0.5s"
+              },
+              {
+                 "value":"1s",
+                 "label":"1s"
+              },
+              {
+                 "value":"1.5s",
+                 "label":"1.5s"
+              },
+              {
+                 "value":"2s",
+                 "label":"2s"
+              },
+              {
+                 "value":"2.5s",
+                 "label":"2.5s"
+              },
+              {
+                 "value":"3s",
+                 "label":"3s"
+              },
+              {
+                 "value":"3.5s",
+                 "label":"3.5s"
+              },
+              {
+                 "value":"4s",
+                 "label":"4s"
+              }
+           ],
+           "default":"0.5s"
+      },
+      {
+         "type":"image_picker",
+         "id":"banner_img",
+         "label":"Banner Image",
+         "info":"Please use 1570x330px size"
+      },
+      {
+         "type":"checkbox",
+         "id":"info_enabled",
+         "default":true,
+         "label":"Info Show/Hide"
+      },
+      {
+         "type":"html",
+         "id":"title",
+         "label":"Custom Html",
+         "default":"<h1><span>Home</span> Appliance </h1>"
+      },
+      {
+         "type":"text",
+         "id":"subtitle",
+         "label":"Subtitle",
+         "default":"Summer Sale"
+      },
+       {
+         "type": "textarea",
+         "id": "trans_subtitle",
+         "label": "Translate Title"
+      },
+      {
+         "type":"text",
+         "id":"btn_txt",
+         "label":"Button Text",
+         "default":"Shop Now"
+      },
+       {
+         "type": "textarea",
+         "id": "trans_btn_txt",
+         "label": "Translate Button"
+      },
+      {
+         "type":"url",
+         "id":"link",
+         "label":"Banner link"
+      }
+   ],
+   "presets":[
+      {
+         "name":"Sale banner",
+         "category":"Banner",
+         "settings":{
+
+         }
+      }
+   ]
+}
+{% endschema %}

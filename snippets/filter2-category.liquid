@@ -1,0 +1,70 @@
+<div class="collection-filter-block">
+  <!-- brand filter start -->
+  <div class="collection-mobile-back">
+    <span class="filter-back">
+      <i class="fa fa-angle-left" aria-hidden="true"></i> back
+    </span>
+  </div>
+
+  {% if settings.filter_by_category_enable %}
+  <div class="category-block collection-collapse-block open ">
+    <h3 class="collapse-block-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#coll_sidebar_filter_category_title"{% endif %}>
+          Pages
+        </h3>
+        {% if settings.enable_lang_switcher %}
+        <span class="hide" id="coll_sidebar_filter_category_title">{{settings.trans_filter_category_title | raw }}</span>
+        {% endif %}
+        <div class="collection-collapse-block-content" style="">
+      <div class="collection-brand-filter">
+        <!--div class="collection-category-list">
+          <ul class="sidebar_category" id="category_filters">
+            {% for collection in collections limit: settings.collection_category_limit %}
+            <li data-value="{{ collection.handle }}" data-link-collection>
+               {% assign data_title =  collection.title  | split: '|' | first %}
+                  {% assign data_json =  collection.title | split: '|' | last %}
+                  <a href="{{ collection.url }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#coll_sidebar_{{collection.id}}_collection_title"{% endif %}>
+                    {{ data_title | truncatewords: 10 }}
+                  </a>
+                  {% if settings.enable_lang_switcher %}
+                  <span class="hide" id="coll_sidebar_{{collection.id}}_collection_title">{{ data_json | raw }}</span>
+                  {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          </div-->
+          <ol  class="sidebar_category" style="padding-left:0px;">
+    <li >
+      <a href="/" style="padding-left:0px;font-size:13px;">
+        Accueil
+      </a>
+    </li>
+        <br>
+    {% if template == 'collection' %}
+    <li >
+      
+      <a href="" style="padding-left:10px;font-size:13px;">
+        Produit
+      </a>
+      
+    </li>
+        <br>
+
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page" class="hide" style="text-transform: capitalize;padding-left:20px;">
+      {% if template == 'collection' %}
+      {{ collection.title | truncatewords: 10  }}
+      {{ page.title }}
+      {% endif %}
+    </li>
+  </ol>
+        
+        
+      </div>
+          
+    </div>
+    
+      
+  </div>
+  {% endif %}
+
+</div>

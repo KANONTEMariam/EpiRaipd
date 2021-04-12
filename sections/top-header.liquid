@@ -1,0 +1,137 @@
+{% if section.settings.enabled %}
+<div class="container-fluid p-0 top-transparent">
+  <div class="top-header top-header-layout-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 header-contact">
+          <ul>
+            {% if section.settings.announcement_text != blank %}
+            <li {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#top_header{{sectionId}}_announcement_text"{% endif %}>
+              {{ section.settings.announcement_text }}
+            </li>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="top_header{{sectionId}}_announcement_text">{{ section.settings.trans_announcement_text | raw }}</span>
+            {% endif %}
+            {% endif %}
+            {% if section.settings.phone_number != blank %}
+            <li><i class="fa fa-phone" aria-hidden="true" style="color:black;"></i>
+              <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#top_header{{sectionId}}_phone_number"{% endif %}>
+                {{ section.settings.phone_number }}
+              </span>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="top_header{{sectionId}}_phone_number">{{ section.settings.trans_phone_number | raw }}</span>
+              {% endif %}
+            </li>
+            {% endif %}
+
+          </ul>
+        </div>
+        <div class="col-lg-6 text-right">
+          <ul class="header-dropdown" >
+            {% if section.settings.show_currency_picker %}
+            {% include 'currency-picker' %}
+            {% endif %}
+            {% if section.settings.show_language_picker %}
+            <li class="onhover-dropdown">
+              <span>Langue</span> 
+              <ul class="onhover-show-div" id="translate" style="text-align: left;">
+                {% include 'language-picker' %}
+              </ul>
+            </li>
+            {% endif %}
+            {% if settings.show_catelogue != true %}
+            <li class="onhover-dropdown">
+              <i class="fa fa-user" aria-hidden="true" style="color:black;padding-right:0px;"></i>
+              <span {% if settings.enable_lang_switcher %}data-trans-key="customer.account.title"{%endif%}>{{ 'customer.account.title' | t }}</span>
+              <ul class="onhover-show-div" style="text-align: left;">
+                <li>
+                  {% if customer %}
+                  <a class="langecolor" href="/account/logout" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.log_out"{%endif%}>
+                    Déconnexion
+                  </a>
+                  {% else %}
+                  <a class="langecolor" href="/account/login" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.log_in"{%endif%}>
+                    Connexion
+                  </a>
+                  {% endif %}
+                </li>
+                <li>
+                  {% if customer %}
+                  <a class="langecolor" href="/account" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.account"{%endif%}>
+                    Compte
+                  </a>
+                  {% else %}
+                  <a class="langecolor" href="/account/register" {% if settings.enable_lang_switcher %}data-trans-key="layout.customer.create_account"{%endif%}>
+                   		Inscription
+                  </a>
+                  {% endif %}
+                </li>
+              </ul>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+   "name":"Top Header",
+   "settings":[
+      {
+         "type":"header",
+         "content":"Announcement Bar"
+      },
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "label":"Enabled",
+         "default":true
+      },
+      {
+         "type":"text",
+         "id":"announcement_text",
+         "label":"Announcement text",
+         "default":"Announce something here"
+      },
+        {  
+         "type":"textarea",
+         "id":"trans_announcement_text",
+         "label":"Translate Announcement text"
+      },
+    
+      {
+         "type":"text",
+         "id":"phone_number",
+         "label":"Contact Number",
+         "default":"CALL US: 123-456-7890"
+      },
+       {  
+         "type":"textarea",
+         "id":"trans_phone_number",
+         "label":"Translate Contact Number"
+      },
+      {
+         "type":"checkbox",
+         "id":"show_currency_picker",
+         "label":"Show currency picker",
+         "default":true
+      },
+      {
+         "type":"checkbox",
+         "id":"show_language_picker",
+         "label":"Show Language Change",
+         "default":false
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

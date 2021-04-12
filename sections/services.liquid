@@ -1,0 +1,146 @@
+<!--small section start-->
+{% if section.settings.enabled %}
+  <div class="container services-box {% if template != 'index' %} main-service {% endif %}">
+    <section class="sub-section  ">
+      <div class="row">
+        {% for block in section.blocks %}
+        {% if block.settings.services_image == blank %}
+        <div class="col service-block">
+          <div class="media 123">
+            <img src="{{ 'service-placeholder.png' | asset_url }}" class="img-fluid" alt="{{ block.settings.services_title }}"/>
+            <div class="align-self-center media-body">
+            {% if block.settings.services_title != blank %}
+              <h4 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_title"{% endif %}>
+                {{ block.settings.services_title }}
+              </h4>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="service1_{{blockId}}_services_title">{{ block.settings.trans_services_title | raw }}</span>
+              {% endif %}
+            {% endif %}
+            {% if block.settings.services_desc != blank %}
+            <p {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_desc"{% endif %}>
+                {{ block.settings.services_desc }}
+              </p>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="service1_{{blockId}}_services_desc">{{ block.settings.trans_services_desc | raw }}</span>
+              {% endif %}
+            {% endif %}
+          </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="col service-block">
+          <div class="media">
+            <div class="new">
+               <div class="text-center">
+                <img src="{{ block.settings.services_image | img_url: '48x' }}" class="img-fluid new-img" alt="{{ block.settings.services_title }}"/>
+              </div>
+            </div>
+            <div class="align-self-center media-body">
+               {% if block.settings.services_title != blank %}
+              <h4 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_title"{% endif %}>
+                {{ block.settings.services_title }}
+              </h4>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="service1_{{blockId}}_services_title">{{ block.settings.trans_services_title | raw }}</span>
+              {% endif %}
+            {% endif %}
+            {% if block.settings.services_desc != blank %}
+            <p {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_desc"{% endif %}>
+                {{ block.settings.services_desc }}
+              </p>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="service1_{{blockId}}_services_desc">{{ block.settings.trans_services_desc | raw }}</span>
+              {% endif %}
+            {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+{% endif %}
+<!--small section ends-->
+
+{% schema %}
+{
+   "name":"Services",
+   "max_blocks":5,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled"
+      }
+   ],
+   "blocks":[
+      { 
+         "type":"Service",
+         "name":"Service",
+         "settings":[            
+	     		{
+               "type":"image_picker",
+               "id":"services_image",
+               "label":"Collection Image (61x52)"
+            },
+            {
+               "type":"text",
+               "id":"services_title",
+               "label":"Services Title",
+               "default":"free shipping"
+            },
+            {
+               "type":"textarea",
+               "id":"trans_services_title",
+               "label":"Transalate Services Title"
+            },
+
+            {
+               "type":"text",
+               "id":"services_desc",
+               "label":"Services Description",
+               "default":"World Wide Shipping"
+            },
+            {
+               "type":"textarea",
+               "id":"trans_services_desc",
+               "label":"Transalate Services Desc"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Services",
+         "category":"Services",
+         "blocks":[
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

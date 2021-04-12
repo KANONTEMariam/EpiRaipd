@@ -1,0 +1,64 @@
+{% if settings.show_new_pro %}
+<div class="theme-card">
+      <h2 class="title" {% if settings.enable_lang_switcher %}data-trans="#coll_sidebar_filter_new_pro_title"{% endif %}>
+        {{settings.filter_new_pro_title }}
+      </h2>
+      {% if settings.enable_lang_switcher %}
+        <span class="title hide" id="coll_sidebar_filter_new_pro_title">{{ settings.trans_filter_new_pro_title | raw }}</span>
+      {% endif %}
+      {% assign collection_new = collections[settings.select_new_pro_coll] %}
+  <div class="offer-slider slide-1 theme-slider">
+    <div>
+      {% for product in collection_new.products limit:4 %}   
+      {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+      {% if thecycle == 'odd' %}
+      <div class="media">
+        <img class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" src="{{ product.featured_image | img_url:'125x' }}" alt="{{ product.title | split: '|' | first }}">
+
+        <div class="media-body align-self-center">
+            <a href="{{ product.url | within: collection }}">
+                {% assign data_title = product.title | split: '|' | first %}
+                {% assign data_json = product.title | split: '|' | last %}
+                <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                  {{ data_title | truncatewords: 10 }}
+                </h6>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+                {% endif %}
+              </a>
+          <h4>{{ product.price | money }}</h4>  
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div>
+      {% for product in collection_new.products limit:4 %}                          
+      {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+      {% if thecycle == 'even' %}
+       <div class="media">
+        <img class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" src="{{ product.featured_image | img_url:'125x' }}" alt="{{ product.title | split: '|' | first }}">
+
+        <div class="media-body align-self-center">
+          <a href="{{ product.url | within: collection }}">
+           {% assign data_title = product.title | split: '|' | first %}
+                {% assign data_json = product.title | split: '|' | last %}
+                <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                  {{ data_title | truncatewords: 10 }}
+                </h6>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+            {% endif %}
+          </a>
+          <h4>{{ product.price | money }}</h4>  
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="text-right pb-3">
+    <a href="{{ collection_new.url }}" {% if settings.enable_lang_switcher %}data-trans-key="collections.general.view_more"{%endif%}>{{collections.general.view_more}}</a>
+  </div>
+</div>
+{% endif %}

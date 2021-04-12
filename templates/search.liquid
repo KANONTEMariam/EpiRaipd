@@ -1,0 +1,62 @@
+<section>
+  <div class="container">
+    <div class="row inner-page-header ">
+      <div class="col-sm-6">
+        <h2 class="title title-borderless title-layout-2 mb-0 p-0">{{ 'general.search.title' | t  }}</h2>
+      </div>
+      <div class="col-sm-6">
+        {% include 'breadcrumb' %}
+      </div>
+    </div>
+  </div>
+</section>
+<!--Breadcrumb ends-->
+
+<!--Search block Start-->
+<section class="search-block">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <form class="form-header" action="/search" method="get" role="search">
+          <div class="input-group mb-3">
+            <input type="search" class="form-control" name="q" aria-label="Amount (to the nearest dollar)" placeholder="Search Products......">
+            <div class="input-group-append">
+              <button class="btn btn-theme">
+                <i class="fa fa-search"></i>Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Search block Ends-->
+
+<!--Search product start-->
+{% if search.performed and search.results_count == 0 %}
+<h3 class="text-center section-t-space  text-muted">
+  <i class="icon-info-alt mr-2"></i>{{ 'general.search.no_results_html' | t: terms: search.terms }}
+</h3>
+{% endif %}
+
+{% if search.results_count != 0  %}
+<section class="search-page section-b-space">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row" >
+          {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+          <div class="col-xl-2 p-0 col-md-4 col-sm-6">
+            {% include 'grid-layout' , product: item %}
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!--Search product ends-->

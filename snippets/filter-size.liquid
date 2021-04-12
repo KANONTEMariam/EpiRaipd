@@ -1,0 +1,26 @@
+{% if settings.filter_by_size_enable %}
+<div class="collection-collapse-block open">
+  {% assign sizes = settings.filter_by_size_option | split: ',' -%}
+  
+        <h3 class="collapse-block-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#coll_sidebar_filter_size_title"{% endif %}>
+          {{ settings.filter_size_title }}
+        </h3>
+        {% if settings.enable_lang_switcher %}
+        <span class="hide" id="coll_sidebar_filter_size_title">{{ settings.trans_filter_size_title | raw }}</span>
+        {% endif %}
+  <div class="collection-collapse-block-content" style="">
+    <div class="collection-brand-filter">
+      <ul class="sidebar_filter_cls sidebar_size">
+        {% for size in sizes limit: settings.size_category_limit %}
+        <li data-value="{{ size | handleize }}" data-link-collection>
+          <div class="custom-control custom-checkbox collection-filter-checkbox">
+            <input type="checkbox" class="custom-control-input" id="{{ size | handleize }}" data-value="{{ size | handleize }}" data-link-collection>
+            <label class="custom-control-label" for="{{ size | handleize }}">{{ size }}</label>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}

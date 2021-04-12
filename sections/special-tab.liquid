@@ -1,0 +1,383 @@
+<!--Section two start-->
+{% if section.settings.enabled %}
+{% case section.settings.product_per_row %}
+{% when '4' %}
+{% assign column_grid_width = 'slide-4' -%}
+{% when '5' %}
+{% assign column_grid_width = 'slide-5' -%}
+{% when '6' %}
+{% assign column_grid_width = 'slide-6' -%}
+{% when '7' %}
+{% assign column_grid_width = 'slide-7' -%}
+{% endcase %}
+<section class=" mb-0 {% if section.settings.bottom_space %} section-b-space {% endif %}">
+  <div class="container">
+    <div class=" col-xl-12  col-md-12">
+      <div class=" hot-deal-right-layout-2">
+        {% if section.settings.tab_title != "blank" %}
+        <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+          {{ section.settings.tab_title }}
+        </h2>
+        {% if settings.enable_lang_switcher %}
+        <span class="hide" id="hot_deal{{sectionId}}trans_tab_title">{{ section.settings.trans_tab_title | raw }}</span>
+        {% endif %}
+        {% endif %}
+        <div class="theme-tab theme-tab-layout-2">
+          <ul class="tabs tabs-new  best-product">
+            {% for block in section.blocks %}
+            {% if block.type == 'Tab'  %}
+            {% assign collection = collections[block.settings.tab_collection] %}
+            {% if collection.empty? %}
+            <li  {% if forloop.first == true %}class="current"{% endif %} >
+              <a href="tab-new-{{forloop.index}}-tab-new" {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.collection_title"{%endif%} >{{ 'homepage.onboarding.collection_title' | t }}</a>
+            </li>
+            {% else %}
+            <li {% if forloop.first == true %} class="current" {% endif %}>
+              <a href="tab-new-{{forloop.index}}-tab-new" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#tab_slidr_{{blockId}}_title"{% endif %}>{{ block.settings.title }}</a>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="tab_slidr_{{blockId}}_title">{{ block.settings.trans_title | raw }}</span>
+              {% endif %}
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+            <div class="tab-content-cls">
+              {% assign count = 0 %}
+              {% for block in section.blocks %}
+              {% if block.type == 'Tab'  %}
+              {% assign collection = collections[block.settings.tab_collection] %}
+              {% assign pro_limit =  section.settings.product_limit %}
+
+              {% assign count = count | plus: 1 %}
+              <div id="tab-new-{{ forloop.index }}-tab-new" class="tab-content default" >
+                 <div class="tab_product_slider theme-slider" data-slick='{"slidesToShow": {{ section.settings.slidetoshow }},"slidesToScroll": 1, "autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}}, "responsive":[{"breakpoint": 1367,"settings":{"slidesToShow": {{ section.settings.slidetoshow_1367}} }},{"breakpoint": 1024,"settings":{"slidesToShow": {{ section.settings.slidetoshow_1024}} }},{"breakpoint": 767,"settings":{"slidesToShow": {{ section.settings.slidetoshow_767}} }},{"breakpoint": 420,"settings":{"slidesToShow": {{ section.settings.slidetoshow_420}} }} ]}' >
+
+                  {% if collection.empty? %}
+                  {% capture current %}{% cycle 1,2,3,4,1,2 %}{% endcapture %}
+                  {% for i in (1..4) %}
+
+                  <div class="inner-slide">
+                    <div class="media">
+                      <a href="#">
+                        {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                      </a>
+                      <div class="media-body align-self-center">
+                        <div class="product-details">
+                          <a href="#">
+                            <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6> 
+                          </a>                          
+                          <div class="rating three-star">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                          </div>                          
+                          <h2>{{ '$20.00' }}</h2>
+                          <p>{{ '$20.00' }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% endfor %}
+                  {% else %}
+                  {% for product in collection.products %}
+                  <div>
+                    {% include  'grid-layout' %}
+                  </div>                 
+                  {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endif %}
+<!--Section two ends-->
+
+<style>
+  {% if section.settings.media_space %}
+  @media (max-width: 991px){
+    section.hot-deal {
+      padding-top: 50px ;
+    }
+  }
+  
+  @media (max-width: 767px){
+section.hot-deal {
+    padding-top: 50px !important;
+}
+    
+    {% endif %}
+</style>
+{% schema %}
+{
+   "name":"Product Tab  slider",
+   "max_blocks":10,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+   {
+         "type":"checkbox",
+         "id":"bottom_space",
+         "default":true,
+         "label":"Enabled Bottom space "
+      },
+    {
+         "type":"checkbox",
+         "id":"media_space",
+         "default":true,
+         "label":"Enabled "
+      },
+ {
+         "type":"checkbox",
+         "id":"enabled_slidercolums",
+         "default":false,
+         "label":"Enabled colum slider "
+      },
+     
+   
+      {
+         "type":"header",
+         "content":"Right Product Tab option"
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Product Tabs Heading",
+         "default":"Today's Hot Deal"
+      },
+      {
+         "type": "textarea",
+         "id": "trans_tab_title",
+         "label": "Today's Hot Deal"
+      },
+      {
+         "type":"checkbox",
+         "id":"display_sale_slider",
+         "label":"Show Sale Slider",
+         "default":true
+      },
+{
+      "type": "header",
+      "content": "Slider settings( Only for Carousel layout )"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Autoplay Speed in milliseconds",
+      "unit": "sec",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "use_autoplay",
+      "label": "Use autoplay?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_arrows",
+      "label": "Use Arrows?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_dots",
+      "default": false,
+      "label": "Use dots for pagination control?"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_loop",
+      "label": "Use Infinite loop sliding?",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "slides To Show(Image per row)",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Breakpoint: 1367"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_1367",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Breakpoint: 1024"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_1024",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "breakpoint: 767"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_767",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "breakpoint: 420"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_420",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 1
+    }
+   ],
+   "blocks":[
+      {
+         "type":"Tab",
+         "name":"Tab Collection",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Heading",
+               "default":"Product Tab"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_title",
+               "label": "Heading"
+            },
+            {
+               "type":"collection",
+               "id":"tab_collection",
+               "label":"Select Collection"
+            },
+            {
+               "type":"checkbox",
+               "id":"display_rating",
+               "label":"Show Review rating",
+               "default":true
+            },
+            {
+               "type":"checkbox",
+               "id":"display_desc",
+               "label":"Show Description",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"desc_words",
+               "label":"Description Word Limit",
+               "default":"100"
+            },
+     
+{
+         "type":"select",
+         "id":"product_limit",
+         "label":"Product Limit",
+         "options":[
+            {
+                "label":"8",
+                "value":"8"
+            },
+            {
+                "label":"12",
+                "value":"12"
+            },
+            {
+                "label":"18",
+                "value":"18"
+            }
+        ],
+        "default":"8"
+      },
+      {
+         "type":"select",
+         "id":"product_per_row",
+         "label":"Product Per Row",
+         "options":[
+            {
+                "label":"4",
+                "value":"4"
+            },
+            {
+                "label":"5",
+                "value":"5"
+            },
+            {
+                "label":"6",
+                "value":"6"
+            },
+            {
+                "label":"7",
+                "value":"7"
+            }
+        ],
+        "default":"6"
+      }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Product Tab  slider",
+         "category":"Product",
+         "settings":{
+
+         },
+         "blocks":[
+            {
+               "type":"Tab"
+            },
+            {
+               "type":"Tab"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

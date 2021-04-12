@@ -1,0 +1,467 @@
+<!--Blog start-->
+{% if section.settings.enabled %}
+{% assign blog = blogs[section.settings.blog] -%}
+
+{% case section.settings.product_per_row %}
+{% when '3' %}
+{% assign column_grid_width = 'slide-3' -%}
+{% when '4' %}
+{% assign column_grid_width = 'slide-4' -%}
+{% endcase %}
+
+<section class="blog {% if section.settings.top_space == false %} pt-0 {% endif %} {% if section.settings._bottom_space %} section-b-space {% endif %}  {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+  <div class="container">
+    <div class="row wow {{ section.settings.animation_style }}" data-wow-delay="{{ section.settings.animation_time }}">
+      <div class="col-sm-12">
+         <h2 class="title title-4 title-borderless {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#blog_{{sectionId}}_title"{% endif %}>
+            {{ section.settings.title }}
+          </h2>
+          {% if settings.enable_lang_switcher %}
+          <span class="hide" id="blog_{{sectionId}}_title">{{ section.settings.trans_title | raw }}</span>
+          {% endif %}
+        
+        <div class="{{ column_grid_width }} theme-slider row" >
+          
+          {% if blog.title == blank %}
+          {% for i in (1..6) %}
+          <div class="col-md-12">
+            <a href="#">
+              <div class="banner-effect banner-effect-layout-4">
+                {% capture current %}{% cycle 1,2,3,4,1,2 %}{% endcapture %}
+                {{ 'collection-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+              </a>
+            <div class="blog-details">
+              <h6>{{ '30 dec, 2016' }} , {{ '0 comments' }}</h6>
+              <a href="#">
+                <h4>
+                  {{ 'Blog post' }}
+                </h4>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          {% for article in blog.articles limit: section.settings.post_limit %}
+          <div class="col-md-12">
+            <a href="{{ article.url }}">
+              <div class="banner-effect banner-effect-layout-4">
+                {% if section.settings.use_equal_height %}
+                <div>
+                  <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: article.image %}" data-sizes="auto" data-parent-fit="cover"></span>
+                </div>        
+              {% else %}
+           
+             {% assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <img src="{{ article.image | img_url: 'master' }}" 
+                 data-src="{{ img_url }}" 
+                 data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                 data-aspectratio="{{   article.image.aspect_ratio }}" 
+                 data-sizes="auto" 
+                 class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                 >
+                 {% endif %}
+              </div>
+            </a>
+            <div class="blog-details">
+              <h6>
+                {% if section.settings.blog_show_date %}
+                {{ article.published_at | time_tag: '%d %b, %Y' }}
+                {% endif %}
+                {% if section.settings.show_comment %}
+                , {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                {% endif %}
+              </h6>
+               <a href="{{ article.url }}">
+                   {% assign data_title = article.title | split: '|' | first %}
+                {% assign data_json = article.title | split: '|' | last %}
+                <h4 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{article.id}}_blog_title"{% endif %}>
+                  {{ data_title | truncatewords: 12 }}
+                </h4>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="{{article.id}}_blog_title">{{ data_json | raw }}</span>
+                {% endif %}
+                </a>
+            </div>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!--Blog ends-->
+
+{% schema %}
+{
+   "name":"Featured Blog",
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+   {
+         "type":"checkbox",
+         "id":"top_space",
+         "default":true,
+         "label":"Enabled Top space "
+      },
+ {
+         "type":"checkbox",
+         "id":"bottom_space",
+         "default":true,
+         "label":"Enabled Bottom space "
+      },
+      {
+         "type":"select",
+         "id":"animation_style",
+         "label":"Animation style",
+         "options":[
+            {
+               "value":"fadeIn",
+               "label":"fadeIn"
+            },
+            {
+               "value":"fadeInDown",
+               "label":"fadeInDown"
+            },
+            {
+               "value":"fadeInLeft",
+               "label":"fadeInLeft"
+            },
+            {
+               "value":"fadeInRight",
+               "label":"fadeInRight"
+            },
+            {
+               "value":"fadeInUp",
+               "label":"fadeInUp"
+            },
+            {
+               "value":"fadeOut",
+               "label":"fadeOut"
+            },
+            {
+               "value":"fadeOutDown",
+               "label":"fadeOutDown"
+            },
+            {
+               "value":"fadeOutLeft",
+               "label":"fadeOutLeft"
+            },
+            {
+               "value":"fadeOutRight",
+               "label":"fadeOutRight"
+            },
+            {
+               "value":"fadeOutUp",
+               "label":"fadeOutUp"
+            },
+            {
+               "value":"lightSpeedIn",
+               "label":"lightSpeedIn"
+            },
+            {
+               "value":"lightSpeedOut",
+               "label":"lightSpeedOut"
+            },
+            {
+               "value":"rotateIn",
+               "label":"rotateIn"
+            },
+            {
+               "value":"rotateOut",
+               "label":"rotateOut"
+            },
+            {
+               "value":"slideInUp",
+               "label":"slideInUp"
+            },
+            {
+               "value":"slideInDown",
+               "label":"slideInDown"
+            },
+            {
+               "value":"slideInLeft",
+               "label":"slideInLeft"
+            },
+            {
+               "value":"slideInRight",
+               "label":"slideInRight"
+            },
+            {
+               "value":"slideOutUp",
+               "label":"slideOutUp"
+            },
+            {
+               "value":"slideOutDown",
+               "label":"slideOutDown"
+            },
+            {
+               "value":"slideOutLeft",
+               "label":"slideOutLeft"
+            },
+            {
+               "value":"slideOutRight",
+               "label":"slideOutRight"
+            },
+            {
+               "value":"zoomIn",
+               "label":"zoomIn"
+            },
+            {
+               "value":"hinge",
+               "label":"hinge"
+            },
+            {
+               "value":"jackInTheBox",
+               "label":"jackInTheBox"
+            },
+            {
+               "value":"pulse",
+               "label":"pulse"
+            }
+           ],
+         "default":"slideInUp"
+      },
+      {
+           "type":"select",
+           "id":"animation_time",
+           "label":"Animation Time",
+           "options":[
+              {
+                 "value":"0.1s",
+                 "label":"0.1s"
+              },
+              {
+                 "value":"0.3s",
+                 "label":"0.3s"
+              },
+              {
+                 "value":"0.5s",
+                 "label":"0.5s"
+              },
+              {
+                 "value":"1s",
+                 "label":"1s"
+              },
+              {
+                 "value":"1.5s",
+                 "label":"1.5s"
+              },
+              {
+                 "value":"2s",
+                 "label":"2s"
+              },
+              {
+                 "value":"2.5s",
+                 "label":"2.5s"
+              },
+              {
+                 "value":"3s",
+                 "label":"3s"
+              },
+              {
+                 "value":"3.5s",
+                 "label":"3.5s"
+              },
+              {
+                 "value":"4s",
+                 "label":"4s"
+              }
+           ],
+           "default":"0.5s"
+      },
+      {
+         "type":"text",
+         "id":"title",
+         "label":"Heading",
+         "default":"Blog posts"
+      },
+      {
+         "type": "textarea",
+         "id": "trans_title",
+         "label": "Translate Title"
+      },
+      {
+         "id":"blog",
+         "type":"blog",
+         "label":"Blog"
+      },
+      {
+         "type":"select",
+         "id":"product_per_row",
+         "label":"Product Per Row",
+         "options":[
+            {
+               "label":"3",
+               "value":"3"
+            },
+            {
+               "label":"4",
+               "value":"4"
+            }
+         ],
+         "default":"4"
+      },
+      {
+         "type":"select",
+         "id":"post_limit",
+         "label":"Posts limit",
+         "default":"5",
+         "options":[
+            {
+               "value":"4",
+               "label":"4"
+            },
+            {
+               "value":"5",
+               "label":"5"
+            },
+            {
+               "value":"6",
+               "label":"6"
+            }
+         ]
+      },
+      {
+         "type":"checkbox",
+         "id":"show_comment",
+         "label":"Show Comment",
+         "default":false
+      },
+      {
+         "type":"checkbox",
+         "id":"blog_show_date",
+         "label":"Show date",
+         "default":true
+      },
+       {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      }
+   ],
+   "presets":[
+      {
+         "name":"Featured Blog",
+         "category":"Blog",
+         "settings":{
+
+         }
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

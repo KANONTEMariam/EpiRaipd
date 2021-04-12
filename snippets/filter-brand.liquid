@@ -1,0 +1,26 @@
+{% if settings.filter_by_brand_enable %}
+<div class="collection-collapse-block open">
+  {% assign vendors = settings.brand_options | split: ',' -%}
+  <h3 class="collapse-block-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#coll_sidebar_filter_category_title"{% endif %}>
+    {{settings.filter_brand_title }}
+  </h3>
+  {% if settings.enable_lang_switcher %}
+  <span class="hide" id="coll_sidebar_filter_category_title">{{ settings.trans_filter_brand_title | raw }}</span>
+  {% endif %}
+  <div class="collection-collapse-block-content" style="">
+    <div class="collection-brand-filter">
+      <ul class="sidebar_filter_cls sidebar_brand">
+        {% for product_vendor in vendors limit: settings.filter_brand_limit %}
+        {% assign vendor = product_vendor | lstrip | rstrip -%}
+        <li data-value="{{ vendor | handleize }}" data-link-collection>
+            <div class="custom-control custom-checkbox collection-filter-checkbox">
+              <input type="checkbox" class="custom-control-input" id="{{ vendor | handleize }}" data-value="{{ vendor | handleize }}" data-link-collection>
+              <label class="custom-control-label" for="{{ vendor | handleize }}">{{ vendor }}</label>
+            </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}

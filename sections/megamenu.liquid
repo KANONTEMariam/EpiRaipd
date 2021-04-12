@@ -1,0 +1,1321 @@
+
+<!-- Megamenu -->
+<div class=" mega-header  bottom-header bottom-hedaer-layout3 sticky">
+  <div class="container">
+    <div class="row">
+      {% if section.settings.v_menu_enable %}
+      <div class="col nav-block">
+        <div class="nav-left" >
+          <nav class="navbar black-bg">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-icon"><i class="fa fa-caret-down"></i></span>
+            </button>
+           <h5 class="mb-0 ml-3 text-white {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#section{{sectionId}}_v_menu_text"{% endif %}>
+                {{ section.settings.v_menu_text }}
+               </h5>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="section{{sectionId}}_v_menu_text">{{ section.settings.trans_v_menu_text | raw }}</span>
+           {% endif %} 
+          </nav>
+          <div class="collapse" id="navbarToggleExternalContent">
+            <ul class="nav-cat">
+              {% for block in section.blocks %}
+              {% if block.type == 'verticle-menu'  %}
+              <li> 
+                <div>
+                  <img src="{{ block.settings.v_menu_img | img_url: '32x' }}" alt="{{ image.alt }}">
+                </div>
+                 <a href="{{ block.settings.v_menu_url }}"   {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#header1_{{blockId}}v_menu_name"{% endif %}>
+                           {{ block.settings.v_menu_name }}
+                  </a>
+                   {% if settings.enable_lang_switcher %}
+                     <span class="hide" id="header1_{{blockId}}v_menu_name"> {{ block.settings.trans_v_menu_name }}</span>
+                    {% endif %}
+              </li>
+              {% endif %}
+              {% endfor %}
+              <li class="text-right">
+              <a href="{{ section.settings.v_view_more_link }}" class="color-font  {% if settings.enable_lang_switcher %}lang_trans
+                  {% endif %} "  {% if settings.enable_lang_switcher %} data-trans="#megamenu{{sectionId}}trans_more_cat" {% endif %} >
+                    
+                    {{section.settings.v_view_more}}
+                  </a>
+                  {% if settings.enable_lang_switcher %}
+                     <span class="hide" id="#megamenu{{sectionId}}trans_more_cat">{{ section.settings.trans_more_cat | raw }}</span>
+                    {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      {% endif %}
+
+      {% if section.settings.h_menu_enable %}
+      <div class="col-xl-7 pl-5">
+          <div class="menu-block">
+           <nav id="main-nav">
+              <!-- Sample menu definition -->
+              <div class="toggle-nav">
+                <i class="icon-menu"></i>
+                <span class="title-menu-mobile"></span>
+              </div>
+             <ul id="main-menu" class="sm sm-blue">
+                <li>
+                  <div class="menu-mobile-back text-right">
+                    Back<i class="fa fa-angle-right pl-2" aria-hidden="true"></i>
+                  </div>
+                </li>
+                {% for block in section.blocks %}
+                {% if block.type == 'parent-item' %}
+                <li>
+                  <a href="{{ block.settings.menu_link }}">
+                       <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#header2_{{blockId}}_menu_name"{% endif %}>
+                          {{ block.settings.menu_name }}
+                        </span>
+                        {% if settings.enable_lang_switcher %}
+                        <span class="hide" id="header2_{{blockId}}_menu_name">{{ block.settings.trans_menu_name | raw }}</span>
+                        {% endif %}   
+
+                    {% if block.settings.show_label %}
+                   <span {% if settings.enable_lang_switcher %}class="lable-menu {{ block.settings.label_text }}  lang_trans" data-trans="#header2_{{blockId}}_label_text"{% endif %}>
+                            {{ block.settings.label_text }}
+                          </span>
+                          {% if settings.enable_lang_switcher %}
+                          <span class="lable-menu hide" id="header2_{{blockId}}_label_text">{{ block.settings.trans_label_text | raw }}</span>
+                          {% endif %} 
+                    {% endif %}
+                  </a>
+                </li>
+
+                {% elsif block.type == 'parent-child-item' %}
+
+                <li>
+                  <a href="{{ block.settings.menu_link }}">
+                   <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#header2_{{blockId}}_menu_name"{% endif %}>
+                          {{ block.settings.menu_name }}
+                        </span>
+                   {% if settings.enable_lang_switcher %}
+                     <span class="hide" id="header2_{{blockId}}_menu_name">{{ block.settings.trans_menu_name | raw }}</span>
+                  {% endif %}
+
+                   {% if block.settings.show_label %}
+                          <span {% if settings.enable_lang_switcher %}class=" lable-menu {{ block.settings.label_text }} lang_trans" data-trans="#header2_{{blockId}}_label_text"{% endif %}>
+                            {{ block.settings.label_text }}
+                          </span>
+                          {% if settings.enable_lang_switcher %}
+                          <span class="lable-menu hide" id="header2_{{blockId}}_label_text">{{ block.settings.trans_label_text | raw }}</span>
+                          {% endif %} 
+                    {% endif %}
+                  </a>
+                  <ul>
+                    {% assign child_linklist = block.settings.submenu_linklist %}
+                    {% for sublink in linklists[child_linklist].links %}
+                    {% assign child_list_handle = sublink.title | handleize %}
+                    {% if linklists[child_list_handle].links != blank %}
+                    <li>
+                      <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                      <ul>
+                        {% for child_sublink in linklists[child_list_handle].links %}
+                         <li>
+                           {% assign data_title = child_sublink.title | split: '|' | first %}
+                           {% assign data_json = child_sublink.title | split: '|' | last %}
+                           <a href="{{ child_sublink.url }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#header2_{{blockId}}_{{child_sublink.handle}}"{% endif %}>
+                            {{ data_title }}
+                          </a>
+                          {% if settings.enable_lang_switcher %}
+                          <span class="hide" id="header2_{{blockId}}_{{child_sublink.handle}}">{{ data_json | raw }}</span>
+                          {% endif %}
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% elsif block.type == 'parent-item-megamenu1' %}
+              
+                <li class="megamenu-li-cls">
+                  <a href="{{ block.settings.menu_link }}">
+                    <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
+                       {{ block.settings.menu_name }}
+                    </span>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="megamenu__{{blockId}}_menu_name">{{ block.settings.trans_menu_name | raw }}</span>
+                    {% endif %}
+
+                  {% if block.settings.show_label %}
+                    <span class="lable-menu {{ block.settings.label_text }} {% if settings.enable_lang_switcher %} lang_trans {% endif %}" {% if settings.enable_lang_switcher %} data-trans="#megamenu__{{blockId}}_label_text"{% endif %}>
+                    {{ block.settings.label_text }}
+                  </span>
+                  {% if settings.enable_lang_switcher %}
+                  <span class="hide" id="megamenu__{{blockId}}_label_text">{{ block.settings.trans_label_text | raw }}</span>
+                  {% endif %}
+
+                  {% endif %}
+                  </a>                  
+                  <ul class="mega-menu menu-full">
+                    <li>
+                      <!-- The mega drop down contents -->
+                      <div class="d-flex">
+                        {% if block.settings.linklist_1 != blank or block.settings.linklist_2 != blank %}
+                        <div class="col" style="padding-left:30px;">
+                          {% for i in (1..2) %}
+                          {% assign for_index = forloop.index | times: 1 -%}
+                          {% capture linklist_grid %}linklist_{{ i }}{% endcapture %}
+                          {% capture linklist_title %}linklist_title_{{ i }}{% endcapture %}
+                          {% capture trans_linklist_title %}trans_linklist_title_{{ i }}{% endcapture %}
+                          {% assign megamenu_grid = block.settings[linklist_grid] -%}
+						  
+                          <h4 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_linklist_title"{% endif %}>{{ block.settings[linklist_title] }}</h4>
+                          {% if settings.enable_lang_switcher %}
+                            <span class="hide" id="megamenu__{{blockId}}_linklist_title">{{ block.settings[trans_linklist_title] | raw }}</span>
+                            {% endif %} 
+                          <ul class="menu-list" >
+                            {% for megamenu_link in linklists[megamenu_grid].links %}
+                            <li>
+                              {% assign data_title = megamenu_link.title | split: '|' | first %}
+                                        {% assign data_json = megamenu_link.title | split: '|' | last %}
+                                        <a style="padding-left:10px;" href="{{ megamenu_link.url }}" {% if settings.enable_lang_switcher %}class="lang_trans" 
+                                        data-trans="#megamenu__{{blockId}}_{{megamenu_link.handle}}"{% endif %}>
+                                          {{ data_title }}
+                                </a>
+                                {% if settings.enable_lang_switcher %}
+                                <span class="hide" id="megamenu__{{blockId}}_{{megamenu_link.handle}}">{{ data_json | raw }}</span>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                          </ul>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if block.settings.linklist_3 != blank or block.settings.linklist_4 != blank %}
+                        <div class="col">
+                          {% for i in (3..4) %}
+                          {% assign for_index = forloop.index | times: 1 -%}
+                          {% capture linklist_title %}linklist_title_{{ i }}{% endcapture %}
+                          {% capture megamenu_linklist %}linklist_{{ i }}{% endcapture %}
+                           {% assign megamenu_grid = block.settings[megamenu_linklist] -%}
+                         {% capture trans_linklist_title %}trans_linklist_title_{{ i }}{% endcapture %}
+                           <h4 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_linklist_title"{% endif %}>{{ block.settings[linklist_title] }}</h4>
+                          {% if settings.enable_lang_switcher %}
+                            <span class="hide" id="megamenu__{{blockId}}_linklist_title">{{ block.settings[trans_linklist_title] | raw }}</span>
+                          {% endif %} 
+
+                          <ul class="menu-list">
+                            {% for megamenu_link in linklists[megamenu_grid].links %}
+                            <li >
+                              {% assign data_title = megamenu_link.title | split: '|' | first %}
+                                        {% assign data_json = megamenu_link.title | split: '|' | last %}
+                                        <a style="padding-left:10px;" href="{{ megamenu_link.url }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_{{megamenu_link.handle}}"{% endif %}>
+                                          {{ data_title }}
+                                        </a>
+                                        {% if settings.enable_lang_switcher %}
+                                        <span class="hide" id="megamenu__{{blockId}}_{{megamenu_link.handle}}">{{ data_json | raw }}</span>
+                               {% endif %}
+                            </li>
+                            {% endfor %}
+                          </ul>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if block.settings.linklist_5 != blank or block.settings.linklist_6 != blank %}
+                        <div class="col">
+                          {% for i in (5..6) %}
+                          {% assign for_index = forloop.index | times: 1 -%}
+                          {% capture linklist_title %}linklist_title_{{ i }}{% endcapture %}
+                          {% capture megamenu_linklist %}linklist_{{ i }}{% endcapture %}
+                          {% assign megamenu_grid = block.settings[megamenu_linklist] -%}
+                           {% capture trans_linklist_title %}trans_linklist_title_{{ i }}{% endcapture %}
+                           <h4 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_linklist_title"{% endif %}>{{ block.settings[linklist_title] }}</h4>
+                            {% if settings.enable_lang_switcher %}
+                            <span class="hide" id="megamenu__{{blockId}}_linklist_title">{{ block.settings[trans_linklist_title] | raw }}</span>
+                          {% endif %} 
+
+                          <ul class="menu-list">
+                            {% for megamenu_link in linklists[megamenu_grid].links %}
+                            <li>  {% assign data_title = megamenu_link.title | split: '|' | first %}
+                                        {% assign data_json = megamenu_link.title | split: '|' | last %}
+                                        <a style="padding-left:10px;" href="{{ megamenu_link.url }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_{{megamenu_link.handle}}"{% endif %}>
+                                          {{ data_title }}
+                                        </a>
+                                        {% if settings.enable_lang_switcher %}
+                                        <span class="hide" id="megamenu__{{blockId}}_{{megamenu_link.handle}}">{{ data_json | raw }}</span>
+                               {% endif %}</li>
+                            {% endfor %}
+                          </ul>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <!--div class="col-xl-4">
+                          <a href="{{ block.settings.custom_image_url }}" class="p-0">
+                            <img src="{{ block.settings.custom_image | img_url: 'master' }}" class="w-100 img-fluid lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}">
+                          </a>
+                        </div-->
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                {% elsif block.type == 'parent-item-megamenu2' %}
+
+                <li class="megamenu-li-cls">
+                  <a href="{{ block.settings.menu_link }}">
+                           <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
+                          {{ block.settings.menu_name }}
+                        </span>
+                        {% if settings.enable_lang_switcher %}
+                        <span class="hide" id="megamenu__{{blockId}}_menu_name">{{ block.settings.trans_menu_name | raw }}</span>
+                        {% endif %}
+
+
+                       {% if block.settings.show_label %}
+                          <span class="lable-menu {{ block.settings.label_text }} {% if settings.enable_lang_switcher %}lang_trans{% endif %}"  {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_label_text"{% endif %}>
+                            {{ block.settings.label_text }}
+                          </span>
+                          {% if settings.enable_lang_switcher %}
+                          <span class="hide" id="megamenu__{{blockId}}_label_text">{{ block.settings.trans_label_text | raw }}</span>
+                          {% endif %} 
+                   {% endif %}
+                    </a>
+                  <ul class="mega-menu menu-full category-megamenu">
+                    <li>
+                      <!-- The mega drop down contents -->
+                      <div class="d-flex">
+                        {% if block.settings.linklist_1 != blank %}
+                        <div class="col-xl-3">
+                           
+                            <h4 class="menu-title  {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
+                                      {{ block.settings.linklist_title_1 }}
+                                    </h4>
+                                    {% if settings.enable_lang_switcher %}
+                                    <span class="hide" id="megamenu__{{blockId}}_linklist_title1">{{ block.settings.trans_linklist_title_1 | raw }}</span>
+                                    {% endif %} 
+                            <ul class="menu-list">
+                              {% assign megamenu2_linklist =  block.settings.linklist_1 %}
+                              {% for megamenu_link in linklists[megamenu2_linklist].links %}
+                              <li>
+                                 {% assign data_title = megamenu_link.title | split: '|' | first %}
+                                          {% assign data_json = megamenu_link.title | split: '|' | last %}
+                                          <a href="{{ megamenu_link.url }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_{{megamenu_link.handle}}"{% endif %}>
+                                            {{ data_title }}
+                                          </a>
+                                    {% if settings.enable_lang_switcher %}
+                                    <span class="hide" id="megamenu__{{blockId}}_{{megamenu_link.handle}}">{{ data_json | raw }}</span>
+                                    {% endif %}
+                              </li>
+                              {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        <!--div class="col-xl-5">
+                          <div class="megamenu-theme-card">
+                             <h2 {% if settings.enable_lang_switcher %}class="lang_trans" {% endif %} 
+                             {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}product_grid_title"{% endif %}>
+                                   {{ block.settings.product_grid_title }}
+                                </h2>
+                              {% if settings.enable_lang_switcher %}
+                              <span class="hide" id="megamenu__{{blockId}}product_grid_title">{{ block.settings.product_grid_title_trans | raw }}
+                              </span>
+                             {% endif %}
+                            <div class="offer-slider">
+                              <div>
+                                {% assign product1 = all_products[block.settings.megamenu_product_1] %}
+                                <div class="media">
+                                  <a href="{{ product1.url }}"><img class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" src="{{ product1.featured_image | img_url: '122x160' }}" class="" alt="{{ product1.title }}"></a>
+                                  <div class="media-body align-self-center">
+                                    <a href="{{ product1.url }}">
+                                      {% assign data_title = product1.title | split: '|' | first %}
+                                      {% assign data_json = product1.title | split: '|' | last %}
+                                      <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                                        {{ data_title | truncatewords: 10 }}
+                                      </h6>
+                                      {% if settings.enable_lang_switcher %}
+                                      <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+                                     {% endif %}</a>
+                                    <h4>{{ product1.price | money }}</h4>
+                                  </div>
+                                </div>
+                                {% assign product2 = all_products[block.settings.megamenu_product_2] %}
+                                <div class="media">
+                                  <a href="{{ product2.url }}"><img class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" src="{{ product2.featured_image | img_url: '122x160' }}" alt="{{ product2.title }}"></a>
+                                  <div class="media-body align-self-center">
+                                    <a href="{{ product2.url }}">
+                                      {% assign data_title = product2.title | split: '|' | first %}
+                                      {% assign data_json = product2.title | split: '|' | last %}
+                                      <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{product.id}}_pro_title"{% endif %}>
+                                        {{ data_title | truncatewords: 10 }}
+                                      </h6>
+                                      {% if settings.enable_lang_switcher %}
+                                      <span class="hide" id="{{product.id}}_pro_title">{{ data_json | raw }}</span>
+                                     {% endif %}
+                                   </a>
+                                    <h4>{{ product2.price | money }}</h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div-->
+                        {% if block.settings.show_custom_image %}
+                        <div class="col megamenu2_img">
+                          <a href="{{ block.settings.custom_image_url }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
+                            <img src="{{ block.settings.custom_image | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
+                          </a>
+                        </div>
+                        {% endif %}
+                        {% if block.settings.show_custom_image_2 %}
+                        <div class="col megamenu2_img">
+                          <a href="{{ block.settings.custom_image_url_2 }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
+                            <img src="{{ block.settings.custom_image_2 | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
+                          </a>
+                        </div>
+                        {% endif %}
+                        {% if block.settings.show_custom_image_3 %}
+                        <div class="col megamenu2_img">
+                          <a href="{{ block.settings.custom_image_url_3 }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
+                            <img src="{{ block.settings.custom_image_3 | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
+                          </a>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+                {% elsif block.type == 'parent-item-megamenu3' %}
+                <li class="megamenu-li-cls" >
+                  <a href="{{ block.settings.menu_link }}">
+                        <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
+                          {{ block.settings.menu_name }}
+                        </span>
+                        {% if settings.enable_lang_switcher %}
+                        <span class="hide" id="megamenu__{{blockId}}_menu_name">{{ block.settings.trans_menu_name | raw }}</span>
+                        {% endif %}
+
+                      <span {% if settings.enable_lang_switcher %}class="lable-menu {{ block.settings.label_text }} lang_trans" {% endif %}  {% if settings.enable_lang_switcher %} data-trans="#megamenu__{{blockId}}_label_text" {% endif %}>
+                            {{ block.settings.label_text }}
+                      </span>
+                      {% if settings.enable_lang_switcher %}
+                      <span class="hide" id="megamenu__{{blockId}}_label_text">
+                          {{ block.settings.trans_label_text | raw }}
+                      </span>
+                      {% endif %} 
+                    </a>
+                  <ul class="mega-menu feature-menu">
+                    <li>
+                      <!-- The mega drop down contents -->
+                      <div class="d-flex">
+
+                        {% for i in (1..9) %}
+                        {% assign for_index = forloop.index | times: 1 -%}
+                        {% capture feature_custom_img %}custom_image_{{ i }}{% endcapture %}
+                        {% capture feature_custom_img_url %}custom_image_url_{{ i }}{% endcapture %}
+                        {% capture feature_custom_img_title %}custom_image_title_{{ i }}{% endcapture %}
+                        {% capture trans_feature_custom_img_title %}trans_cal_title_{{ i }}{% endcapture %}
+
+
+                        {% if block.settings.col_width == '2' %}
+                        {% assign menu_col_width = 'col-xl-6' %}
+                        {% elsif block.settings.col_width == '3' %}
+                        {% assign menu_col_width = 'col-xl-4' %}
+                        {% elsif block.settings.col_width == '4' %}
+                        {% assign menu_col_width = 'col-xl-3' %}
+                        {% endif %}
+
+                        {% if block.settings[feature_custom_img_title] != blank %}
+                        <div class="{{ menu_col_width }}">
+                          <a href="{{ block.settings[feature_custom_img_url] }}" target="_blank">
+                            <img src="{{ block.settings[feature_custom_img] | img_url: '' }}" class="img-fluid" alt="{{ image.alt }}" />
+                            <p  {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_cal_title"{% endif %}>{{ block.settings[feature_custom_img_title] }}</p>
+                             {% if settings.enable_lang_switcher %}
+                                <span class="hide" id="megamenu__{{blockId}}_cal_title">{{ block.settings[trans_feature_custom_img_title] | raw }}</span>
+                                {% endif %}
+                          </a>
+                              
+                        </div>
+                        {% endif %}
+                        
+                        {% endfor %}
+
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </nav>
+        </div>
+      </div>
+      {% endif %}
+     {% if section.settings.suumer_offer_enable %}
+      <div class="col text-right">
+        <div class="onhover-dropdown offer-dropdown">
+          <i class="icon-gift" style="    font-size: 21px;
+    padding-right: 10px;
+    color: #f7ffff;"></i><span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}summer_offer_title"{% endif %}> {{ section.settings.summer_offer_title }}</span>
+           {% if settings.enable_lang_switcher %}
+            <span class="hide" id="megamenu__{{blockId}}summer_offer_title">{{section.settings.trans_summer_offer_title}}</span>
+            {% endif %}
+          {% if section.settings.offer_bnr_1 or section.settings.offer_bnr_2 or section.settings.offer_bnr_3 %}
+          <ul class="onhover-show-div">
+            {% if section.settings.offer_bnr_1 %}
+            <li>
+              <a href=" {% if section.settings.offer_url_1 != blank %} {{ section.settings.offer_url_1 }} {% else %} # {% endif %}">
+                <img src="{{ section.settings.offer_bnr_1 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
+              </a>
+            </li>
+            {% endif %}
+            {% if section.settings.offer_bnr_2 %}
+            <li>
+              <a href="{% if section.settings.offer_url_2 != blank %} {{ section.settings.offer_url_2 }} {% else %} # {% endif %}">
+                <img src="{{ section.settings.offer_bnr_2 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
+              </a>
+            </li>
+            {% endif %}
+            {% if section.settings.offer_bnr_3 %}
+            <li>
+              <a href="{% if section.settings.offer_url_3 != blank %} {{ section.settings.offer_url_3 }} {% else %} # {% endif %}">
+                <img src="{{ section.settings.offer_bnr_3 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+     {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+   "name":"Top Menu",
+   "settings":[
+   
+      {
+         "type":"header",
+         "content":"Vertical Menu"
+      },
+      {
+         "type":"checkbox",
+         "id":"v_menu_enable",
+         "label":"Enabled",
+         "default":true
+      },
+      {
+         "type":"text",
+         "id":"v_view_more",
+         "label":"View More",
+         "info":"View More Categories"
+      },
+      {  
+         "type":"textarea",
+         "id":"trans_more_cat",
+         "label":"view more category"
+      },
+      {
+         "type":"url",
+         "id":"v_view_more_link",
+         "label":"View More link"
+      },
+      {
+         "type":"text",
+         "id":"v_menu_text",
+         "default":"ALL DEPARTMENTS",
+         "label":"Vertical Menu Title"
+      },
+      {
+         "type":"textarea",
+         "id":"trans_v_menu_text",
+         "default":"ALL DEPARTMENTS",
+         "label":"Vertical Menu Title"
+      },
+      {
+         "type":"header",
+         "content":"Horizontal Navigation"
+      },
+      {
+         "type":"checkbox",
+         "id":"h_menu_enable",
+         "label":"Enabled",
+         "default":true
+      },
+      {
+         "type":"header",
+         "content":"Summer Offer"
+      },
+      {
+         "type":"checkbox",
+         "id":"suumer_offer_enable",
+         "label":"Enabled Summer Offer",
+         "default":true
+      },
+      {
+         "type":"text",
+         "id":"summer_offer_title",
+         "default":"Title",
+         "label":"Summer offer"
+      },
+      {
+         "type":"textarea",
+         "id":"trans_summer_offer_title",
+         "default":" Title",
+         "label":"translate summer offer Title"
+      },
+      {
+         "type":"image_picker",
+         "id":"offer_bnr_1",
+         "label":"Offer Banner Image",
+         "info":"( 300 X 130 PX )"
+      },
+      {
+         "type":"url",
+         "id":"offer_url_1",
+         "label":"Offer Image link"
+      },
+      {
+         "type":"image_picker",
+         "id":"offer_bnr_2",
+         "label":"Offer Banner Image",
+         "info":"( 300 X 130 PX )"
+      },
+      {
+         "type":"url",
+         "id":"offer_url_2",
+         "label":"Offer Image link"
+      },
+      {
+         "type":"image_picker",
+         "id":"offer_bnr_3",
+         "label":"Offer Banner image",
+         "info":"( 300 X 130 PX )"
+      },
+      {
+         "type":"url",
+         "id":"offer_url_3",
+         "label":"Offer Image link"
+      }
+   ],
+   "blocks":[
+       {
+         "type":"verticle-menu",
+         "name":"Verticle Menu",
+         "settings":[
+            {
+               "type":"text",
+               "id":"v_menu_name",
+               "label":"Menu Name",
+               "default":"Mobile & tablet"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_v_menu_name",
+               "label":"transalte Mobile & tablet"
+            },
+            {
+               "type":"image_picker",
+               "id":"v_menu_img",
+               "label":"Menu image"
+            },
+            {
+               "type":"url",
+               "id":"v_menu_url",
+               "label":"Menu Link"
+            }
+         ]
+      },
+      {
+         "type":"parent-item",
+         "name":"Parent Item",
+         "settings":[
+            {
+               "type":"text",
+               "id":"menu_name",
+               "label":"Menu Name",
+               "default":"Home"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_menu_name",
+               "label":"Translate Menu Name"
+            },
+            {
+               "type":"url",
+               "id":"menu_link",
+               "label":"Menu Link"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_label",
+               "label":"Show Label",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"label_text",
+               "label":"Label Text",
+               "default":"new"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_label_text",
+               "label":"Translate Label Text"
+            }
+         ]
+      },
+      {
+         "type":"parent-child-item",
+         "name":"Parent with Child Item",
+         "settings":[
+            {
+               "type":"text",
+               "id":"menu_name",
+               "label":"Menu Name",
+               "default":"pages"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_menu_name",
+               "label":"Translate Menu Name"
+            },
+            {
+               "type":"url",
+               "id":"menu_link",
+               "label":"Menu Link"
+            },
+            {
+               "type":"link_list",
+               "id":"submenu_linklist",
+               "label":"main-menu"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_label",
+               "label":"Show Label",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"label_text",
+               "label":"Label Text",
+               "default":"hot"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_label_text",
+               "label":"Translate Label Text"
+            }
+         ]
+      },
+      {
+         "type":"parent-item-megamenu1",
+         "name":"Megamenu Style 1",
+         "settings":[
+            {
+               "type":"text",
+               "id":"menu_name",
+               "label":"Menu Name",
+               "default":"Home"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_menu_name",
+               "label":"Translate Menu Name"
+            },
+            {
+               "type":"url",
+               "id":"menu_link",
+               "label":"Menu Link"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_label",
+               "label":"Show Label",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"label_text",
+               "label":"Label Text",
+               "default":"sale"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_label_text",
+               "label":"Translate Label Text"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 1"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_1",
+               "label":"Linklist 1"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_1",
+               "label":"Linklist 1 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_custom_linklist_title_1",
+               "label":"Translate Linklist 1 Title"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 2"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_2",
+               "label":"Linklist 2"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_2",
+               "label":"Linklist 2 Title"
+            },
+               {  
+               "type":"textarea",
+               "id":"trans_custom_linklist_title_2",
+               "label":"Translate Linklist 2 Title"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 3"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_3",
+               "label":"Linklist 3"
+            },
+           
+            {
+               "type":"text",
+               "id":"linklist_title_3",
+               "label":"Linklist 3 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_custom_linklist_title_3",
+               "label":"Translate Linklist 3 Title"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 4"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_4",
+               "label":"Linklist 4"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_4",
+               "label":"Linklist 4 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_custom_linklist_title_4",
+               "label":"Translate Linklist 4 Title"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 5"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_5",
+               "label":"Linklist 5"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_5",
+               "label":"Linklist 5 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_custom_linklist_title_5",
+               "label":"Translate Linklist 5 Title"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 6"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_6",
+               "label":"Linklist 6"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_6",
+               "label":"Linklist 6 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_custom_linklist_title_6",
+               "label":"Translate Linklist 6 Title"
+            },
+            {
+               "type":"header",
+               "content":"Custom Image"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_custom_image",
+               "label":"Show image",
+               "default":true
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image",
+               "label":"Custom Image",
+               "info":" (355 x 540px) .png"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url",
+               "label":"Image Url"
+            }
+         ]
+      },
+      {
+         "type":"parent-item-megamenu2",
+         "name":"Megamenu Style 2",
+         "settings":[
+              {
+               "type":"text",
+               "id":"menu_name",
+               "label":"Menu Name",
+               "default":"Home"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_menu_name",
+               "label":"Translate Menu Name"
+            },
+            {
+               "type":"url",
+               "id":"menu_link",
+               "label":"Menu Link"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_label",
+               "label":"Show Label",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"label_text",
+               "label":"Label Text",
+               "default":"deal"
+            },
+              {  
+               "type":"textarea",
+               "id":"trans_label_text",
+               "label":"Translate Label Text"
+            },
+            {
+               "type":"header",
+               "content":"Select Linklist 1"
+            },
+            {
+               "type":"link_list",
+               "id":"linklist_1",
+               "label":"Linklist 1"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_1",
+               "label":"Linklist 1 Title"
+            },
+              {  
+               "type":"textarea",
+               "id":"trans_linklist_title_1",
+               "label":"Translate Linklist Title"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Product Grid"
+            },
+            {
+               "type":"text",
+               "id":"product_grid_title",
+               "label":"Product Grid Title"
+            },
+            {  
+               "type":"textarea",
+               "id":"product_grid_title_trans",
+               "label":"Translate Product Grid Title"
+            },
+            {
+               "type":"product",
+               "id":"megamenu_product_1",
+               "label":"Megamenu Product 1",
+               "info":"Select 1st Product For Megamenu"
+            },
+            {
+               "type":"product",
+               "id":"megamenu_product_2",
+               "label":"Megamenu Product 2",
+               "info":"Select 2nd Product For Megamenu"
+            },
+            {
+               "type":"header",
+               "content":"Custom Image"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_custom_image",
+               "label":"Show image",
+               "default":true
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image",
+               "label":"Custom Image",
+               "info":"355x540px.png required"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url",
+               "label":"Image Url"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_custom_image_2",
+               "label":"Show image",
+               "default":true
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_2",
+               "label":"Custom Image",
+               "info":"355x540px.png required"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_2",
+               "label":"Image Url"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_custom_image_3",
+               "label":"Show image",
+               "default":true
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_3",
+               "label":"Custom Image",
+               "info":"355x540px.png required"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_3",
+               "label":"Image Url"
+            }
+         ]
+      },
+      {
+         "type":"parent-item-megamenu3",
+         "name":"Megamenu Style 3",
+         "settings":[
+             {
+               "type":"text",
+               "id":"menu_name",
+               "label":"Menu Name",
+               "default":"Home"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_menu_name",
+               "label":"Translate Menu Name"
+            },
+            {
+               "type":"url",
+               "id":"menu_link",
+               "label":"Menu Link"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_label",
+               "label":"Show Label",
+               "default":true
+            },
+            {
+               "type":"text",
+               "id":"label_text",
+               "label":"Label Text",
+               "default":"trend"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_label_text",
+               "label":"Translate Label Text"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Option"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_hover_btn",
+               "label":"Show Hover On image",
+               "default":true
+            },
+            {
+               "type":"select",
+               "id":"col_width",
+               "label":"Megamenu Col per Row",
+               "options":[
+                {
+                  "value":"2",
+                  "label":"2"
+                        },
+                {
+                  "value":"3",
+                  "label":"3"
+                },
+                {
+                  "value":"4",
+                  "label":"4"
+                }
+                 ],
+                       "default":"3"
+                      },
+                      {
+                         "type":"header",
+                         "content":"Megamenu Col 1 Image"
+                      },
+                      {
+                         "type":"image_picker",
+                         "id":"custom_image_1",
+                         "label":"Add col 1 image"
+                      },
+            {
+               "type":"text",
+               "id":"custom_image_title_1",
+               "label":"Col 1 Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_1",
+               "label":"Col 1 Image Url"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_cal_title_1",
+               "label":"Translate Title"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 2 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_2",
+               "label":"Add col 2 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_2",
+               "label":"Col 2 Title"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_cal_title_2",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_2",
+               "label":"Col 2 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 3 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_3",
+               "label":"Add col 3 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_3",
+               "label":"Col 3 Title"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_cal_title_3",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_3",
+               "label":"Col 3 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 4 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_4",
+               "label":"Add col 4 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_4",
+               "label":"Col 4 Title"
+            },
+            {  
+               "type":"textarea",
+               "id":"trans_cal_title_4",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_4",
+               "label":"Col 4 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 5 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_5",
+               "label":"Add col 5 image"
+            },
+           
+            {
+               "type":"text",
+               "id":"custom_image_title_5",
+               "label":"Col 5 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_cal_title_5",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_5",
+               "label":"Col 5 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 6 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_6",
+               "label":"Add col 6 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_6",
+               "label":"Col 6 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_cal_title_6",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_6",
+               "label":"Col 6 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 7 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_7",
+               "label":"Add col 7 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_7",
+               "label":"Col 7 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_cal_title_7",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_7",
+               "label":"Col 7 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 8 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_8",
+               "label":"Add col 8 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_8",
+               "label":"Col 8 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_cal_title_8",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_8",
+               "label":"Col 8 Image Url"
+            },
+            {
+               "type":"header",
+               "content":"Megamenu Col 9 Image"
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_9",
+               "label":"Add col 9 image"
+            },
+            {
+               "type":"text",
+               "id":"custom_image_title_9",
+               "label":"Col 9 Title"
+            },
+             {  
+               "type":"textarea",
+               "id":"trans_cal_title_9",
+               "label":"Translate Title"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_9",
+               "label":"Col 9 Image Url"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+

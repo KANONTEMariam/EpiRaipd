@@ -1,0 +1,337 @@
+<!--Trending product start-->
+{% if section.settings.enabled %}
+
+
+<section class="treding  {% if section.settings.top_space %} pt-0 {% else %} {% endif %} section-b-space {% if section.settings.bg_color_enable %} gray-bg {% endif %} {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 {% if settings.enable_lang_switcher %}class="title title-layout-2 lang_trans" data-trans="#trending{{sectionId}}title_bg_pos_"{% endif %}>
+        {{ section.settings.title }}
+        </h2>
+      {% if settings.enable_lang_switcher %}
+      <span class="hide" id="trending{{sectionId}}title_bg_pos_">{{ section.settings.trans_title | raw }}</span>
+      {% endif %}
+      </div>
+      <div class="col-sm-12 p-0">
+        {% assign collection = collections[section.settings.collection] %}
+        <div class="tab_product_slider  theme-slider" data-slick='{"slidesToShow": {{ section.settings.slidetoshow }},"slidesToScroll": 1, "autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}}, "responsive":[{"breakpoint": 1367,"settings":{"slidesToShow": {{ section.settings.slidetoshow_1367}} }},{"breakpoint": 1024,"settings":{"slidesToShow": {{ section.settings.slidetoshow_1024}} }},{"breakpoint": 767,"settings":{"slidesToShow": {{ section.settings.slidetoshow_767}} }},{"breakpoint": 420,"settings":{"slidesToShow": {{ section.settings.slidetoshow_420}} }} ]}' >
+          {% if collection.empty? %}
+          {% capture current %}{% cycle 1,2,3,4,5,6,1,2 %}{% endcapture %}
+          {% for i in (1..6) %}
+
+          <div>
+            <div class="product-box  product-box-layout-2"  itemscope itemtype="http://schema.org/Product">
+              <div class="img-block">
+                <div class="cart-info">
+                  <button  data-toggle="tooltip" data-placement="left" title="Add to cart"><i class="icon-shopping-cart"></i></button>
+                  <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Wishlist"><i class="icon-heart"></i></a>
+                  <a href="#" data-toggle="tooltip" data-placement="left" title="Quick View"><i class="icon-zoom-in"></i></a>
+                </div>
+                <span class="lbl-1">New</span>
+                <span class="lbl-2">On Sale</span>
+                <a href="#" >
+                  {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}   
+                </a>
+              </div>
+              <div class="product-details text-center">
+
+                <ul class="color-variant">
+                  <li class="bg-primary"></li>
+                  <li class="bg-secondary"></li>
+                  <li class="bg-info"></li>
+                  <li class="bg-danger"></li>
+                </ul>
+
+                <div class="rating three-star">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <a href="#" >
+                   <h6 {% if settings.enable_lang_switcher %}data-trans-key="homepage.onboarding.product_title"{%endif%}>{{ 'homepage.onboarding.product_title' | t }}</h6>  
+                </a>
+                <h4 class="price" >
+                  {{ '$20.00' }}
+                </h4>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          {% for product in collection.products   %}
+          <div>
+            {% include  'grid-layout' %}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!--Trending product ends-->
+
+{% schema %}
+  {
+    "name": "Fetaured Products Slider",
+    "settings": [
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+     {
+         "type":"checkbox",
+         "id":"top_space",
+         "default":false,
+         "label":"Enabled top space "
+      },
+      {
+         "type":"checkbox",
+         "id":"bg_color_enable",
+         "default":true,
+         "label":"Enabled Background color"
+      },
+
+       {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      },
+	    {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default":"New Arrivals"
+      },
+       {
+           "type": "textarea",
+           "id": "trans_title_arrivals",
+           "label": "Translate Main Title"
+        },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Select collection"
+      },
+      
+{
+      "type": "header",
+      "content": "Slider settings( Only for Carousel layout )"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Autoplay Speed in milliseconds",
+      "unit": "sec",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "use_autoplay",
+      "label": "Use autoplay?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_arrows",
+      "label": "Use Arrows?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_dots",
+      "default": false,
+      "label": "Use dots for pagination control?"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_loop",
+      "label": "Use Infinite loop sliding?",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "slides To Show(Image per row)",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Breakpoint: 1367"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_1367",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Breakpoint: 1024"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_1024",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "breakpoint: 767"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_767",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "breakpoint: 420"
+    },
+    {
+      "type": "range",
+      "id": "slidetoshow_420",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "slides To Show",
+      "default": 1
+    }
+    ],
+    "presets": [{
+      "name": "Fetaured Products Slider",
+      "category": "Product",
+      "settings": {}
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

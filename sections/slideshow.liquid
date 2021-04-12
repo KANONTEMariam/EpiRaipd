@@ -1,0 +1,253 @@
+<!--Home section start-->
+<div class=" home-layout-2 {{ section.settings.alignment }} {{ section.settings.position }}" style="  {% if template == 'index' %}padding-top: 0px;{% else %}padding-top: 18px; {% endif %}">
+      <div class="home-slider home-slider-layout-2 slide-1" data-slick='{"autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}} }' >
+        {% for block in section.blocks %} 
+        {% if block.type == 'Image' %}
+        <div class="main">
+          {% if block.settings.show_info %}
+          <div class="slider-contain" >
+            <div class="inner" >
+           {% if block.settings.top_heading %}   
+            <h4 {% if block.settings.heading_color != blank%} style="color:{{block.settings.heading_color}}" {% endif  %} {% if settings.enable_lang_switcher %}class="title-font lang_trans" data-trans="#slide_{{blockId}}_slide_title"{% endif %}>
+              {{ block.settings.top_heading }}
+            </h4>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="slide_{{blockId}}_slide_title">{{ block.settings.trans_top_heading | raw }}</span>
+            {% endif %}
+           {% endif %}
+
+            {% if block.settings.title_html != blank %}
+              <h1 class="title-font" ><span {% if block.settings.main_heading_color != blank%} style="color:{{block.settings.main_heading_color}}" {% endif  %}>{{ block.settings.title_html }}</span> </h1> {% endif %} {% if block.settings.offer_html != blank %}
+            <h2 class="text-white title-font">{{ block.settings.offer_html }}</h2> {% endif %} 
+           {% if block.settings.sub_html != blank %}
+            <h4>{{ block.settings.sub_html }}</h4>
+           {% endif  %}
+            {% if block.settings.shop_btn_url != blank %}
+                <a {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a>
+                 {% if settings.enable_lang_switcher %}
+            <span class="hide" id="slide_{{blockId}}shop_button">{{ block.settings.trans_shop_button | raw }}</span>
+            {% endif %} 
+            {% endif %}
+            </div>
+          </div>
+          {% endif %} 
+          {% if block.settings.slider == blank %}
+          {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }} 
+          {% else %}
+          <img src="{{  block.settings.slider | img_url: 'master' }}" class=" lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}"  alt="{{ image.alt }}" /> 
+          {% endif %}
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+</div>
+
+<!--Home section ends-->
+
+{% schema %}
+{  
+   "name":"Slideshow",
+   "max_blocks":15,
+   "settings":[  
+      {  
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled "
+      },
+
+            {
+               "type":"select",
+               "id":"alignment",
+               "label":"Text Alignment",
+               "options":[
+                  {
+                     "value":"text-left",
+                     "label":"Left"
+                  },
+                  {
+                     "value":"text-center",
+                     "label":"Center"
+                  },
+                  {
+                     "value":"text-right",
+                     "label":"Right"
+                  }
+               ],
+               "default":"text-center"
+            },
+            {
+               "type":"select",
+               "id":"position",
+               "label":"Text Position",
+               "options":[
+                  {
+                     "value":"p-left",
+                     "label":"Left"
+                  },
+                  {
+                     "value":"p-center",
+                     "label":"Center"
+                  },
+                  {
+                     "value":"p-right",
+                     "label":"Right"
+                  }
+               ],
+               "default":"p-left"
+            },
+
+    {
+      "type": "header",
+      "content": "Slider settings( Only for Carousel layout )"
+    },
+  
+    {
+      "type": "checkbox",
+      "id": "enabled_overlay",
+      "default": false,
+      "label": "Enabled overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 9,
+      "step": 1,
+      "label": "Overlay Opacity",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "label": "Autoplay Speed in milliseconds",
+      "unit": "sec",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "use_autoplay",
+      "label": "Use autoplay?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_arrows",
+      "label": "Use Arrows?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_dots",
+      "default": false,
+      "label": "Use dots for pagination control?"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_loop",
+      "label": "Use Infinite loop sliding?",
+      "default": false
+    }
+
+   ],
+   "blocks":[  
+      {  
+         "type":"Image",
+         "name":"Add slide",
+         "settings":[  
+            {  
+               "type":"image_picker",
+               "id":"slider",
+               "label":"Slide Image (1920 x 750 PX)"
+            },
+         
+             {  
+               "type":"checkbox",
+               "id":"show_info",
+               "label":"Show Info",
+               "default":true
+            },
+            {  
+               "type":"color",
+               "id":"heading_color",
+               "label":"heading Color",
+               "default":"#fff"
+            },
+            {  
+               "type":"text",
+               "id":"top_heading",
+               "label":"heading",
+               "default":"SPECIAL OFFERS"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_top_heading",
+               "label": "Translate Main Title"
+            },
+            {  
+               "type":"color",
+               "id":"main_heading_color",
+               "label":"heading Color",
+               "default":"#7bc002"
+            },
+            {  
+               "type":"html",
+               "id":"title_html",
+               "label":"Title Html",
+               "default":"Groceries"
+            },
+            {  
+               "type":"html",
+               "id":"offer_html",
+               "label":"Offer Html",
+               "default":"<span>25%</span> off"
+            },
+            {  
+               "type":"text",
+               "id":"shop_button",
+               "label":"Button Title",
+               "default":"Shop Now"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_shop_button",
+               "label": "Translate Button Title"
+            },
+            {  
+               "type":"url",
+               "id":"shop_btn_url",
+               "label":"Button Url"
+            }
+         ]
+      }
+   ],
+   "presets":[  
+      {  
+         "name":"Slideshow",
+         "category":"Slideshow",
+         "blocks":[  
+            {  
+               "type":"Image"
+            },
+            {  
+               "type":"Image"
+            }
+         ]
+      }
+   ]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

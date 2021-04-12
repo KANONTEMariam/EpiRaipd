@@ -1,0 +1,21 @@
+{% if settings.filter_by_price_enable %}
+<div class="collection-collapse-block open">
+  {% assign pro_price = settings.filter_by_price_option | split: ',' -%}
+  <h3 class="collapse-block-title">{{ settings.filter_price_title }}</h3>
+  <div class="collection-collapse-block-content">
+    <div class="collection-brand-filter">
+      <ul class="sidebar_filter_cls sidebar_price" id="price_filters">
+        {% for product_price in pro_price limit: settings.collection_price_limit %}
+        {% assign price = product_price | lstrip | rstrip -%}
+        <li data-value="{{ price | handleize }}" data-link-collection>
+          <div class="custom-control custom-checkbox collection-filter-checkbox">
+            <input type="checkbox" class="custom-control-input" id="{{ price | handleize }}">
+            <label class="custom-control-label" for="{{ price | handleize }}">{{ price }}</label>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}

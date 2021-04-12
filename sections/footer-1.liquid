@@ -1,0 +1,361 @@
+<!--footer 1 start-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 footer_accordian text-center">
+      <span class="show_more">show more 
+      </span>
+    </div>
+  </div>
+</div>
+<footer class="section-b-space light-layout layout-2 mid_footer">
+  <div class="container">
+    <div class="row">
+      {% for block in section.blocks %}
+      {% if block.type == 'Custom-html' %}
+      <div class="col-xl-3 ">
+        {% if block.settings.footer_logo %}
+        {% capture image_size %}{{ block.settings.footer_logo_max_width | escape }}x{% endcapture %}
+        <div class="footer-logo">
+          <a href="/">
+            <img src="{{ block.settings.footer_logo | img_url: image_size }}" alt="{{ shop.name }}" />
+          </a>
+        </div>
+        {% else %}
+        <h1 itemprop="logo"><a href="/" itemprop="url">{{ shop.name }}</a></h1>
+        {% endif %}
+        {% if block.settings.text %}
+        <p>{{ block.settings.text }}</p>
+        {% endif %}
+        {% if block.settings.show_downloads %}
+        <div class="footer-app">
+          <ul>
+            <li class="d-inline-block"> 
+              <a href="{{ block.settings.payment_1_link }}">
+                <img src="{{ block.settings.payment_1 | img_url: '130x' }}" class="img-fluid" alt="{{ image.alt }}">
+              </a>
+            </li>
+            <li class="d-inline-block">
+              <a href="{{ block.settings.payment_2_link }}">
+                <img src="{{ block.settings.payment_2 | img_url: '130x' }}" class="img-fluid" alt="{{ image.alt }}">
+              </a>
+            </li>
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      {% elsif block.type == 'Menu' %}
+      <div class="col">
+        <div class="">
+          <div class="footer-title">
+            <h4  style="color: {{ settings.footer_text_color }}"  class="sub-title {% if settings.enable_lang_switcher %} lang_trans {% endif %}"{% if settings.enable_lang_switcher %} data-trans="#footer1_{{blockId}}_menu_title"{% endif %}>
+              {{ block.settings.title }}
+            </h4>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="footer1_{{blockId}}_menu_title">{{ block.settings.trans_title | raw }}</span>
+            {% endif %}
+          </div>
+          <div class="footer-contant">
+            <ul>
+              {% if block.settings.footer_linklist != blank %} 
+              {% assign footer_linklist = block.settings.footer_linklist -%}
+              {% for link in linklists[footer_linklist].links %}
+              <li>
+                {% assign data_title = link.title | split: '|' | first %}
+                {% assign data_json = link.title | split: '|' | last %}
+                <a href="{{ link.url }}" style="color: {{ settings.footer_link_color }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{link.handle}}"{% endif %}>
+                  {{ data_title }}
+                </a>
+                {% if settings.enable_lang_switcher %}
+                <span class="hide" id="footer1_{{link.handle}}">{{ data_json | raw }}</span>
+                {% endif %}
+              </li>
+              {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% elsif block.type == 'Info' %}
+      <div class="col">
+        <h4 class="sub-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#footer1_{{blockId}}info_title"{% endif %}>
+          {{ block.settings.title }}
+        </h4>
+        {% if settings.enable_lang_switcher %}
+        <span class="hide" id="footer1_{{blockId}}info_title">{{ block.settings.trans_title | raw }}</span>
+        {% endif %}
+        <ul class="contact-list">
+          {% if block.settings.address %}
+          <li style="color: {{ settings.footer_link_color }}">
+            <i class="fa fa-map-marker"></i>
+            <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{blockId}}_address"{% endif %}>
+              {{ block.settings.address }}
+            </span>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="footer1_{{blockId}}_address">{{ block.settings.trans_address | raw }}</span>
+            {% endif %}
+          </li>
+          {% endif %}
+          {% if block.settings.contact_info %}
+          <li style="color: {{ settings.footer_link_color }}">
+            <i class="fa fa-phone"></i>
+            <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{blockId}}_contact_info"{% endif %}>
+              {{ block.settings.contact_info }}
+            </span>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="footer1_{{blockId}}_contact_info">{{ block.settings.trans_contact_info | raw }}</span>
+            {% endif %}
+          </li>
+          {% endif %}
+          {% if block.settings.email %}
+          <li style="color: {{ settings.footer_link_color }}">
+            <i class="fa fa-envelope-o"></i>
+            <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{blockId}}_email"{% endif %}>
+              {{ block.settings.email }}
+            </span>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="footer1_{{blockId}}_email">{{ block.settings.trans_email | raw }}</span>
+            {% endif %}
+          </li>
+          {% endif %}
+          {% if block.settings.fax %}
+          <li style="color: {{ settings.footer_link_color }}">
+            <i class="fa fa-fax"></i>
+            <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{blockId}}_fax"{% endif %}>
+              {{ block.settings.fax }}
+            </span>
+            {% if settings.enable_lang_switcher %}
+            <span class="hide" id="footer1_{{blockId}}_fax">{{ block.settings.trans_fax | raw }}</span>
+            {% endif %}
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+      {% else %}
+      <div class="col">
+        <div class="">
+          <div class="footer-title">
+            <h4  style="color: {{ settings.footer_text_color }}"  class="sub-title {% if settings.enable_lang_switcher %} lang_trans {% endif %}"{% if settings.enable_lang_switcher %} data-trans="#footer1_{{blockId}}_menu_title"{% endif %}>
+              {{ block.settings.title }}
+            </h4>
+            {% if settings.enable_lang_switcher %}
+                <span class="hide" id="footer1_{{blockId}}_menu_title">{{ block.settings.trans_title | raw }}</span>
+                {% endif %}
+              </div>
+              <div class="footer-contant">
+                <ul>
+                  {% if block.settings.footer_linklist != blank %} 
+                  {% assign footer_linklist = block.settings.footer_linklist -%}
+                  {% for link in linklists[footer_linklist].links %}
+                  <li>
+                    {% assign data_title = link.title | split: '|' | first %}
+                    {% assign data_json = link.title | split: '|' | last %}
+                    <a href="{{ link.url }}" style="color: {{ settings.footer_link_color }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{link.handle}}"{% endif %}>
+                      {{ data_title }}
+                    </a>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="footer1_{{link.handle}}">{{ data_json | raw }}</span>
+                    {% endif %}
+                  </li>
+                  {% endfor %}
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+      {% endif %}
+      {% endfor %}
+      
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        {% if section.settings.show_social %}
+        <ul class="footer-social">
+          {% if settings.social_facebook_link != blank %}
+          <li><a href="{{ settings.social_facebook_link | escape }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+          {% endif %}
+          {% if settings.social_google_link != blank %}
+          <li><a href="{{ settings.social_google_link | escape }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+          {% endif %}
+          {% if settings.social_twitter_link != blank %}
+          <li><a href="{{ settings.social_twitter_link | escape }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+          {% endif %}
+          {% if settings.social_instagram_link != blank %}
+          <li><a href="{{ settings.social_instagram_link | escape }}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+          {% endif %}
+          {% if settings.social_rss_link != blank %}
+          <li><a href="{{ settings.social_rss_link | escape }}" target="_blank"><i class="fa fa-rss"></i></a></li>
+          {% endif %}
+        </ul>
+        {% endif %}
+        <ul class="bottom-links wow {{ section.settings.btm_footer_animation_style }}" data-wow-delay="0.4s">
+          {% if section.settings.footer_btm_linklist != blank %} 
+          {% assign footer_linklist = section.settings.footer_btm_linklist -%}
+          {% for link in linklists[footer_linklist].links %}
+          <li>{% assign data_title = link.title | split: '|' | first %}
+                    {% assign data_json = link.title | split: '|' | last %}
+                    <a href="{{ link.url }}" style="color: {{ settings.footer_link_color }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer1_{{link.handle}}"{% endif %}>
+                      {{ data_title }}
+                    </a>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="footer1_{{link.handle}}">{{ data_json | raw }}</span>
+                    {% endif %}</li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--footer 1 start-->
+
+{% schema %}
+{
+   "name":"Footer",
+   "max_blocks":8,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"show_social",
+         "label":"Show Social Icon",
+         "default":true
+      },
+      {
+         "type":"link_list",
+         "id":"footer_btm_linklist",
+         "label":"Select Bottom footer menu",
+         "default":"footer"
+      }
+   
+   ],
+   "blocks":[
+      {
+         "type":"Custom-html",
+         "name":"Custom Html",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"footer_logo",
+               "label":"footer Logo image"
+            },
+            {
+               "type":"text",
+               "id":"footer_logo_max_width",
+               "label":"Custom logo width (in pixels)",
+               "default":"280"
+            },
+            {
+               "type":"textarea",
+               "id":"text",
+               "label":"Text",
+			   "default": "It is a long established fact that a reader will be distracted by the readable content."
+            },
+            {
+               "type":"checkbox",
+               "id":"show_downloads",
+               "label":"Show App Downloads",
+               "default":true
+            },
+            {
+               "type":"image_picker",
+               "id":"payment_1",
+               "label":"google Play Image"
+            },
+            {
+               "type":"url",
+               "id":"payment_1_link",
+               "label":"google Play Link"
+            },
+            {
+               "type":"image_picker",
+               "id":"payment_2",
+               "label":"App store Image"
+            },
+            {
+               "type":"url",
+               "id":"payment_2_link",
+               "label":"App store Link"
+            }
+         ]
+      },
+        {
+         "type":"Menu",
+         "name":"footer Menu",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Menu Title",
+               "default": "Links"
+            },
+            {
+             "type": "textarea",
+             "id": "trans_title",
+             "label": "Translate Text Title"
+            },
+            {
+               "type":"link_list",
+               "id":"footer_linklist",
+               "label":"Select footer menu",
+               "default":"footer"
+            }
+            ]
+         },
+       {
+          "type":"Info",
+         "name":"Store Info",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Store Info title",
+               "default": "Store Info"
+            },
+            {
+             "type": "textarea",
+             "id": "trans_title",
+             "label": "Translate Store Info Title"
+            },
+            {
+               "type":"text",
+               "id":"address",
+               "label":"Address",
+               "default":"Fiot Fashion Demo Store Demo Store USA"
+            },
+            {
+             "type": "textarea",
+             "id": "trans_address",
+             "label": "Translate Address Title"
+            },
+            {
+               "type":"text",
+               "id":"email",
+               "label":"Email Addres",
+               "default":"Email Us: Support@Fiot.com"
+            },
+            {
+             "type": "textarea",
+             "id": "trans_email",
+             "label": "Translate Email Title"
+            },
+            {
+               "type":"text",
+               "id":"fax",
+               "label":"Fax Number",
+               "default":"Fax: 123456"
+            },
+            {
+             "type": "textarea",
+             "id": "trans_fax",
+             "label": "Translate fax Title"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

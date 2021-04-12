@@ -1,0 +1,340 @@
+{%- if section.settings.enabled -%}
+<section class="{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+  <div class="container">
+    <div class="row banners  layout-4-collection">
+      {% assign block_size = section.blocks.size  %}
+      {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %} 
+      <div class="col-lg-{% if block_size == 2 %}{{ 6 }}{% elsif block_size == 3 %}{{ 4 }}{% elsif block_size == 4 %}{{ 3 }}{% endif %} " >
+        <a href="{{ collection.url }}">
+          <div class="banner-effect  main-banner">
+            {% if block.settings.banner_image == blank %}
+              {% capture current %}{% cycle 1,2,3,4 %}{% endcapture %}
+              {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% else %}
+                 {% if section.settings.use_equal_height %}
+                  <div>
+                    <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: block.settings.banner_image %}" data-sizes="auto" data-parent-fit="cover"></span>
+                  </div>        
+                  {% else %}
+                  {% assign block_image = block.settings.banner_image %}
+                  {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                  <img src="{{ block_image | img_url: 'original' }}" 
+                       data-src="{{ img_url }}" 
+                       data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                       data-aspectratio="{{  block_image.aspect_ratio }}" 
+                       data-sizes="auto" 
+                       class="{% if forloop.last == true %} mb-0 {% endif %} lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                       width="100%">
+                  {% endif %}
+
+            {% endif %}
+
+            {% if block.settings.enabled_info %}
+              <div class="banner-contain {% if section.settings.enabled_layout_2 %}banner-contain-layout-2 banner-mobile {% endif %} demo-style-2 {{ block.settings.banner_color_style }}">
+                <div>
+                    {% if block.settings.title_top != blank %}
+                    <h4  {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#collection_{{blockId}}trans_title_top"{% endif %}>{{block.settings.title_top}}</h4>
+                    {% endif %}
+                     {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="collection_{{blockId}}trans_title_top">{{ block.settings.trans_title_top | raw }}</span>
+                    {% endif %}
+
+                    {% if block.settings.title %}
+                     <h1 class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#collection_{{blockId}}main_title"{% endif %}>
+                      {{ block.settings.title }}
+                    </h1>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="collection_{{blockId}}main_title">{{ block.settings.trans_title | raw }}</span>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.title_bottom %}
+                    <h2 {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#collection_{{blockId}}title_bottom"{% endif %}>{{block.settings.title_bottom}}
+                    </h2>
+                    {% if settings.enable_lang_switcher %}
+                    <span class="hide" id="collection_{{blockId}}title_bottom">{{ block.settings.trans_title_bottom | raw }}</span>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.btn_txt != blank %}
+                    <div {% if settings.enable_lang_switcher %}class="banner-btn lang_trans"{% endif %} {% if settings.enable_lang_switcher %} data-trans="#collection_{{blockId}}btn_txt"{% endif %}>
+                      {{ block.settings.btn_txt }}
+                    </div>
+                      {% if settings.enable_lang_switcher %}
+                       <span class="hide" id="collection_{{blockId}}btn_txt">{{ block.settings.trans_btn_txt | raw }}</span>
+                     {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+<!--banner section ends-->
+
+{% schema %}
+{
+   "name":"Featured Collection",
+   "max_blocks":4,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled"
+      },
+  {
+         "type":"checkbox",
+         "id":"enabled_layout_2",
+         "default":true,
+         "label":"Enabled Simple design"
+      },
+      {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position2",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      }
+   ],
+   "blocks":[
+      {
+         "type":"Collection",
+         "name":"Add Collection ",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"banner_image",
+               "label":"Collection Image (505x270)"
+            },
+            {
+               "type":"collection",
+               "id":"collection",
+               "label":"Select collection"
+            },
+            {
+               "type":"checkbox",
+               "id":"enabled_info",
+               "default":true,
+               "label":"Show Info"
+            },
+            {
+               "type":"text",
+               "id":"title_top",
+               "label":"Heading Top",
+               "default":"fruits"
+            },
+             {
+               "type": "textarea",
+               "id": "trans_title_top",
+               "label": "Translate Main Title"
+            },
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Heading",
+               "default":"fruits"
+            },
+             {
+               "type": "textarea",
+               "id": "trans_title",
+               "label": "Translate Title"
+            },
+            {
+               "type":"text",
+               "id":"title_bottom",
+               "label":"Heading",
+               "default":"-16%"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_title_bottom",
+               "label": "Translate Title bottom"
+            },
+            {
+               "type":"text",
+               "id":"btn_txt",
+               "label":"Button Text",
+               "default":"shop now"
+            },
+            {
+               "type": "textarea",
+               "id": "trans_btn_txt",
+               "label": "Translate shop now button"
+            },
+            {
+               "type":"select",
+               "id":"banner_color_style",
+               "label":"banner color Style",
+               "options":[
+                  {
+                     "label":"banner text green",
+                     "value":"banner-green"
+                  },
+                  {
+                     "label":"banner text orenge",
+                     "value":"banner-orange"
+                  },
+                  {
+                     "label":"banner text red",
+                     "value":"banner-yellow"
+                  }
+               ],
+               "default":"banner-green"
+            },
+            {
+               "type":"checkbox",
+               "id":"enabled_dark_btn",
+               "default":false,
+               "label":"Reb Button Style"
+            },
+            {
+               "type":"select",
+               "id":"text_style",
+               "label":"Text Style",
+               "options":[
+                  {
+                     "label":"Light text",
+                     "value":"light-theme"
+                  },
+                  {
+                     "label":"Dark Text",
+                     "value":"dark_theme"
+                  }
+               ],
+               "default":"light-theme"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Featured Collection",
+         "category":"Collection",
+         "blocks":[
+            {
+               "type":"Collection"
+            },
+            {
+               "type":"Collection"
+            },
+            {
+               "type":"Collection"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

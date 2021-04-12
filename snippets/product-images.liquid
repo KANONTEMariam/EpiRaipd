@@ -1,0 +1,121 @@
+<div class="{% if section.settings.layout == 'full-width-img' %}col-lg-12 {% else %}col-lg-6{% endif %}">
+  <div class="row">
+    <div class="{% if section.settings.layout == 'thumbnails-left' %}col-9 order-1
+                {% elsif section.settings.layout =='thumbnails-bottom' %} col-12 
+                {% elsif section.settings.layout == 'thumbnails-right' %}col-9 
+                {% elsif section.settings.layout == 'full-width-img' %}col-xl-8 offset-xl-2
+                {% else %}col-9
+                {% endif %}">
+      <div class="slider product-slider theme-slider">
+        {% for image in product.images %}
+        {% capture img_id %}FeaturedImage-{{ section.id }}-{{ image.id }}{% endcapture %}
+        {% capture zoom_img_id %}FeaturedImageZoom-{{ section.id }}-{{ image.id }}{% endcapture %}
+        {% capture img_wrapper_id %}{{ zoom_img_id }}-w
+        rapper{% endcapture %}             
+        <div id="{{ img_wrapper_id }} " class="video_feature">
+          {% if settings.group_video_features == "video" %}
+
+          {% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}
+          <div class="video_alt">
+            <i class="fa fa-play" data-toggle="modal"  data-target="#myModal_vedio_{{forloop.index}}"></i>
+          </div>
+          {% endif %}
+          
+          {% endif %}
+          
+          {% assign block_image = image %}
+          {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+          <img itemprop="image" src="{{ block_image | img_url: 'original' }}" 
+               data-src="{{ img_url }}" 
+               data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+               data-aspectratio="{{ block_image.aspect_ratio }}" 
+               data-sizes="auto" 
+               class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid image_zoom_cls-{{ forloop.index0 }} main_img" alt="{{ product.title }}" >
+        </div>
+        {% endfor %}
+      </div>
+      {% if settings.enable_360_view %}
+      {%- if product.metafields.meta.view_img != blank -%}
+      <div class="product-360view">
+        {% include 'product-360' %}
+        <div class="image-360">
+          <img src="{{ '360-icon.png' | asset_url }}" class="img-fluid">
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+
+    </div>
+    <div class="{% if section.settings.layout == 'thumbnails-left' %}col-3
+                {% elsif section.settings.layout == 'thumbnails-bottom' %} col-12
+                {% elsif section.settings.layout == 'full-width-img' %}col-xl-8 offset-xl-2
+                {% else %}col-3 thumb_right
+                {% endif %} theme-slider">
+      <div class="slider product-nav">
+        {% for image in product.images %}
+        <div>
+          {% assign block_image = image.src %}
+          {% assign img_url = image.src | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+          <img itemprop="image" src="{{ image.src | img_url: '220x' }}" 
+               data-src="{{ img_url }}" 
+               data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+               data-aspectratio="{{ block_image.aspect_ratio }}" 
+               data-sizes="auto" 
+               class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid " alt="{{ product.title }}" />
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+{% for image in product.images %}
+{% if settings.group_video_features == "video" %}
+{% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}
+<div class="modal fade myModal_vedio" id="myModal_vedio_{{forloop.index}}" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="video_fram">
+        {% assign src = image.alt | split: 'src="' %}
+        {% assign src = src[1] | split: '"' | first %}
+
+        {% if src contains '?' %}
+        {% assign src = src | append: '&amp;autoplay=1' %}
+        {% else %}
+        {% assign src = src | append: '?autoplay=1' %}
+        {% endif %}
+        <div class="video-container {% if image.alt contains 'vimeo' %}vimeo{% else %}youtube{% endif %}">
+          <div>
+            <a href="{{ src }}" title="{{ product.title | escape }}">
+              {{ image.alt }}
+            </a>
+          </div>
+        </div>      
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endfor %}
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $('.image-360').click(function(){
+      $('body').addClass('show-360');
+
+    });
+    $('.close-360').click(function(){
+      $('body').removeClass('show-360');
+    });
+
+
+  });
+</script>
+

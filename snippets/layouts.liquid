@@ -1,0 +1,196 @@
+<section id="demo-import-lightbox" class="demo-modal pixel-box">
+  <div class="lightbox showlightbox">
+    <div class="pixel-close">
+      <button id="close-btn">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+    <div class="importbox-inner">
+      <div class="importbox-body">
+        <div class="demo-update-cls row">
+          <label>Import Theme Demo</label>
+          {% for i in (1..4) %}
+          {% capture thumb %} demonew{{ i }}.png{% endcapture %}
+          <div class="col-sm-3 col-xs-6">
+            <div class="update_demo_item">
+              <div class="demo_img" style="background-image: url(https://cdn.shopify.com/s/files/1/0033/7956/0537/files/demonew{{ i }}.png)" ></div>
+              <div class="import-form-fields">
+                <span>Set up Lauout {{ i }}</span>
+                <button class="demo-click-btn" data-demo="Layout_{{ i }}" title="Set Up Demo {{i}}">
+                  <span class="fa fa-download"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="export-json row">
+          <div class="export-json-inner">
+            <label>Export Demo json</label>
+            <div class="attention">
+              <div class="attention-title">
+                <i class="fa fa-warning"></i><strong>Attention:</strong>
+              </div>
+              <div class="attention-description">
+                Before Publishing the home page, you should always create back of settings data of your current theme.
+                Click below button to copy setting data and save this on your Computer. 
+              </div>
+            </div>
+            <div class="col-sm-12 col-xs-12">
+
+              <a id="setting_preset_data"></a>
+              <div class="export_btn">
+                <button class="export-btn" type="submit">Download Demo Preset</button>
+                <button class="import-btn" type="submit" ><span>Publish Demo</span>
+                  <img src="{{ 'demo-loader.gif' | asset_url }}" alt="Importer Loader" />
+                </button>
+
+              </div>
+            </div>
+            <button class="close-btn">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  $('.export-json').hide();
+  $(document).on("click", ".export-btn", function() {
+    var theme_id = Shopify.theme.id;
+    var shop_url = '{{ shop.url }}/admin/themes/';
+    var shopUrl =  shop_url+theme_id+'/assets.json?asset[key]=config/settings_data.json&theme_id='+theme_id;
+    function url_content(url){
+      return $.get(url);
+    }
+    url_content(shopUrl).success(function(data){ 
+      var current_setting_data = data.asset.value;
+      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(current_setting_data);
+      var dlAnchorElem = document.getElementById('setting_preset_data');
+      dlAnchorElem.setAttribute("href", dataStr );
+      dlAnchorElem.setAttribute("download", "current_setting_preset.json");
+      dlAnchorElem.click();
+    });
+  });
+
+  window.modifyJson = {}, 
+    window.modifyJson.settings_urls = "{{ 'demo_preset.json ' | asset_url }}", 
+    $(document).on("shopify:section:load", modifyPortion), 
+      $(document).on("shopify:section:reorder", modifyPortion);
+
+  var $top = $(top.document),
+      $list_item = $top.find(".ui-action-list").first();
+  0 == $list_item.find("li .import-demo-btn").length && $list_item.append($('<li class="ui-action-list__item"><a href="#" class="ui-action-list-action import-demo-btn">One Click Import</a></li>'));
+
+  window.top.document.querySelector(".import-demo-btn").addEventListener("click", function() {
+    $("body").toggleClass("lightbox-active");
+    $('.demo-update-cls').show();
+  }), 
+    $.get(window.modifyJson.settings_urls, function(f, y) {
+    "success" == y && ($data = f.presets)
+  }),
+
+    $(document).on("click", ".demo-click-btn", function(f) {
+    var y = $(this),
+        data_val = y.data("demo");
+    $('.export-json').addClass('lightbox-open');
+    $('.export-json').fadeIn();
+    $('.import-btn').attr("data-layout", data_val);
+
+    var copy_data = $data[data_val];
+
+    $(document).on("shopify:section:select"), $(document).on("shopify:section:reorder"), $(document).on("click", ".import-btn", function(f) {
+      f.preventDefault(), $(this).addClass("loading");
+      var y = $(this),
+          a = y.data("layout");
+
+      $data[a], jsonImport(setDemoPosition(replicateJson($data[a]), !1, "settings")), $(".import-btn").removeClass("active"), y.addClass("active")
+    });
+  }),    
+    $(document).on("click", ".close-btn", function() {
+    $('.export-json').fadeOut();
+    $('.export-json').removeClass('lightbox-open');
+  })
+
+  $(document).on("click", "#close-btn", function() {
+    $("body").toggleClass("lightbox-active");    
+  })
+  function modifyPortion() {
+    var f = [];
+    $(top.document).find("[data-content-for-index]").children("li").each(function() {
+      var y = $(this).attr("data-section-id");
+      y && f.push(y)
+    }), f.length > 0 && (top.window.Shopify.contentForIndex = f)
+  }
+  function changeToJson(f, y, n) {
+    var n = n || {};
+    return f.length === 1
+    ? (y.indexOf("[]") > -1 ? y = [] 
+       : y.indexOf('["') > -1 && (y = y.replace('["', "").replace('"]', "").replace(new RegExp('","', "g"), "|").split("|")), n[f[0]] = y, n) 
+    : (n[f[0]] = n[f[0]] || {}, n[f[0]] = changeToJson(f.slice(1), y, n[f[0]]), n)
+  }
+  function setDemoPosition(f, y, a) {
+    return y = y || [], Object.keys(f).forEach(function(j) {
+      var i;
+      if(a){
+        i = a + "[" + j + "]";
+      }else{
+        i = j;
+      }
+      if((typeof f[j] !== 'object') || Array.isArray(f[j]) || f[j] instanceof File)
+      {   
+        if(Array.isArray(f[j]))
+        {
+          f[j].forEach(function(f) {
+            var a = i + "[]";
+            if((typeof f[j] === 'object') && !(f[j] instanceof File))
+            {
+              setDemoPosition(f, y, a) 
+            }else{ 
+              y.push({
+                name: a,
+                value: f
+              })
+            }
+          }) 
+        }else{ 
+          y.push({
+            name: i,
+            value: f[j]
+          }) 
+        }
+      }else{
+        setDemoPosition(f[j], y, i)
+      }
+    }), y
+  }
+  function getLayoutData() {
+    var themeform = $(window.top.document).find("#theme-editor-form").serializeArray();
+    themeform.push({
+      name: "settings[content_for_index]",
+      value: '["' + top.window.Shopify.contentForIndex.join('","') + '"]'
+    });
+    for (var y = {}, i = 0; i < themeform.length; i++){ 
+      var f = themeform[i].name.replace("settings", "").split("][").join("|").replace("[", "").replace("]", "").split("|");
+      var a = themeform[i].value;
+      changeToJson(f, a, y);
+    }
+    return y
+  }
+  function replicateJson(data) {
+    var CurrentSettings = getLayoutData();
+    var OldSettings = {
+      "accessToken": CurrentSettings["CurrentSettings"]
+    };
+    return $.extend({}, OldSettings, data); 
+  }
+  function jsonImport(f, y) {
+    var a = {method: "PATCH",url: top.Shopify.routes.theme_editor_save(top.THEME_ID).html,data: f},
+        j = $.extend({}, a, y);
+    top.Shopify.ajax(j).done(function(f) {top.window.location.reload()}).fail(function(f) {})
+  }
+</script>

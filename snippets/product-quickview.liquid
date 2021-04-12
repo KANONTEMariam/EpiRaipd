@@ -1,0 +1,420 @@
+<div class="qv_custom_modal" id="product_qv_id">
+  <div class="qv_padding_cls">
+    <div class="qv_innwe_modal">
+      <div class="qv_close_btn">
+        <a href="javascript:void(0)" id="qv_close_id"><em class="fa fa-times"></em></a>
+      </div>
+      <img src="{{ 'Spinner-loder.gif' | asset_url }}" class="qv_loader" alt="loader_img" />
+      <div class="custom_7_col qv_grid">
+        <div class="qv_featured_img">
+          <ul class="qv_slider_for qv_main_img_cls"> 
+            <li>
+              <figure class="qv_main_img"></figure>
+            </li>
+          </ul>
+          <ul class="qv_slider_nav thumbnail qv_thumbnail_cls"></ul>
+        </div>
+      </div>
+      <div class="custom_5_col qv_grid">
+        <div class="qv_product_info">
+          <h2 class="qv_product_title"><a href=""></a></h2>
+          
+          <div class="qv_price_box qv_product_price qv_price_part">
+            <span class="qv_price_box_new selective-orange"></span>
+            <span class="main qv_price_box_old selective-green"></span>
+          </div>
+          <div class="qv_pro_desc">
+            <div class="qv_pro_desc_info"></div>
+          </div>
+          <div class="qv_pro_available">
+            <form id="qv_addcart_form" action="/cart/add" method="post">
+              <div class="qv_variants"></div>
+              <div class="wrapper">
+                <div class="qv_qty_cls">
+                  <input type="number" id="Quantity" class="product_qty_input" name="quantity" value="1">
+                  <button class="addtocartqv btn btn-theme" id="add_to_cart_btn_id" type="submit">Add to Cart</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="qv_info_div">
+            <div class="qv_pro_disable">
+              <button disabled class="qv_unavialable_btn">Sold Out</button>
+            </div>
+            <a class="qv_fullinfo selective-orange" target="_blank">View Detail</a>
+          </div>
+          <div class="qv_socials">
+            <span>Share it</span>
+            <ul class="theme-social mt-0">
+              <li class="qv_social_icon"><a target="_blank" href="" class="fb_share"><em class="fa fa-facebook"></em></a></li>
+              <li class="qv_social_icon"><a target="_blank" href="" class="twitter_share"><em class="fa fa-twitter"></em></a></li>
+              <li class="qv_social_icon"><a target="_blank" href="" class="pinterest_share"><em class="fa fa-pinterest-p"></em></a></li>
+              <li class="qv_social_icon"><a target="_blank" href="" class="google_share"><em class="fa fa-google-plus"></em></a></li>
+            </ul>
+          </div>
+          <div class="qv_added_pro_div">
+            <p>Item added to cart! <a href="/cart">View Cart</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="qv_shop_url_id" style="display:none !important">{{ shop.url }}</div>
+  <div id="qv_shop_money_format" style="display:none !important">{{ shop.money_format }}</div>
+</div>
+
+<div class="quickViewModal_info" style="display:none;">
+  <div class="button">Add to Cart</div>
+  <div class="button_added">Added to Cart</div>
+  <div class="button_error">Error</div>
+  <div class="button_wait">Wait</div>
+</div>
+
+{{ '//cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.js' | script_tag }}
+<script>
+  $('#add_to_cart_btn_id').click(function(evt) {
+    Shopify.addItemFromForm($(this).closest('form').attr('id'), $(this).attr('id'));
+    return false;
+  });
+
+  Shopify.addItemFromForm = function(form_id, variant_id, callback) {
+    $('.qv_added_pro_div').hide();
+    var params = {
+      type: 'POST',
+      url: '/cart/add.js',
+      beforeSend: function(){
+        if(form_id == "qv_addcart_form") {
+          jQuery('#'+form_id).find(".addtocartqv").html(jQuery(".quickViewModal_info .button_wait").html());
+        }
+      },
+      data: jQuery('#' + form_id).serialize(),
+      dataType: 'json',
+      success: function(line_item) {
+        if((typeof callback) === 'function') {
+          callback(line_item);
+        }
+        else {
+          jQuery('#' + form_id).find(".addtocartqv").html(jQuery(".quickViewModal_info .button_added").html());
+          setTimeout(function(){
+            jQuery('#' + form_id).find(".addtocartqv").html(jQuery(".quickViewModal_info .button").html());
+          }, 2000);
+          $('.qv_added_pro_div').show('300');
+          setTimeout(function(){
+            jQuery.getJSON('/cart.js', function(cart) {
+              $('.change_cart_count').html(cart.item_count);
+            });
+          },300);
+        }
+      },
+      error: function(XMLHttpRequest, textStatus) {
+        if(form_id != "qv_addcart_form") {
+          Shopify.onError(XMLHttpRequest, textStatus);
+        } else {
+          jQuery('#' + form_id).find(".addtocartqv").html(jQuery(".quickViewModal_info .button_error").html());
+          setTimeout(function(){
+            jQuery('#' + form_id).find(".addtocartqv").html(jQuery(".quickViewModal_info .button").html());
+          }, 2000);
+        }
+      }
+    };
+    jQuery.ajax(params);
+  };
+
+  var mainImage = '';
+  var shop_url = $('#qv_shop_url_id').text();
+  var shop_money_format = $('#shop_currency_val').text();
+
+  jQuery(function ($) {
+    open_quickview = function(product_handle) {
+      $('#product_qv_id').fadeIn();
+      $('.qv_padding_cls').addClass('animated slideInDown');
+      $('body').addClass('overflow_fixed');
+      $('#product_qv_id .qv_grid').hide();
+      $('.qv_loader').show();
+      setTimeout(function(){
+        Shopify.getProduct(product_handle);
+      }, 200);
+    }
+    Shopify.onProduct = function(product) {
+      $('.qv_fullinfo').attr('href', product.url);
+      var _parent = '#product_qv_id';
+      $(_parent+' .qv_product_title a').text(product.title);
+      $(_parent+' .qv_product_title a').attr('href', product.url);
+      $(_parent+' .qv_socials .fb_share').attr('href', '//www.facebook.com/sharer.php?u='+shop_url+product.url);
+      $(_parent+' .qv_socials .twitter_share').attr('href', '//twitter.com/share?text='+product.title+'&amp;url='+shop_url+product.url);
+      $(_parent+' .qv_socials .pinterest_share').attr('href', '//pinterest.com/pin/create/button/?url='+shop_url+product.url+'&amp;media='+product.featured_image+'&amp;description='+product.featured_image);
+      $(_parent+' .qv_socials .google_share').attr('href', '//plus.google.com/share?url='+shop_url+product.url);
+
+      //check variants
+      var variant = '';
+      for (i = 0; i < product.variants.length; i++) {
+        if(product.variants[i].inventory_quantity > 0) {
+          variant = product.variants[i];
+          break;
+        }
+      }
+
+      if(variant) {
+        for (i = 0; i < product.variants.length; i++) {
+          if(product.variants[i].inventory_policy == "continue") {
+            variant = product.variants[i];
+            break;
+          }
+        }
+      }
+      else{
+        variant = product.variants[0];
+      }
+
+      mainImage = product.featured_image;
+      var shopifyimgurl = variant.featured_image ? variant.featured_image.src : product.featured_image;
+      var imgurl = "<img class=\"full-width\" id=\"quickview_img_zoom\" alt=\"\" src = \""+Shopify.resizeImage(shopifyimgurl, 'large')+"\" data-zoom-image=\""+Shopify.resizeImage(shopifyimgurl, 'original')+"\" >";
+      jQuery(_parent+' .qv_main_img_cls .qv_main_img').empty();
+      jQuery(_parent+' .qv_main_img_cls .qv_main_img').append(imgurl);
+
+      var poplet_imgs = '';
+
+      if(product.images.length > 1){
+        for (i = 0; i < product.images.length; i++) {
+          var temp_img = product.images[i];
+          poplet_imgs += '<li><figure class="product_poplet_imgs"><img src="'+Shopify.resizeImage(temp_img, 'large')+'" alt="image" data-zoom-image="'+Shopify.resizeImage(temp_img, 'original')+'"></figure></li>';
+        }
+      }
+
+      var total_pop_imgs = '';
+      total_pop_imgs = poplet_imgs;
+      jQuery(_parent+' .qv_slider_nav.thumbnail').empty();
+      jQuery(_parent+' .qv_slider_nav.thumbnail').append(total_pop_imgs);
+
+      $('#product_qv_id .product_poplet_imgs').on('click', function (e) {
+        var img_url = $(this).find('img').attr('src');
+        var zoom_img_src = $(this).find('img').attr('data-zoom-image');
+        $('#product_qv_id .qv_main_img_cls').find('figure img').attr('src', img_url);
+        $('#product_qv_id .qv_main_img_cls').find('figure img').attr('data-zoom-image', zoom_img_src);
+        $('.zoomContainer').remove();
+        $('#quickview_img_zoom').removeData('elevateZoom');
+        $('#quickview_img_zoom').removeData('zoomImage');
+        if($(window).width() < 768){} else{
+          $("#quickview_img_zoom").elevateZoom({scrollZoom:true});
+        }
+      });
+
+      var desc = product.description;
+      var desc_split_counter_start = '[countdowntimer-date-start]';
+      var desc_split_counter_end = '[countdowntimer-date-end]';
+
+      $(_parent+' .qv_pro_desc_info').show();
+
+      if (desc.length > 200) {
+        if(desc.includes(desc_split_counter_start) || desc.includes(desc_split_counter_end)){
+          desc = desc.replace(desc_split_counter_start,'');
+          desc = desc.replace(desc_split_counter_end,'');
+          $(_parent+' .qv_pro_desc_info').html(desc.substr(0, desc.lastIndexOf(' ', 200)) + '...');
+        }else{
+          $(_parent+' .qv_pro_desc_info').html(desc.substr(0, desc.lastIndexOf(' ', 200)) + '...');
+        }
+      } else{
+        if(desc.includes(desc_split_counter_start) || desc.includes(desc_split_counter_end)){
+          desc = desc.replace(desc_split_counter_start,'');
+          desc = desc.replace(desc_split_counter_end,'');
+          $(_parent+' .qv_pro_desc_info').html(desc);
+        }else{
+          $(_parent+' .qv_pro_desc_info').html(desc);
+        }
+      }
+
+      //set variants property
+      var inv_qua = variant.inventory_quantity;
+      //price
+      if(variant.price < variant.compare_at_price) {
+        $('.qv_price_part .main').addClass('qv_price_box_old');
+        $('.qv_price_part .qv_price_box_new').show();
+        changePriceValue('.qv_price_part .main', variant.compare_at_price);
+        changePriceValue('.qv_price_part .qv_price_box_new', variant.price);
+      }
+      else {
+        $('.qv_price_part .qv_price_box_new').hide();
+        $('.qv_price_part .main').removeClass('qv_price_box_old');
+        changePriceValue('.qv_price_part .main', variant.price);
+      }
+
+      // Variants select
+      if(product.variants.length > 1) {
+        var variants_margin = product.options.length == 2 ? 'variants_margin' : '';
+        var select = '<select id="product-select-wc" name="id">';
+        var selected = 'selected';
+        for (i = 0; i < product.variants.length; i++) {
+          var _var = product.variants[i];
+          if(_var.available) {
+            select += '<option value="' + _var.id + '"' + selected +'>' + _var.title + ' - ' + Shopify.formatMoney(_var.price, shop_money_format) + '</option>'
+            selected = '';
+          }
+        }
+        select += '</select>';
+        var variant_select = '<div class="variants_selects ' + variants_margin + '">';
+        variant_select += select;
+        variant_select += '</div><div class="divider divider--sm"></div>';
+        select = variant_select;
+      }
+      else {
+        var select = '<input type="hidden" name="id" value="' + product.variants[0].id + '" />';
+      }
+      $('.qv_variants').empty();
+      $('.qv_variants').html(select);
+
+      //quantity
+      var out_of_stock = false;
+      if(product.available){}
+      else {
+        out_of_stock = true;
+      }
+
+      // button
+      if(!out_of_stock) {
+        $('.qv_pro_available').show();
+        $('.qv_pro_disable').hide();
+        $('.addtocartqv').attr('id', product.id);
+      }
+      else {
+        $('.qv_pro_available').hide();
+        $('.qv_pro_disable').show();
+      }
+
+      if (product.available && product.variants.length > 1) {
+        new Shopify.OptionSelectors("product-select-wc", { product: product, onVariantSelected: selectCallbackQv, enableHistoryState: true });
+
+        if($('#product_qv_id .variants_selects .selector-wrapper').length > 0) {
+          $.each( jQuery('#product_qv_id .variants_selects .selector-wrapper'), function(index) {
+            $(this).find('label').text(product.options[index].name);
+          });
+        }
+      }
+      else {
+        jQuery('.currency .active').trigger('click');
+      }
+      selectGrid(_parent, product);
+
+      if($(".spr-badge").length > 0) {
+        $.getScript(window.location.protocol + "//productreviews.shopifycdn.com/assets/v4/spr.js");
+      }
+
+      if($(".selector-wrapper label").length) {
+        $(".selector-wrapper label").each(function(index) {
+          $(this).text(jQuery(this).text());
+        });
+      }
+
+      var main_img_url = Shopify.resizeImage(shopifyimgurl, 'large');
+      $('#quickview_img_zoom').attr('src', main_img_url).on('load', function(){
+        $('.qv_loader').hide();
+        $('#product_qv_id .qv_grid').show();
+        $('.qv_padding_cls').removeClass('animated slideInDown');
+      });
+
+      if( !( 'ontouchstart' in window ) &&
+         !navigator.msMaxTouchPoints &&
+         !navigator.userAgent.toLowerCase().match( /windows phone os 7/i ) ) return false;
+    }
+
+    function changePriceValue (cell, value) {
+      $(cell).html(Shopify.formatMoney(value, shop_money_format));
+    };
+
+  });
+
+  var selectCallbackQv = function(variant, selector) {
+    var _parent = '#product_qv_id';
+    var _parentprice = _parent + ' .qv_price_part';
+    if (!variant) {
+      jQuery(_parent + " .qv_price_box").hide();
+      jQuery(_parent + " .qwt").hide();
+      jQuery(_parent + " .control-console").hide();
+      jQuery(_parent + ' .addtocartqv').attr('disabled','disabled');
+      jQuery(_parent + ' .addtocartqv').text('Unavailable');
+      return false;
+    }
+
+    jQuery(_parent + " .qv_price_box").show();
+    jQuery(_parent + " .qwt").show();
+    jQuery(_parent + " .control-console").show();
+
+    if(variant.price < variant.compare_at_price){
+      jQuery(_parentprice + ' .main').addClass('qv_price_box_old');
+      jQuery(_parentprice + ' .qv_price_box_new').show();
+      changePriceValue(_parentprice + ' .main', variant.compare_at_price);
+      changePriceValue(_parentprice + ' .qv_price_box_new', variant.price);
+    } else {
+      jQuery(_parentprice + ' .qv_price_box_new').hide();
+      jQuery(_parentprice + ' .main').removeClass('qv_price_box_old');
+      changePriceValue(_parentprice + ' .main', variant.price);
+    }
+
+    $('.qv_loader').show();
+    var shopifyimgurl = variant.featured_image ? variant.featured_image.src : mainImage;
+    var imgurl = "<img class=\"full-width\" id=\"quickview_img_zoom\" alt=\"\" src =\""+shopifyimgurl+"\" data-zoom-image=\""+Shopify.resizeImage(shopifyimgurl, 'original')+"\" >";
+    if(jQuery(_parent+' .qv_main_img_cls .qv_main_img').children().length > 0) {
+      var detach = jQuery(_parent+' .qv_main_img_cls .qv_main_img img').detach();
+    }
+    jQuery(_parent+' .qv_main_img_cls .qv_main_img').empty();
+    jQuery(_parent+' .qv_main_img_cls .qv_main_img').append(imgurl);
+
+    if (variant && variant.available) {
+      jQuery(_parent + ' .addtocartqv').removeAttr('disabled');
+      jQuery(_parent + ' .addtocartqv').html('Add to Cart');
+      jQuery(_parent + " .control-console").show();
+    } else {
+      jQuery(_parent + ' .addtocartqv').attr('disabled','disabled');
+      jQuery(_parent + ' .addtocartqv').text('Unavailable');
+      jQuery(_parent + " .control-console").hide();
+    }
+
+    var main_img_url = Shopify.resizeImage(shopifyimgurl, 'large');
+    $('#quickview_img_zoom').attr('src', main_img_url).on('load', function(){
+      $('.qv_loader').hide();
+    });
+
+    jQuery('.currency .active').trigger('click');
+    
+  };
+
+  function changePriceValue (cell, value) {
+    jQuery(cell).html(Shopify.formatMoney(value, shop_money_format));
+  };
+
+  function selectGrid(_parent, product) {
+    setTimeout(timeout, 5);
+    var select_wapper_length = jQuery(_parent + " .selector-wrapper").length;
+    function timeout() {
+      if(jQuery(_parent + " .selector-wrapper").length >= 2){
+        jQuery(_parent + " .selector-wrapper").addClass("custom_6_col");
+        jQuery(_parent + " .single-option-selector").addClass("select--wd");
+      } else{
+        jQuery(_parent + " .selector-wrapper").addClass("custom_12_col");
+        jQuery(_parent + " .single-option-selector").before("<label>"+product.options[0].name+"</label>");
+        jQuery(_parent + " .single-option-selector").addClass("select--wd");
+      }
+    }
+  };
+
+  $('#qv_close_id').click(function(){
+    var _parent = '#product_qv_id';
+    $('.qv_padding_cls').addClass('animated slideOutUp');
+    setTimeout(function(){
+      $('body').removeClass('overflow_fixed');
+      $('.qv_added_pro_div').hide();
+      jQuery(_parent+' .qv_main_img_cls .qv_main_img').empty();
+      jQuery(_parent+' .qv_slider_nav.thumbnail').empty();
+      $(_parent+' .qv_product_title a').text('');
+      $(_parent+' .qv_product_title a').attr('href', '');
+      $('.qv_price_part .main').empty();
+      $('.qv_price_part .qv_price_box_new').empty();
+      $(_parent+' .qv_pro_desc_info').empty();
+      $(_parent+' .qv_variants').empty();
+      $(_parent+' .qv_pro_available').hide();
+      $(_parent+' .qv_pro_disable').hide();
+      $('.qv_padding_cls').removeClass('animated slideOutUp');
+      $('#product_qv_id').fadeOut();
+    }, 200);
+  });
+
+</script>

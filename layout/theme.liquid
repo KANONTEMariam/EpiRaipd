@@ -1,0 +1,259 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
+
+  {%- capture seo_title -%}
+  {{ page_title }}
+  {%- if current_tags -%}
+  {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+  {%- endif -%}
+  {%- if current_page != 1 -%}
+  &ndash; {{ 'general.meta.page' | t: page: current_page }}
+  {%- endif -%}
+  {%- assign escaped_page_title = page_title | escape -%}
+  {%- unless escaped_page_title contains shop.name -%}
+  &ndash; {{ shop.name }}
+  {%- endunless -%}
+  {%- endcapture -%}
+  <title>{{ seo_title | strip }}</title>
+
+  {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}"> 
+  {%- endif -%}
+  
+   {% if settings.enable_fb_chat %}
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="{{ settings.fb_page_id }}"
+         theme_color="{{ settings.fb_color }}"
+         logged_in_greeting="{{ settings.greeting_title }}"
+         logged_out_greeting="{{ settings.greeting_title }}">
+    </div>
+    {% endif %}
+
+
+  {% include 'style' %}
+
+  {{ 'jquery-3.3.1.min.js' | asset_url | script_tag }} 
+  {{ 'head.js' | asset_url | script_tag }}
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+<script>
+      window.product_name="{{ 'products.compare.product_name' | t  }}";
+      window.product_image="{{ 'products.compare.product_image' | t  }}";
+      window.product_desc="{{ 'products.compare.product_desc' | t  }}";
+      window.availability="{{ 'products.compare.availability' | t  }}";
+      window.available_stock="{{ 'products.compare.available_stock' | t  }}";
+      window.unavailable_stock="{{ 'products.compare.unavailable_stock' | t  }}";
+      window.compare_note="{{ 'products.compare.compare_note' | t  }}";
+      window.added_to_cmp="{{ 'products.compare.added_to_cmp' | t  }}";
+      window.select_options="{{ 'products.product.select_options' | t  }}";
+      window.add_to_cart="{{ 'products.product.add_to_cart' | t  }}";
+      window.confirm_box="{{ 'products.compare.confirm_box' | t  }}";
+      window.cancelButtonText="{{ 'products.compare.cancelButtonText' | t  }}";
+      window.remove="{{ 'cart.general.remove' | t  }}";
+
+      var  compare_list = []; 
+
+      var theme = {
+        moneyFormat: {{ shop.money_format | json }},
+        quickview_enable: {{ settings.show_quickview }},
+        shop_currency: '{{ shop.currency }}',
+        file_url: '{{''|file_url}}',
+        asset_url: "{{'pixelstrap'|asset_url|remove:"pixelstrap"}}",
+        money_currency_format: "{{shop.money_with_currency_format}}"
+        
+      }  
+    </script>
+
+  <script>
+    var theme = {
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        regularPrice: {{ 'products.product.regular_price' | t | json }},
+        sale: {{ 'products.product.on_sale' | t | json }},
+        showMore: {{ 'general.filters.show_more' | t | json }},
+        showLess: {{ 'general.filters.show_less' | t | json }},
+        addressError: {{ 'sections.map.address_error' | t | json }},
+        addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
+        authError: {{ 'sections.map.auth_error_html' | t | json }},
+        newWindow: {{ 'general.accessibility.link_messages.new_window' | t | json }},
+        external: {{ 'general.accessibility.link_messages.external' | t | json }},
+        newWindowExternal: {{ 'general.accessibility.link_messages.new_window_and_external' | t | json }}
+      },
+      moneyFormat: {{ shop.money_format | json }}
+    }
+
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
+
+  {%- if template.directory == 'customers' -%}
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
+  <!--[if lte IE 9]><script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script><![endif]-->
+  {%- endif -%}
+    {{ content_for_header }}
+
+{% capture CFH %}{{ content_for_header }}{% endcapture %}
+    {% if CFH contains 'design_mode' %}
+    {% assign admin_panel = true %}
+    {% else %}
+    {% assign admin_panel = false %}
+    {% endif %} 
+</head>
+
+<body class="template-{{ template | split: '.' | first }}">
+
+  <div id="shop-currency" style="display:none !important">{{ shop.money_with_currency_format }}</div>
+
+  <!-- Loader Start-->
+  <div class="loader">
+    <div class="loader-wrapper">
+      {% if settings.enable_loadlogo %}
+      <img class="loader_logo" src="{{ settings.loader_img | img_url: '250x' }}" alt="Loader" />
+      {% else %}
+      <div class="timer-loader"></div>
+      {% endif %}
+    </div>
+  </div>
+  <!-- Loader Ends-->
+{% if settings.header_layout == 'header_1' or settings.header_layout == 'header_2' or settings.header_layout == 'header_4' %}
+  {% section 'top-header' %}
+  {% endif %}
+  
+  
+  <div class="off-canvas-layer"></div>
+  
+  {% include 'header-layout' %}
+
+  <div class="page-container" id="PageContainer">
+    <main class="main-content" id="MainContent">
+      {{ content_for_layout }}
+    </main>
+  </div>
+
+  {% if settings.footer_layout == 'footer_3' %}
+  {% section 'top-footer' %}
+  {% endif %}
+  {% include 'footer-layout' %}
+
+  {% if template contains 'collection' or template contains 'collection.24' or template contains 'collection.48' or template contains 'collection.80' %}
+  <div class="shop-cart-ajax-loader"></div>
+  {% endif %}
+
+  <div id="back-top" style="display: none;">
+    <a class="btn bounce-cs animated-cs" href="#top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+
+  {% if template == 'index' %}
+  {% if settings.newsletter_enable %}
+  {% include 'newsletter-popup' %}
+  {% endif %}
+  {% endif %}
+  {% include 'product-sale-popup' %}
+  {% include 'ajax-cart-template' %}
+  {% include 'product-quickview' %}
+  
+  {% if template == 'index' %}
+    {% if settings.age_popup_enable %}
+    {% include 'age-popup' %}
+    {% endif %}
+    {% endif %} 
+  <script>
+    jQuery(function($) {
+      ajaxCart.init({
+        formSelector: '.AddToCartForm_id',
+        cartContainer: '#cart_container_id',
+        addToCartSelector: '.add_to_cart_btn_cls',
+        enableQtySelectors: true,
+        moneyFormat: {{ shop.money_format | json }}
+      });
+      });
+  </script>
+
+  {% include 'search-autocomplete' %}
+  {% include 'fixed_addcart_btn' %}
+  {% include 'js' %}
+  {% include 'cart-upsell-popup' %}
+  {% include 'currencies' %}
+  {% include 'swatch-script' %} 
+  {% include 'exit-popup' %}
+  {% include 'product-compare' %}
+  
+   {% if template == 'index' %}
+  {% if settings.age_popup_enable %}
+  {% include 'age-varification' %}
+  {% endif %}
+  {% endif %} 
+
+  <script>
+    {% if settings.enable_animation %}
+    //Animation js
+    new WOW().init();
+    {% endif %}
+    
+    $(document).ready(function(){
+      $('.shop-cart-ajax-loader').css("display","none");
+    });
+
+    $(window).on('load',function(){
+      $('#exampleModal').modal('show');
+    });
+    
+    {% if settings.enable_cookie_bar %}
+    // cookiebar
+    $.cookieBar({
+      message: '{{ settings.cookie_msg }}', 
+      acceptButton: true, 
+      acceptText: '{{ settings.cookie_btn_text }}'
+    });
+    {% endif %}
+
+    // new theme   tooltip
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });  
+
+
+  </script>
+  {% if template contains 'index' and admin_panel %}
+  {% include 'layouts' %}
+  {% endif %}
+
+
+   {% include 'footer-script' %}
+  
+  <span id="locale_data" class="hide">
+    <script>
+      var arrlang = 
+          {% include 'locale.data' %}
+    </script>
+  </span>
+
+</body>
+</html>

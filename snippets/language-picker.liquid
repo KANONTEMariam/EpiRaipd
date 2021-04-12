@@ -1,0 +1,13 @@
+{% if settings.enable_lang_switcher %}
+{% assign languages = settings.languages_support | split: ',' %}
+{% for l in languages %}
+{% assign l = l | strip %}
+{% assign groups = l | split: '=' %}
+{% assign code = groups | first | strip %}
+<li>
+  <a href="javascript:void(0)" data-value="{{ code }}" class="langecolor">
+    {{ groups | last | strip }}
+  </a>
+</li>
+{% endfor %}
+{% endif %}

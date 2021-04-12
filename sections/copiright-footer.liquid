@@ -1,0 +1,60 @@
+<div class="sub-footer"> 
+  <div class="container">
+    <div class="row">
+      {% if section.settings.show_payment_icons %}
+      <div class="col-md-6 col-sm-12">
+        <div class="payment-card-bottom">
+          <ul>
+            <li>
+              <a href="{{ settings.payment_url_1 }}"><img src="{{ 'payment_img_1.png' | asset_url }}" alt="{{ image.alt }}"></a>
+            </li>
+            <li>
+              <a href="{{ settings.payment_url_2 }}"><img src="{{ 'payment_img_2.png' | asset_url }}" alt="{{ image.alt }}"></a>
+            </li>
+            <li>
+              <a href="{{ settings.payment_url_3 }}"><img src="{{ 'payment_img_3.png' | asset_url }}" alt="{{ image.alt }}"></a>
+            </li>
+            <li>
+              <a href="{{ settings.payment_url_4 }}"><img src="{{ 'payment_img_4.png' | asset_url }}" alt="{{ image.alt }}"></a>
+            </li>
+            <li>
+              <a href="{{ settings.payment_url_5 }}"><img src="{{ 'payment_img_5.png' | asset_url }}" alt="{{ image.alt }}"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+      {% if section.settings.copyright_text %}
+      <div class="col-md-6 col-sm-12">
+        {{ section.settings.copyright_text }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+   "name":"Bottom Footer",
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"show_payment_icons",
+         "label":"Show Payment Icons",
+         "default":true
+      },
+      {
+         "type":"richtext",
+         "id":"copyright_text",
+         "label":"Copyright Text",
+         "default":"<p>2018 - 19 Copy Right by Themeforest Powered by Webiots</p>"
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

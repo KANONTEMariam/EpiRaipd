@@ -1,0 +1,284 @@
+<!--Service start-->
+{% if section.settings.enabled %}
+<div class="container section-t-space services-box mt-0 pb-0 pt-0 shadow-none">
+  <section class="sub-section-2 border-section">
+    <div class="row wow {{section.settings.animation_style}}" data-wow-delay="{{section.settings.animation_time}}">
+      {% for block in section.blocks %}
+      <a href="{{ block.settings.banner_link }}">
+      <div class="col service-block service-block-layout-4">
+        <div class="media media-new">
+          {% if block.settings.services_image == blank %}
+          <img src="{{ 'service-placeholder.png' | asset_url }}" class="img-fluid lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ block.settings.services_title }}"/>
+          {% else %}
+          <img src="{{ block.settings.services_image | img_url: '60x' }}" class="align-self-center lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ block.settings.services_title }}"/>
+          {% endif %}
+          <div class="align-self-center media-body ">
+            {% if block.settings.services_title != blank %}
+              <h6 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_title"{% endif %}>
+                {{ block.settings.services_title }}
+              </h6>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="service1_{{blockId}}_services_title">{{ block.settings.trans_services_title | raw }}</span>
+              {% endif %}
+            {% endif %}
+            {% if block.settings.services_desc != blank %}
+            <p {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_desc"{% endif %}>
+                {{ block.settings.services_desc }}
+              </p>
+              {% if settings.enable_lang_switcher %}
+              <span class="hide" id="service1_{{blockId}}_services_desc">{{ block.settings.trans_services_desc | raw }}</span>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+        </a>
+      {% endfor %}  
+    </div>
+  </section>
+</div>
+{% endif %}
+<!--Service ends-->
+
+{% schema %}
+{
+   "name":"Services-2",
+   "max_blocks":5,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled"
+      },
+      {
+         "type":"select",
+         "id":"animation_style",
+         "label":"Animation style",
+         "options":[
+            {
+               "value":"fadeIn",
+               "label":"fadeIn"
+            },
+            {
+               "value":"fadeInDown",
+               "label":"fadeInDown"
+            },
+            {
+               "value":"fadeInLeft",
+               "label":"fadeInLeft"
+            },
+            {
+               "value":"fadeInRight",
+               "label":"fadeInRight"
+            },
+            {
+               "value":"fadeInUp",
+               "label":"fadeInUp"
+            },
+            {
+               "value":"fadeOut",
+               "label":"fadeOut"
+            },
+            {
+               "value":"fadeOutDown",
+               "label":"fadeOutDown"
+            },
+            {
+               "value":"fadeOutLeft",
+               "label":"fadeOutLeft"
+            },
+            {
+               "value":"fadeOutRight",
+               "label":"fadeOutRight"
+            },
+            {
+               "value":"fadeOutUp",
+               "label":"fadeOutUp"
+            },
+            {
+               "value":"lightSpeedIn",
+               "label":"lightSpeedIn"
+            },
+            {
+               "value":"lightSpeedOut",
+               "label":"lightSpeedOut"
+            },
+            {
+               "value":"rotateIn",
+               "label":"rotateIn"
+            },
+            {
+               "value":"rotateOut",
+               "label":"rotateOut"
+            },
+            {
+               "value":"slideInUp",
+               "label":"slideInUp"
+            },
+            {
+               "value":"slideInDown",
+               "label":"slideInDown"
+            },
+            {
+               "value":"slideInLeft",
+               "label":"slideInLeft"
+            },
+            {
+               "value":"slideInRight",
+               "label":"slideInRight"
+            },
+            {
+               "value":"slideOutUp",
+               "label":"slideOutUp"
+            },
+            {
+               "value":"slideOutDown",
+               "label":"slideOutDown"
+            },
+            {
+               "value":"slideOutLeft",
+               "label":"slideOutLeft"
+            },
+            {
+               "value":"slideOutRight",
+               "label":"slideOutRight"
+            },
+            {
+               "value":"zoomIn",
+               "label":"zoomIn"
+            },
+            {
+               "value":"hinge",
+               "label":"hinge"
+            },
+            {
+               "value":"jackInTheBox",
+               "label":"jackInTheBox"
+            },
+            {
+               "value":"pulse",
+               "label":"pulse"
+            }
+           ],
+         "default":"slideInUp"
+      },
+      {
+           "type":"select",
+           "id":"animation_time",
+           "label":"Animation Time",
+           "options":[
+              {
+                 "value":"0.1s",
+                 "label":"0.1s"
+              },
+              {
+                 "value":"0.3s",
+                 "label":"0.3s"
+              },
+              {
+                 "value":"0.5s",
+                 "label":"0.5s"
+              },
+              {
+                 "value":"1s",
+                 "label":"1s"
+              },
+              {
+                 "value":"1.5s",
+                 "label":"1.5s"
+              },
+              {
+                 "value":"2s",
+                 "label":"2s"
+              },
+              {
+                 "value":"2.5s",
+                 "label":"2.5s"
+              },
+              {
+                 "value":"3s",
+                 "label":"3s"
+              },
+              {
+                 "value":"3.5s",
+                 "label":"3.5s"
+              },
+              {
+                 "value":"4s",
+                 "label":"4s"
+              }
+           ],
+           "default":"0.5s"
+      }
+   ],
+   "blocks":[
+      {
+         "type":"Service",
+         "name":"Service",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"services_image",
+               "label":"Collection Image (61x52)"
+            },
+            {
+               "type":"text",
+               "id":"services_title",
+               "label":"Services Title",
+               "default":"free shipping"
+            },
+            {
+               "type":"textarea",
+               "id":"trans_services_title",
+               "label":"Transalate Services Title"
+            },
+            {
+               "type":"url",
+               "id":"banner_link",
+               "label":"Banner Link"
+            },
+            {
+               "type":"text",
+               "id":"services_desc",
+               "label":"Services Description",
+               "default":"World Wide Shipping"
+            },
+            {
+               "type":"textarea",
+               "id":"trans_services_desc",
+               "label":"Transalate Services Desc"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Services-2",
+         "category":"Services",
+         "blocks":[
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            },
+            {
+               "type":"Service"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

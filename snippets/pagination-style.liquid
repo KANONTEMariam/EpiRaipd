@@ -1,0 +1,28 @@
+{% if collection_infinite_scrolling == 'default' %}
+<nav aria-label="Page navigation">
+  {% include 'pagination' %}
+</nav>
+{% endif %}
+
+{% if collection_infinite_scrolling == 'auto_loadmore' %}
+<div class="infinite-scrolling loading-mores mt-3 mb-3 d-inline-block">
+  <div class="loading-more btn btn-secondary"><img class="mr-3 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" src="{{ 'ajax_loader.gif' | asset_url }}" alt="" />Loading......</div>
+</div>
+{% endif %}
+
+{% if collection_infinite_scrolling == 'click_loadmore' %}
+{% if paginate.next %}
+
+<div class="infinite-scrolling mt-3 mb-3 d-inline-block" {% if settings.enable_lang_switcher %}data-trans-key="collections.general.loading"{%endif%}>
+  <div class="loading-product btn btn-solid">
+    {{ 'collections.general.loading' | t }}
+  </div>
+  <a href="{{ paginate.next.url }}" title="Load more" class="btn btn-solid btn btn-secondary btn-secondary-layout-4" {% if settings.enable_lang_switcher %}data-trans-key="collections.general.load_more_pro"{%endif%}>
+    {{ 'collections.general.load_more_pro' | t }}
+  </a>  
+  <a href="#" class="disabled" style="display:none" title="Product loded" class="btn btn-solid btn btn-secondary btn-secondary-layout-4" {% if settings.enable_lang_switcher %}data-trans-key="collections.general.no_more_product"{%endif%}>
+    {{ 'collections.general.no_more_product' | t }}
+  </a>  
+</div>
+{% endif %}
+{% endif %}

@@ -1,0 +1,65 @@
+<nav aria-label="breadcrumb" class="theme-breadcrumb mt-1">
+  <ol class="breadcrumb mb-1">
+    <li class="breadcrumb-item">
+      <a href="/">
+        Accueil
+      </a>
+    </li>
+    {% if template == 'collection' %}
+    <li class="breadcrumb-item">
+      
+      <a href="/templates/page.allproduits">
+        Produit
+      </a>
+      
+    </li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">
+      {% if template == 'collection' %}
+      {{ collection.title | truncate: 30  }}
+      {% elsif template == 'collection.24' %}
+      {{ collection.title | truncate: 30  }}
+      {% elsif template == 'collection.48' %}
+      {{ collection.title | truncate: 30  }}
+      {% elsif template == 'collection.80' %}
+      {{ collection.title | truncate: 30  }}
+      {% elsif template == 'list-collections' %}
+      {{ 'Collections' }}
+      {% elsif template == 'product' %}
+      {{ product.title | truncate: 30  }}
+      {% elsif template == 'product.sticky-info' %}
+      {{ product.title | truncate: 30  }}
+      {% elsif template == 'product.three-column' %}
+      {{ product.title | truncate: 30  }}
+      {% elsif template == 'blog' %}
+      {{ blog.title | truncate: 30  }}
+      {% elsif template == 'article' %}
+      {{ article.title | truncate: 30  }}
+      {% elsif template == 'cart' %}
+      {{ 'cart' }}
+      {% elsif template == 'page' %}
+      {{ page.title | truncate: 30  }}
+      {% elsif template == 'search' %}
+      Search
+      {% elsif template == 'customers/login' %}
+      {{ 'Login' }}
+      {% elsif template == 'customers/register' %}
+      {{ 'Register' }}
+      {% elsif template == 'customers/account' %}
+      {{ 'Account' }}
+      {% elsif template == 'customers/addresses' %}
+      {{ 'Address' }}
+      {% elsif template == 'customers/order' %}
+      {{ 'Order' }}
+      {% elsif template == 'customers/reset_password' %}
+      {{ 'Reset password' }}
+      {% elsif template == 'customers/activate_account' %}
+      {{ 'Activate Account' }}
+      {% elsif template == '404' %}
+      {{ '404' }}
+      {% else %}
+      {{ page.title }}
+      {% endif %}
+    </li>
+  </ol>
+</nav>

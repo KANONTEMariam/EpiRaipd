@@ -1,0 +1,466 @@
+<!--Featured collection 2-->
+{% if section.settings.enabled %}
+<section class="treding">
+  <div class="container">
+    <div class="row">
+      {% assign block_size = section.blocks.size  %}
+      {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      <div class="col-lg-{% if block_size == 2 %}{{ 6 }}{% elsif block_size == 3 %}{{ 4 }}{% elsif block_size == 4 %}{{ 3 }}{% endif %} col-sm-12 wow {{ block.settings.animation_style }}  {% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}" data-wow-delay="{{ block.settings.animation_time }}">
+        <a href="{{ collection.url }}">
+          <div class="{{ block.settings.position }} {{ block.settings.alignment }}">
+            <div class="banner-effect banner-effect-layout-4">
+              {% if block.settings.banner_image == blank %}
+              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+              {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+              {% else %}             
+              {% if section.settings.use_equal_height %}
+            <div>
+              <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: block.settings.banner_image %}" data-sizes="auto" data-parent-fit="cover"></span>
+            </div>        
+            {% else %}
+            {% assign block_image = block.settings.banner_image %}
+            {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <img src="{{ block_image | img_url: 'master' }}" 
+                 data-src="{{ img_url }}" 
+                 data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                 data-aspectratio="{{  block_image.aspect_ratio }}" 
+                 data-sizes="auto" 
+                 class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                 style = "width:800px;">
+            {% endif %}
+              {% endif %}
+            </div>
+            {% if block.settings.enabled_info %}
+            <div class="banner-details {{ block.settings.position }} {{ block.settings.alignment }}">
+              {% if block.settings.title %}
+            <h4 class="title title-4 title-borderless {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#blog_{{sectionId}}_title"{% endif %}>
+              {{ block.settings.title }}
+            </h4>
+            {% if settings.enable_lang_switcher %}
+             <span class="hide" id="blog_{{sectionId}}_title">{{ block.settings.trans_title | raw }}</span>
+            {% endif %}
+        
+              {% endif %}
+              {% if block.settings.btn_txt %}
+                <h6 class="title title-4 title-borderless {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#blog_{{sectionId}}btn_txt"{% endif %}>
+                {{ block.settings.btn_txt }}
+              </h6>
+            {% if settings.enable_lang_switcher %}
+             <span class="hide" id="blog_{{sectionId}}btn_txt">{{ block.settings.trans_btn_txt | raw }}</span>
+            {% endif %}
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endif %}
+<!--Featured collection 2-->
+
+{% schema %}
+{
+   "name":"Featured Collection 2",
+   "max_blocks":4,
+   "settings":[
+      {
+         "type":"checkbox",
+         "id":"enabled",
+         "default":true,
+         "label":"Enabled"
+      },
+      {
+        "type": "header",
+        "content": "Image Design Option"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_equal_height",
+        "label": "Use height Option for images?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "label": "Image Aspect Ratio",
+        "default": "ratio_landscape",
+        "options": [
+          {
+            "value": "ratio2_1",
+            "label": "2:1"
+          },
+          {
+            "value": "ratio3_2",
+            "label": "3:2"
+          },
+          {
+            "value": "ratio_landscape",
+            "label": "4:3 (Landscape)"
+          },
+          {
+            "value": "ratio_square",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "ratio_asos",
+            "label": "Ratio ASOS"
+          },
+          {
+            "value": "ratio_portrait",
+            "label": "2:3 (Portrait)"
+          },
+          {
+            "value": "ratio1_2",
+            "label": "1:2"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image Size",
+        "default": "cover",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Full"
+          },
+          {
+            "value": "contain",
+            "label": "Auto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "image_position",
+        "info":"The first value is the horizontal position and the second value is the vertical.",
+        "options": [
+          {
+            "value": "1",
+            "label": "Left Top"
+          },
+          {
+            "value": "2",
+            "label": "Left Center"
+          },
+          {
+            "value": "3",
+            "label": "Left Bottom"
+          },
+          {
+            "value": "4",
+            "label": "Right Top"
+          },
+          {
+            "value": "5",
+            "label": "Right Center"
+          },
+          {
+            "value": "6",
+            "label": "Right Bottom"
+          },
+          {
+            "value": "7",
+            "label": "Center Top"
+          },
+          {
+            "value": "8",
+            "label": "Center Center"
+          },
+          {
+            "value": "9",
+            "label": "Center Bottom"
+          }
+        ],
+        "label": "Image Position",
+        "default": "8"
+      }
+   ],
+   "blocks":[
+      {
+         "type":"select",
+         "name":"Add Collection ",
+         "settings":[
+            {
+               "type":"select",
+               "id":"animation_style",
+               "label":"Animation style",
+               "options":[
+                  {
+                     "value":"fadeIn",
+                     "label":"fadeIn"
+                  },
+                  {
+                     "value":"fadeInDown",
+                     "label":"fadeInDown"
+                  },
+                  {
+                     "value":"fadeInLeft",
+                     "label":"fadeInLeft"
+                  },
+                  {
+                     "value":"fadeInRight",
+                     "label":"fadeInRight"
+                  },
+                  {
+                     "value":"fadeInUp",
+                     "label":"fadeInUp"
+                  },
+                  {
+                     "value":"fadeOut",
+                     "label":"fadeOut"
+                  },
+                  {
+                     "value":"fadeOutDown",
+                     "label":"fadeOutDown"
+                  },
+                  {
+                     "value":"fadeOutLeft",
+                     "label":"fadeOutLeft"
+                  },
+                  {
+                     "value":"fadeOutRight",
+                     "label":"fadeOutRight"
+                  },
+                  {
+                     "value":"fadeOutUp",
+                     "label":"fadeOutUp"
+                  },
+                  {
+                     "value":"lightSpeedIn",
+                     "label":"lightSpeedIn"
+                  },
+                  {
+                     "value":"lightSpeedOut",
+                     "label":"lightSpeedOut"
+                  },
+                  {
+                     "value":"rotateIn",
+                     "label":"rotateIn"
+                  },
+                  {
+                     "value":"rotateOut",
+                     "label":"rotateOut"
+                  },
+                  {
+                     "value":"slideInUp",
+                     "label":"slideInUp"
+                  },
+                  {
+                     "value":"slideInDown",
+                     "label":"slideInDown"
+                  },
+                  {
+                     "value":"slideInLeft",
+                     "label":"slideInLeft"
+                  },
+                  {
+                     "value":"slideInRight",
+                     "label":"slideInRight"
+                  },
+                  {
+                     "value":"slideOutUp",
+                     "label":"slideOutUp"
+                  },
+                  {
+                     "value":"slideOutDown",
+                     "label":"slideOutDown"
+                  },
+                  {
+                     "value":"slideOutLeft",
+                     "label":"slideOutLeft"
+                  },
+                  {
+                     "value":"slideOutRight",
+                     "label":"slideOutRight"
+                  },
+                  {
+                     "value":"zoomIn",
+                     "label":"zoomIn"
+                  },
+                  {
+                     "value":"hinge",
+                     "label":"hinge"
+                  },
+                  {
+                     "value":"jackInTheBox",
+                     "label":"jackInTheBox"
+                  },
+            {
+               "value":"pulse",
+               "label":"pulse"
+            }
+               ],
+               "default":"slideInUp"
+            },
+            {
+               "type":"select",
+               "id":"animation_time",
+               "label":"Animation Time",
+               "options":[
+                  {
+                     "value":"0.1s",
+                     "label":"0.1s"
+                  },
+                  {
+                     "value":"0.2s",
+                     "label":"0.2s"
+                  },
+                  {
+                     "value":"0.3s",
+                     "label":"0.3s"
+                  },
+                  {
+                     "value":"0.4s",
+                     "label":"0.4s"
+                  },
+                  {
+                     "value":"0.5s",
+                     "label":"0.5s"
+                  },
+                  {
+                     "value":"0.6s",
+                     "label":"0.6s"
+                  },
+                  {
+                     "value":"0.7s",
+                     "label":"0.7s"
+                  },
+                  {
+                     "value":"0.8s",
+                     "label":"0.8s"
+                  },
+                  {
+                     "value":"0.9s",
+                     "label":"0.9s"
+                  },
+                  {
+                     "value":"1s",
+                     "label":"1s"
+                  },
+                  {
+                     "value":"1.5s",
+                     "label":"1.5s"
+                  },
+                  {
+                     "value":"2s",
+                     "label":"2s"
+                  }
+               ],
+               "default":"0.5s"
+            },{
+               "type":"image_picker",
+               "id":"banner_image",
+               "label":"Collection Image (1901x744)"
+            },
+            {
+               "type": "collection",
+               "id": "collection",
+               "label": "Select collection"
+            },
+            {
+               "type":"checkbox",
+               "id":"enabled_info",
+               "default":true,
+               "label":"Show Info"
+            },
+          {
+               "type":"select",
+               "id":"alignment",
+               "label":"Text Alignment",
+               "options":[
+                  {
+                     "value":"text-left",
+                     "label":"Left"
+                  },
+                  {
+                     "value":"text-center",
+                     "label":"Center"
+                  },
+                  {
+                     "value":"text-right",
+                     "label":"Right"
+                  }
+               ],
+               "default":"text-center"
+            },
+  {
+               "type":"select",
+               "id":"position",
+               "label":"Text Position",
+               "options":[
+                  {
+                     "value":"p-left",
+                     "label":"Left"
+                  },
+                  {
+                     "value":"p-center",
+                     "label":"Center"
+                  },
+                  {
+                     "value":"p-right",
+                     "label":"Right"
+                  },
+                  {
+                     "value":"absolute-btm",
+                     "label":"Absolute Bottom"
+                  }
+               ],
+               "default":"p-left"
+            },
+            {
+               "type": "text",
+               "id": "title",
+               "label": "Heading",
+               "default": "Save up to 50% OFf under ₹6,000"
+            },
+              {
+               "type": "textarea",
+               "id": "trans_title",
+               "label": "Translate Title"
+            },
+            {
+               "type":"text",
+               "id":"btn_txt",
+               "label":"Button Text",
+               "default":"View More"
+            },
+             {
+               "type": "textarea",
+               "id": "trans_btn_txt",
+               "label": "Translate Button Text"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Featured Collection 2",
+         "category":"Collection",
+         "blocks":[
+            {
+               "type":"select"
+            },
+            {
+               "type":"select"
+            },
+            {
+               "type":"select"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

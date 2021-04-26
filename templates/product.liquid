@@ -1,1 +1,43 @@
-{% section 'product-template' %}
+{% section 'product-template' %}  {{ 'glo3d.js' | asset_url | script_tag }}
+  {{ 'glo3d.css' | asset_url | stylesheet_tag }}
+<iframe id="myiframe" width="0" height="0"></iframe>
+<script>
+function checkIframeLoaded() {
+    // Get a handle to the iframe element
+    var iframe = document.getElementById('glo3d-iframe');
+  if (!iframe) {
+  	document.getElementById("myiframe").src="https://360spin.glo3d.net/glo3dWorking?isWorking=no"
+  	return
+  }
+  
+    var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Check if loading is complete
+    if (  iframeDoc.readyState  == 'complete' ) {
+        //iframe.contentWindow.alert("Hello");
+        iframe.contentWindow.onload = function(){
+
+        };
+        // The loading is complete, call the function we want executed once the iframe is loaded
+        afterLoading();
+        return;
+    } 
+
+    // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
+    window.setTimeout(checkIframeLoaded, 100);
+}
+
+function afterLoading(){
+//     alert("I am here");
+//   	localStorage.setItem("glo3d-working", "yes");
+  document.getElementById("myiframe").src="https://360spin.glo3d.net/glo3dWorking?isWorking=yes"
+//   var xhttp = new XMLHttpRequest();
+//   xhttp.open("GET", "https://360spin.glo3d.net/glo3dWorking?isWorking=yes", true);
+//   xhttp.send();
+}
+  window.onload = function() {
+    checkIframeLoaded()
+  }
+</script>
+<div class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&amp;','%26'}}" data-description="{{ product.description | escape }}" data-price="{{ variant.price | money_without_currency }}" data-currency="{{ shop.currency }}"></div>
+<!--Start Revieewer.com Auto Installation--><iframe id="revieewer-iframe" scrolling="no" src="https://widget.revieewer.com/{{ shop.permanent_domain | downcase | replace: "https://", ""}}/{{ product.id }}" width=80% height=300 style="border:0px;display:block;margin: 30px auto;overflow: hidden"></iframe> <script>window.onmessage=e=>{e.data.hasOwnProperty("frameHeight")&&(document.getElementById("revieewer-iframe").style.height=`${e.data.frameHeight+30}px`)}</script><!--End Revieewer.com Auto Installation-->

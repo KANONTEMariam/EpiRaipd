@@ -123,7 +123,11 @@
     {% else %}
     {% assign admin_panel = false %}
     {% endif %} 
-</head>
+{% render 'opinew_head' %}
+
+                  {% include 'bss-product-labels-configs' %}
+                    </head>
+             
 
 <body class="template-{{ template | split: '.' | first }}">
 
@@ -255,5 +259,5 @@
     </script>
   </span>
 
-</body>
+{% if content_for_header contains 'product_label' %}{% include 'bss-product-label-js' %}{% endif %}</body>
 </html>

@@ -3,7 +3,7 @@
       <div class="home-slider home-slider-layout-2 slide-1" data-slick='{"autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}} }' >
         {% for block in section.blocks %} 
         {% if block.type == 'Image' %}
-        <div class="main">
+        <div class="main" >
           {% if block.settings.show_info %}
           <div class="slider-contain" >
             <div class="inner" >
@@ -23,7 +23,7 @@
             <h4>{{ block.settings.sub_html }}</h4>
            {% endif  %}
             {% if block.settings.shop_btn_url != blank %}
-                <a {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a>
+                <button style="margin-top:350px;background-color:#ff6e0b;border:none; border-radius:4px;height:40px;"><a style="color:white;" {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a></button>
                  {% if settings.enable_lang_switcher %}
             <span class="hide" id="slide_{{blockId}}shop_button">{{ block.settings.trans_shop_button | raw }}</span>
             {% endif %} 

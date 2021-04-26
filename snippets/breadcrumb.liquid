@@ -8,7 +8,7 @@
     {% if template == 'collection' %}
     <li class="breadcrumb-item">
       
-      <a href="/templates/page.allproduits">
+      <a href="/collections/all">
         Produit
       </a>
       
@@ -40,11 +40,11 @@
       {% elsif template == 'page' %}
       {{ page.title | truncate: 30  }}
       {% elsif template == 'search' %}
-      Search
+      Recherche
       {% elsif template == 'customers/login' %}
-      {{ 'Login' }}
+      Connexion
       {% elsif template == 'customers/register' %}
-      {{ 'Register' }}
+      Inscription
       {% elsif template == 'customers/account' %}
       {{ 'Account' }}
       {% elsif template == 'customers/addresses' %}

@@ -71,7 +71,7 @@
               <label for="address_default_address_new" {% if settings.enable_lang_switcher %}data-trans-key="customer.addresses.set_default"{%endif%}>{{ 'customer.addresses.set_default' | t }}</label>
 
               <div><input type="submit" class="btn btn-secondary " value="{{ 'customer.addresses.add' | t }}"></div>
-              <div><button type="button" class="btn btn-secondary address-new-toggle" {% if settings.enable_lang_switcher %}data-trans-key="customer.addresses.cancel"{%endif%}>{{ 'customer.addresses.cancel' | t }}</button></div>
+              <div><button type="button" class="btn btn-secondary address-new-toggle button" {% if settings.enable_lang_switcher %}data-trans-key="customer.addresses.cancel"{%endif%}>{{ 'customer.addresses.cancel' | t }}</button></div>
 
             </div>
             {% endform %}

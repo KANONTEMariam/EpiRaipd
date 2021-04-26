@@ -107,12 +107,12 @@
           <table class="table cart-table table-responsive-xl">
             <thead>
             <tr class="table-head">
-                <th scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.image"{%endif%}>{{ 'cart.label.image' | t }}</th>
-                <th scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.product"{%endif%}>{{ 'cart.label.product' | t }}</th>
-                <th scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.price"{%endif%}>{{ 'cart.label.price' | t }}</th>
-                <th scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.quantity"{%endif%}>{{ 'cart.label.quantity' | t }}</th>
-                <th scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.action"{%endif%}>{{ 'cart.label.action' | t }}</th>
-                <th scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.total"{%endif%}>{{ 'cart.label.total' | t }}</th>
+                <th style="padding-right:140px;" scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.image"{%endif%}>{{ 'cart.label.image' | t }}</th>
+                <th style="padding-right:80px;" scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.product"{%endif%}>{{ 'cart.label.product' | t }}</th>
+                <th style="padding-right:140px; padding-left:80px;" scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.price"{%endif%}>{{ 'cart.label.price' | t }}</th>
+                <th style="padding-right:100px;" scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.quantity"{%endif%}>{{ 'cart.label.quantity' | t }}</th>
+                <th style="padding-right:60px;" scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.action"{%endif%}>{{ 'cart.label.action' | t }}</th>
+                <th  scope="col" {% if settings.enable_lang_switcher %}data-trans-key="cart.label.total"{%endif%}>{{ 'cart.label.total' | t }}</th>
               </tr>
             </thead>
             <tbody>
@@ -123,9 +123,9 @@
                     <img src="{{ item | img_url: '110x135'}}" alt="{{ item.product.title }}" />
                     {% assign data_title = item.product.title | split: '|' | first %}
                     {% assign data_json = item.product.title | split: '|' | last %}
-                    <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{item.id}}_cartItem_title"{% endif %}>
+                    <!--span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{item.id}}_cartItem_title"{% endif %}>
                       {{ data_title | truncatewords: 10 }}
-                    </span>
+                    </span-->
                      {% if settings.enable_lang_switcher %}
                       <span class="hide" id="{{item.id}}_cartItem_title">{{ data_json | raw }}</span>
                      {% endif %}
@@ -133,23 +133,28 @@
 
                 </td>
                 <td class="text-center">
+                  <span style="padding-right:90px;" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#{{item.id}}_cartItem_title"{% endif %}>
+                      {{ data_title | truncatewords: 10 }}
+                    </span>
+				</td>
+                <!--td class="text-center">
                   {{ item.product.description  | truncate: 30}}
-                </td>
-                <td class="text-center">
-                  <h2>
+                </td-->
+                <td class="text-center" >
+                  <h2 style="padding-right:10px;">
                     {{ item.price | money }}
                   </h2>
                 </td>
                 <td class="text-center">
-                  <div class="qty-box mr-3">
-                    <div class="input-group">
+                  <div class="qty-box mr-3" >
+                    <div class="input-group" >
                       <span class="input-group-prepend">
                         <button type="button" id="quantity-left-minus-{{ forloop.index }}" class="btn quantity-left-minus-{{ forloop.index }}" data-type="minus" data-field="">
                           <i class="icon-angle-left"></i>
                         </button>
                       </span>
                       <input type="text" name="updates[]" id="quantity-{{ forloop.index }}" value="{{ item.quantity }}" class="form-control input-number" value="1"  >
-                      <span class="input-group-prepend">
+                     <span class="input-group-prepend">
                         <button type="button" id="quantity-right-plus-{{ forloop.index }}" class="btn quantity-right-plus" data-type="plus" data-field="">
                           <i class="icon-angle-right"></i>
                         </button>
@@ -191,15 +196,16 @@
 
                   </div>
                 </td>
-                <td class="text-center">
-                  <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="" title="Remove this item">
+                <td class="text-center" >
+                  <a style="padding-right:10px;" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="" title="Remove this item">
                     <i class="icon-close"></i>
                   </a>
                 </td>
-                <td class="text-center">
-                  <h2>
+                <td class="text-center" >
+                  <h2 style="padding-left:10px;">
                     {{ item.line_price | money }}
                   </h2>
+                  
                 </td>
               </tr>
               {% endfor %}
@@ -298,3 +304,4 @@
 
 {% javascript %}
 {% endjavascript %}
+

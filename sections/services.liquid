@@ -1,7 +1,12 @@
 <!--small section start-->
 {% if section.settings.enabled %}
-  <div class="container services-box {% if template != 'index' %} main-service {% endif %}">
+
+  <div style="margin-bottom:80px;" class="container services-box {% if template != 'index' %} main-service {% endif %}">
+    <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+          {{ section.settings.tab_title }}
+        </h2>
     <section class="sub-section  ">
+    
       <div class="row">
         {% for block in section.blocks %}
         {% if block.settings.services_image == blank %}
@@ -74,6 +79,12 @@
          "id":"enabled",
          "default":true,
          "label":"Enabled"
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Product Tabs Heading",
+         "default":"Today's Hot Deal"
       }
    ],
    "blocks":[

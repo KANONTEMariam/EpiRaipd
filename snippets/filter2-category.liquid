@@ -34,7 +34,7 @@
           </div-->
           <ol  class="sidebar_category" style="padding-left:0px;">
     <li >
-      <a href="/" style="padding-left:0px;font-size:13px;">
+      <a href="/" style="padding-left:0px;font-size:15px;text-transform: capitalize;" class="simpe_nav">
         Accueil
       </a>
     </li>
@@ -42,7 +42,7 @@
     {% if template == 'collection' %}
     <li >
       
-      <a href="" style="padding-left:10px;font-size:13px;">
+      <a href="{{ section.settings.produit }}" style="padding-left:10px;font-size:15px;text-transform: capitalize;" class="simpe_nav">
         Produit
       </a>
       
@@ -50,7 +50,7 @@
         <br>
 
     {% endif %}
-    <li class="breadcrumb-item active" aria-current="page" class="hide" style="text-transform: capitalize;padding-left:20px;">
+    <li class="breadcrumb-item active simpe_nav" aria-current="page" class="hide" style="text-transform: capitalize;padding-left:20px;">
       {% if template == 'collection' %}
       {{ collection.title | truncatewords: 10  }}
       {{ page.title }}

@@ -1,6 +1,9 @@
 <!--Sale Banner start-->
 {% if section.settings.enabled %}
-<section class="{% if section.settings.enabled_top_space %}section-t-space{% else %} pt-0 {% endif %}section-b-space">
+<section  class="{% if section.settings.enabled_top_space %}section-t-space{% else %} pt-0 {% endif %}section-b-space">
+  <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+          {{ section.settings.tab_title }}
+        </h2>
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
@@ -82,6 +85,12 @@
         "id": "use_equal_height",
         "label": "Use height Option for images?",
         "default": false
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Product Tabs Heading",
+         "default":"Today's Hot Deal"
       },
       {
         "type": "select",

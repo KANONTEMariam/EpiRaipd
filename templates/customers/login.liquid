@@ -19,6 +19,7 @@
           
           <div class="theme-card">
             {% form 'customer_login' , class: 'theme-form' %}
+            <input type="hidden" name="checkout_url" value="/" />
 
             {% if form.errors -%}
             <div class="form-message form-message--error">
@@ -32,10 +33,11 @@
                 <input type="email" name="customer[email]" id="CustomerEmail" placeholder="{{ 'customer.login.email' | t }}" required class="form-control {% if form.errors contains 'email' %} input--error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
               </div>
               <div class="col-md-12">
-              <label for="review" {% if settings.enable_lang_switcher %}data-trans-key="customer.login.password"{%endif%}>{{ 'customer.login.password' | t }}</label>                <input type="password" value="" name="customer[password]" placeholder="{{ 'customer.login.password' | t }}" required id="CustomerPassword" class="form-control {% if form.errors contains 'password' %} input--error{% endif %}">
+              <label for="review" {% if settings.enable_lang_switcher %}data-trans-key="customer.login.password"{%endif%}>{{ 'customer.login.password' | t }}</label>               
+              <input type="password" value="" name="customer[password]" placeholder="{{ 'customer.login.password' | t }}" required id="CustomerPassword" class="form-control {% if form.errors contains 'password' %} input--error{% endif %}">
               </div>
               <div class="col-md-12">
-                <button type="submit" class="btn btn-theme" {% if settings.enable_lang_switcher %}data-trans-key="customer.login.login"{%endif%}>{{ 'customer.login.login' | t }}</button>
+                <button type="submit" class="btn btn-theme button" {% if settings.enable_lang_switcher %}data-trans-key="customer.login.login"{%endif%}>{{ 'customer.login.login' | t }}</button>
               </div>
             </div>
 
@@ -72,7 +74,7 @@
                 <button type="submit" class="btn btn-secondary " {% if settings.enable_lang_switcher %}data-trans-key="customer.recover_password.submit"{%endif%}>{{ 'customer.recover_password.submit' | t }}</button>
               </div>
               <div class="col-md-12">
-                <button type="button" id="HideRecoverPasswordLink" class="btn btn-secondary " {% if settings.enable_lang_switcher %}data-trans-key="customer.recover_password.cancel"{%endif%}>{{ 'customer.recover_password.cancel' | t }}</button>
+                <button type="button" id="HideRecoverPasswordLink" class="btn btn-secondary button" {% if settings.enable_lang_switcher %}data-trans-key="customer.recover_password.cancel"{%endif%}>{{ 'customer.recover_password.cancel' | t }}</button>
               </div>
             </div>
             {% endform %}
@@ -99,7 +101,7 @@
         <h3 {% if settings.enable_lang_switcher %}data-trans-key="customer.login.guest_title"{%endif%}>{{ 'customer.login.guest_title' | t }}</h3>
 
         {% form 'guest_login' %}
-        <input type="submit" class="btn" placeholder="{{ 'customer.login.guest_continue' | t }}">
+        <input type="submit" class="btn button" placeholder="{{ 'customer.login.guest_continue' | t }}">
         {% endform %}
       </div>
       {% endif %}

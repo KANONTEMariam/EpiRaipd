@@ -1,3 +1,7 @@
+
+{% assign glo3d = product.metafields.glo3d %}
+{% capture glo3dThumb %}https://us-central1-glo3d-c338b.cloudfunctions.net/streamPic/{{ glo3d.url | replace: 'https://glo3d.net/', '' }}{% endcapture %}
+{% capture glo3dUrl %}{{ glo3d.url | replace: "glo3d.net/", "glo3d.net/iFrame/"}}?autoLoad=true&autoRotate=true{% endcapture %}
 <section id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true">
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">

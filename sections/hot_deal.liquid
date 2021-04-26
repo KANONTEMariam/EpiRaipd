@@ -1,8 +1,8 @@
 <!--Section two start-->
 {% if section.settings.enabled %}
-<section class="hot-deal mb-0 {% if section.settings.bottom_space %} section-b-space {% endif %}">
-  <div class="container">
-    <div class="row ">
+<section style="margin-bottom:0;padding-bottom:0;" class="hot-deal mb-0 {% if section.settings.bottom_space %} section-b-space {% endif %}">
+  <div class="container" >
+    <div class="row " style="margin-bottom:0;padding-bottom:0;">
       {% if section.settings.enabled_slidercolums %}
       <div class="col-xl-3 col-md-12">
         <div class="theme-card">
@@ -178,12 +178,12 @@
              {% endif %}
           </div>
           <div class="text-right">
-              <a href="{{ collection.url }}" {% if settings.enable_lang_switcher %}data-trans-key="collections.general.view_more"{%endif%}>{{ 'collections.general.view_more' | t }}</a>
+              <a href="{{ collection.url }}">View More</a>
           </div>
         </div>
       </div>
       {% endif %}
-      <div class=" {% if section.settings.enabled_slidercolums == false  %}col-xl-12 {% else %} col-xl-9 {% endif %} col-md-12">
+      <div  class=" {% if section.settings.enabled_slidercolums == false  %}col-xl-12 {% else %} col-xl-9 {% endif %} col-md-12">
         <div class="hot-deal-right hot-deal-right-layout-2">
            {% if section.settings.tab_title != "blank" %}
              <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
@@ -287,7 +287,7 @@
                           </p>
                           {% endif %}
                           {% if block.settings.display_timer %}
-                          <div class="timer">
+                          <div style="margin-bottom:0;padding-bottom:0;" class="timer">
                             <span>{{ block.settings.timer_title }}</span>
                             <div class="timer_date">{{ block.settings.timer_date }}</div>
                             <div id="timer_{{count}}" class="timer_{{count}}"></div>
@@ -307,7 +307,7 @@
           </div>
         </div>
       </div>
-    </div>
+  </div>
   </div>
 </section>
 {% endif %}

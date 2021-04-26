@@ -1,7 +1,7 @@
 
 <div class="container sticky">
   <header>
-    <div class="mid-header mid-header-layout-2">
+    <div class="mid-header mid-header-layout-2" style="height:95px">
       <div class="container">
         <div class="row" >
           <div class="logo" itemscope itemtype="http://schema.org/Organization" style="margin-right: 1px;">
@@ -45,14 +45,15 @@
           </div-->
           <div class="popup" id="popup-1">
    <div class="content">
-    <div class="close-btn" onclick="togglePopup()">
+    <div class="close-btn" onclick="togglePopup()" style="cursor: pointer;">
      ×</div>
      
-<h1 style="color:#ff822e">Connexion</h1> 
-  <div class="input-field"><input type="text" class="validate" placeholder="Email"></div>
-  <div class="input-field"><input type="password" class="validate" placeholder="Mot de Passe"></div>
-    <button class="second-button" >Connexion</button>
-    <p>Avez vous un compte? <a href="/signup.html" style="color:#ff822e">Inscription</a></p>
+<h1 style="color:#ff822e">Mon EpiCompte</h1> 
+  <input type="text" placeholder="Email" style="height:40px;width:250px;border-radius:3px; border:1px solid #ced4da;color:#b4b4b4;">
+  <input type="password"  placeholder="Mot de Passe" style="height:40px;width:250px;margin-bottom:15px;border-radius:3px; border:1px solid #ced4da;color:#b4b4b4;">
+     <!--button class="validate" style="background-color:black;border:none;height:40px;cursor: pointer;width:100px;border-radius:4px;"><p style="color:white;padding-top:-7px;" >Connexion</p></button-->
+     <button type="submit" class="btn btn-secondary " {% if settings.enable_lang_switcher %}data-trans-key="customer.recover_password.submit"{%endif%}>Connexion</button>
+    <p>Avez vous un compte? <a href="/account/register" style="color:#ff822e">Inscription</a></p>
       
      
    </div>
@@ -62,7 +63,7 @@
               
               <a href="#" onclick="togglePopup()" style="color:black;">
                 <img src="{{ section.settings.map_img | img_url: '15x' }}"  alt="Cart-icon" />
-                Adresse de livraison
+                OÙ LIVRER?
               </a>
 
           </div>
@@ -108,7 +109,7 @@
                  
         <div class="select-box mega-menu ">
 
-            <div class="options-container ">
+            <div class="options-container">
 
                 <div class="option">
                     <input type="radio" class="radio" id="Fruit" name="category" />
@@ -136,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="selected fleche">
+            <div class="selected fleche ">
               <p style="color:#f5fafa;padding-buttom:2px;" >
                 CATEGORIES
               </p>
@@ -146,9 +147,10 @@
     
         <input type="search" class="form-control " style="height:40px;font-size:15px;color:#b4b4b4;widht:300px;" name="q" placeholder="Search Products......" aria-label="{{ 'general.search.placeholder' | t }}">
         <div class="input-group-append">
-                  <button class="btn btn-secondary btn-layout-2 " style="height:40px;"><i class="fa fa-search"></i>Search</button>
+                  <button class="btn btn-secondary btn-layout-2 " style="height:40px;"><i class="fa fa-search"></i>RECHERCHE</button>
                 </div>
       </div>
+              
             </form>
            {% endif %}
           </div>

@@ -1,6 +1,6 @@
 <li style="padding: 0;width: 0;display: none;">
   <select class="currency-picker" name="currencies"  style="display:block; width: auto; visibility:hidden; height:0; padding:0; margin:0; min-height:0px; border: none;">
-    {% assign codes = 'XAF,USD,EUR' | split: ',' %}
+    {% assign codes = 'XAF,USD' | split: ',' %}
     {% assign supported_codes = settings.supported_currencies | split: ' ' %}
     <option value="{{ shop.currency }}" selected="selected">  {{ shop.currency }}</option>
     {% for code in supported_codes %}
@@ -11,7 +11,7 @@
   </select>
 </li>
 
-{% assign codes = 'XAF,USD,EUR' | split: ',' %}
+{% assign codes = 'XAF,USD' | split: ',' %}
 {% assign supported_codes = settings.supported_currencies | split: ' ' %}
 
 <li class="onhover-dropdown currency_picker_cls">

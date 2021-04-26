@@ -17,7 +17,7 @@
               <span class="hide" id="section{{sectionId}}_v_menu_text">{{ section.settings.trans_v_menu_text | raw }}</span>
            {% endif %} 
           </nav>
-          <div class="collapse" id="navbarToggleExternalContent">
+          <div class="collapse " id="navbarToggleExternalContent">
             <ul class="nav-cat">
               {% for block in section.blocks %}
               {% if block.type == 'verticle-menu'  %}
@@ -52,7 +52,7 @@
       {% endif %}
 
       {% if section.settings.h_menu_enable %}
-      <div class="col-xl-7 pl-5">
+      <div class="col-xl-7 pl-5" style="padding-left:0px;margin-left:0;">
           <div class="menu-block">
            <nav id="main-nav">
               <!-- Sample menu definition -->
@@ -70,7 +70,7 @@
                 {% if block.type == 'parent-item' %}
                 <li>
                   <a href="{{ block.settings.menu_link }}">
-                       <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#header2_{{blockId}}_menu_name"{% endif %}>
+                       <span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#header2_{{blockId}}_menu_name"{% endif %}>
                           {{ block.settings.menu_name }}
                         </span>
                         {% if settings.enable_lang_switcher %}
@@ -140,7 +140,7 @@
               
                 <li class="megamenu-li-cls">
                   <a href="{{ block.settings.menu_link }}">
-                    <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
+                    <span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
                        {{ block.settings.menu_name }}
                     </span>
                     {% if settings.enable_lang_switcher %}
@@ -262,9 +262,9 @@
 
                 {% elsif block.type == 'parent-item-megamenu2' %}
 
-                <li class="megamenu-li-cls">
+                <li class="megamenu-li-cls ">
                   <a href="{{ block.settings.menu_link }}">
-                           <span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
+                           <span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#megamenu__{{blockId}}_menu_name"{% endif %}>
                           {{ block.settings.menu_name }}
                         </span>
                         {% if settings.enable_lang_switcher %}
@@ -286,9 +286,9 @@
                       <!-- The mega drop down contents -->
                       <div class="d-flex">
                         {% if block.settings.linklist_1 != blank %}
-                        <div class="col-xl-3">
+                        <!--div class="col-xl-3">
                            
-                            <h4 class="menu-title  {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
+                            <h4 class="menu-title  {% if settings.enable_lang_switcher %}class="lang_trans"{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
                                       {{ block.settings.linklist_title_1 }}
                                     </h4>
                                     {% if settings.enable_lang_switcher %}
@@ -309,7 +309,7 @@
                               </li>
                               {% endfor %}
                             </ul>
-                        </div>
+                        </div-->
                         {% endif %}
 
                         <!--div class="col-xl-5">
@@ -363,13 +363,29 @@
                         </div-->
                         {% if block.settings.show_custom_image %}
                         <div class="col megamenu2_img">
+                          <h4 class="menu-title  {% if settings.enable_lang_switcher %}class="lang_trans"{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
+                                      {{ block.settings.linklist_title_1 }}
+                                    </h4>
                           <a href="{{ block.settings.custom_image_url }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
                             <img src="{{ block.settings.custom_image | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
                           </a>
                         </div>
                         {% endif %}
+                        {% if block.settings.show_custom_image_1 %}
+                        <div class="col megamenu2_img">
+                          <h4 class="menu-title  {% if settings.enable_lang_switcher %}class="lang_trans"{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
+                                      {{ block.settings.linklist_title_12 }}
+                                    </h4>
+                          <a href="{{ block.settings.custom_image_url_1 }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
+                            <img src="{{ block.settings.custom_image_1 | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
+                          </a>
+                        </div>
+                        {% endif %}
                         {% if block.settings.show_custom_image_2 %}
                         <div class="col megamenu2_img">
+                          <h4 class="menu-title  {% if settings.enable_lang_switcher %}class="lang_trans"{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
+                                      {{ block.settings.linklist_title_13 }}
+                                    </h4>
                           <a href="{{ block.settings.custom_image_url_2 }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
                             <img src="{{ block.settings.custom_image_2 | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
                           </a>
@@ -377,6 +393,9 @@
                         {% endif %}
                         {% if block.settings.show_custom_image_3 %}
                         <div class="col megamenu2_img">
+                          <h4 class="menu-title  {% if settings.enable_lang_switcher %}class="lang_trans"{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#megamenu__{{blockId}}_linklist_title1"{% endif %}>
+                                      {{ block.settings.linklist_title_14 }}
+                                    </h4>
                           <a href="{{ block.settings.custom_image_url_3 }}" class="p-0 lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" title="Megamenu_Banner">
                             <img src="{{ block.settings.custom_image_3 | img_url:'290x450' }}" class="img-fluid" alt="{{ image.alt }}">
                           </a>
@@ -454,11 +473,11 @@
       </div>
       {% endif %}
      {% if section.settings.suumer_offer_enable %}
-      <div class="col text-right">
+      <div class="col text-right" style="padding-left:400px;">
         <div class="onhover-dropdown offer-dropdown">
           <i class="icon-gift" style="    font-size: 21px;
     padding-right: 10px;
-    color: #f7ffff;"></i><span {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#megamenu__{{blockId}}summer_offer_title"{% endif %}> {{ section.settings.summer_offer_title }}</span>
+    color: #f7ffff;"></i><span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#megamenu__{{blockId}}summer_offer_title"{% endif %}> {{ section.settings.summer_offer_title }}</span>
            {% if settings.enable_lang_switcher %}
             <span class="hide" id="megamenu__{{blockId}}summer_offer_title">{{section.settings.trans_summer_offer_title}}</span>
             {% endif %}
@@ -525,6 +544,11 @@
          "type":"url",
          "id":"v_view_more_link",
          "label":"View More link"
+      },
+	  {
+         "type":"url",
+         "id":"produit",
+         "label":"les produit"
       },
       {
          "type":"text",
@@ -651,6 +675,11 @@
                "type":"url",
                "id":"menu_link",
                "label":"Menu Link"
+            },
+			{
+               "type":"url",
+               "id":"menu_link_1",
+               "label":"Menu1 Link"
             },
             {
                "type":"checkbox",
@@ -941,6 +970,21 @@
                "id":"linklist_title_1",
                "label":"Linklist 1 Title"
             },
+            {
+               "type":"text",
+               "id":"linklist_title_12",
+               "label":"Linklist 1 Title"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_13",
+               "label":"Linklist 1 Title"
+            },
+            {
+               "type":"text",
+               "id":"linklist_title_14",
+               "label":"Linklist 1 Title"
+            },
               {  
                "type":"textarea",
                "id":"trans_linklist_title_1",
@@ -991,6 +1035,23 @@
             {
                "type":"url",
                "id":"custom_image_url",
+               "label":"Image Url"
+            },
+            {
+               "type":"checkbox",
+               "id":"show_custom_image_1",
+               "label":"Show image",
+               "default":true
+            },
+            {
+               "type":"image_picker",
+               "id":"custom_image_1",
+               "label":"Custom Image",
+               "info":"355x540px.png required"
+            },
+            {
+               "type":"url",
+               "id":"custom_image_url_1",
                "label":"Image Url"
             },
             {

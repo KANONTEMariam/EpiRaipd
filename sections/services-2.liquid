@@ -1,8 +1,8 @@
 <!--Service start-->
 {% if section.settings.enabled %}
-<div class="container section-t-space services-box mt-0 pb-0 pt-0 shadow-none">
+<div class="container section-t-space services-box mt-0 pb-0 pt-0 shadow-none" >
   <section class="sub-section-2 border-section">
-    <div class="row wow {{section.settings.animation_style}}" data-wow-delay="{{section.settings.animation_time}}">
+    <div class="row wow {{section.settings.animation_style}}"  data-wow-delay="{{section.settings.animation_time}}">
       {% for block in section.blocks %}
       <a href="{{ block.settings.banner_link }}">
       <div class="col service-block service-block-layout-4">
@@ -14,7 +14,7 @@
           {% endif %}
           <div class="align-self-center media-body ">
             {% if block.settings.services_title != blank %}
-              <h6 {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#service1_{{blockId}}_services_title"{% endif %}>
+              <h6 {% if settings.enable_lang_switcher %}class="lang_trans" style="color:white;" data-trans="#service1_{{blockId}}_services_title"{% endif %}>
                 {{ block.settings.services_title }}
               </h6>
               {% if settings.enable_lang_switcher %}

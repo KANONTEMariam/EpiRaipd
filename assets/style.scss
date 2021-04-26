@@ -8,11 +8,11 @@ $black: #000000;
 $selective-red-orange: #252525;
 $selective-danger: #fd3241;
 $selective_yellow: #ffb400;
-$selective_red: #ff7c27;
+$selective_red: #ff6e0b;
 $selective_coffee: #252525;
-$selective-green: #ff7c27;
+$selective-green: #ff6e0b;
 $selective-orange: #252525;
-$selective-blue: #ff7c27;
+$selective-blue: #ff6e0b;
 $selective-pink: #eb2989;
 $selective-yellow2: #ffd200;
 $grey: #777777;
@@ -75,7 +75,7 @@ body {
   background: #fff;
   
   font-size: 15px;
-  color: #eef2f4;
+  color: #000000;
 }
 ::selection {
   color: $selective-red-orange;
@@ -301,7 +301,7 @@ section {
 }
 .btn-secondary {
 
-  background-color: #ff7c27;
+  background-color: #ff6e0b;
   color: #eef2f4;
   border-radius: 5px;
   padding: 10px 30px;
@@ -391,7 +391,7 @@ section{
 
 .btn-theme {
   padding: 10px 30px;
-  background-color: #ff7c27;
+  background-color: #ff6e0b;
   border-radius: 5px;
   text-transform: uppercase;
   color: #eef2f4;
@@ -734,7 +734,7 @@ section{
 }
 .top-header {
   /*   background-color: lighten($black, 93.5%); */
-  background-color: #ff7c27;
+  background-color: #ff6e0b;
   padding-top: 5px;
   padding-bottom: 5px;
   .header-dropdown {
@@ -1041,7 +1041,7 @@ section{
 
   .input-group-append{
     .btn-layout-2{
-      background-color:#252525;
+      background-color:#567e05;
     }
   }
 }
@@ -1130,7 +1130,7 @@ section{
         color: #1e0505;
         font-size: 14px;
         &:hover{
-          color: #ff7c27;
+          color: #ff6e0b;
         }
       }
       &:hover {
@@ -1182,7 +1182,7 @@ section{
   }
 }
 .bottom-header {
-  background: #252525;
+  background: #567e05;
   border-bottom: 3px solid $selective-red-orange;
 }
 .home-slider {
@@ -2829,7 +2829,7 @@ section{
   -ms-transition: position 10s;
   -o-transition: position 10s;
   transition: all 0.5s ease;
-  background:#252525;
+  background:#567e05;
   border-bottom: 0;
   .sm-blue{
     a{
@@ -2875,7 +2875,7 @@ section{
             filter: contrast(100);
           }
           a{
-            color:#ff7c27;
+            color:#ff6e0b;
 
           }
         }
@@ -2888,7 +2888,7 @@ section{
       }
     }
     .navbar {
-      background-color: #ff7c27;
+      background-color: #ff6e0b;
       padding: 21px 46px 24px;
     }
     .collapse {
@@ -2941,7 +2941,7 @@ section{
 //subscribe layouts start
 .subscribe-full{
   > div{
-    background-color: #ff7c27;
+    background-color: #ff6e0b;
     .subscribe-left{
       border-radius: 0;
     }
@@ -3694,6 +3694,7 @@ footer {
   h2{
     .money{
       font-size: 24px;
+      
     }
     font-size: 30px;
     font-weight: 400;
@@ -5233,7 +5234,7 @@ h2{
       font-weight: 400;
       text-transform: uppercase;
       span{
-        color: #ff7c27;
+        color: #ff6e0b;
         font-size: 70px;
         font-weight: 700;
         text-transform: uppercase;
@@ -5255,7 +5256,7 @@ h2{
     }
 
     h4{
-      color: #ff7c27;
+      color: #ff6e0b;
       font-size: 24px;
       text-transform: capitalize;
       font-weight: 600;
@@ -5314,7 +5315,7 @@ h2{
         &:hover{
 
           a{
-            color: #ff7c27;
+            color: #ff6e0b;
           }
         }
         a{
@@ -6479,6 +6480,7 @@ Password template end
                   margin: 15px 0;
                   span.money{
                     padding-left: 5px;
+                    
                   }
                 }
                 p{    
@@ -6876,7 +6878,7 @@ Password template end
       right: 14px;
     }
     &:hover{
-      background: #ff7c27;
+      background: #ff6e0b;
       color: $white;
       .cart_qty_cls{
         color: $selective-green;
@@ -6965,7 +6967,7 @@ Password template end
     text-align: center;
     line-height: normal;
     font-size: 25px;
-    color:#ff7c27;
+    color:#ff6e0b;
     &:hover{
       color:#444444;
     }
@@ -6977,7 +6979,7 @@ Password template end
 img{
   &.img-fluid{
     &.bnr_img {
-      border: 1px solid #ff7c27;
+      border: 1px solid #ff6e0b;
       border-radius: 5px;
     }
   }
@@ -7243,7 +7245,7 @@ img{
       }
     }
     border-bottom: 0;
-    background-color:#252525;
+    background-color:#567e05;
     .offer-dropdown{
       span{
         color: $white;
@@ -8174,7 +8176,7 @@ img{
     }
   }
   .services-box{
-    max-width: 92%;
+    max-width: 100%;
     padding: 30px;
     box-shadow: 0px 0px 10px #ddd;
     .service-block{
@@ -8691,6 +8693,7 @@ img{
     h2{
       .money {
         font-size: 24px;
+       
       }
     }
   }
@@ -9175,7 +9178,7 @@ img{
     &.bottom-header{
       .toggle-nav{
         border-radius: 0;
-        background-color: #ff7c27;
+        background-color: #ff6e0b;
       }
     }
   }
@@ -13963,7 +13966,7 @@ body{
 
 .select-box {
     display: flex;
-    width: 130px;
+    width: 150px;
     flex-direction: column;
 }
 
@@ -13981,7 +13984,7 @@ body{
 }
 
 .selected {
-    background: #FF7C27;
+    background: #ff6e0b;
     border-radius: 5px 0 0 5px;
     margin-bottom: 8px;
     color: #f5f6fa;
@@ -14052,11 +14055,11 @@ body{
 
 .popup .content {
     position: absolute;
-    top: 10%;
+    top: 470px;
     left: 50%;
     transform: translate(-50%, -150%) scale(0);
     width: 350px;
-    height: 400px;
+    height: 300px;
     z-index: 2;
     text-align: center;
     padding: 20px;
@@ -14105,7 +14108,7 @@ a {
     color: #ff822e;
 }
 
-.input-field .validate {
+/*.validate {
     padding: 20px;
     font-size: 16px;
     border-radius: 10px;
@@ -14116,6 +14119,33 @@ a {
     box-shadow: inset 5px 5px 5px #232323, inset -5px -5px 5px #292929;
     outline: none;
   height:40px;
+.validate{
+  
+  height:40px;
+  width:250px;
+  margin-bottom:15px;
+  border-radius:3px;
+  border:1px solid #ced4da;
+  color:#b4b4b4;
+}
+
+}*/
+
+.bouton:hover{
+  background-color:red;
+}
+
+
+.mapbutton{
+  
+  padding: 20px;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color:#ff822e;
+  height:40px;
+  color: white;
+  text-align:center;
 }
 
 .first-button {
@@ -14235,6 +14265,46 @@ input[type="text"]:focus {
 a {
     color: black;
     text-decoration: none;
+}
+
+.simpe_nav:hover{
+  color:#ff822e;
+}
+
+
+.simpes_nav:hover{
+  color:black;
+}
+
+.button:hover{
+  background-color:black;
+}
+
+
+.required {
+  color: red;
+}
+
+.advantages-content {
+    background-color: white;
+    float: left;
+    text-align: center;
+    margin-left: 6em;
+    padding-top: 3em;
+    margin-top: 3em;
+}
+
+.advantages-h2 {
+    padding-bottom: 0.85em;
+    color: #444;
+}
+
+.advantages-p {
+    color: rgba(68, 68, 68, 0.5);
+}
+
+.image {
+    padding-bottom: 1em;
 }
 
 

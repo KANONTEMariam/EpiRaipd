@@ -28,9 +28,9 @@
       <div class="col-xl-12 ">
         <div class="subscribe-top">
           <div class="row">
-            <div class="col text-center">
+            <div  class="col text-center">
               <i class="fa fa-envelope-o selective-green"></i>
-              <h2 class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#footer2_{{blockId}}title"{% endif %}> <i class="fa fa-envelope-o"></i>{{ block.settings.title }}
+              <h2 style="text-align:center; color:#ff6e0b;" class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#footer2_{{blockId}}title"{% endif %}> <!--i class="fa fa-envelope-o"></i-->{{ block.settings.title }}
               </h2>
               {% if settings.enable_lang_switcher %}
                <span class="hide" id="footer2_{{blockId}}title">{{ block.settings.trans_title | raw }}</span>
@@ -125,14 +125,14 @@
           </ul>
 
       {% else %}
-       <div class="col">
+       <div class="col" >
           <h4 class="sub-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#footer2_{{blockId}}info_title"{% endif %}>
             {{ block.settings.title }}
           </h4>
           {% if settings.enable_lang_switcher %}
           <span class="hide" id="footer2_{{blockId}}info_title">{{ block.settings.trans_title | raw }}</span>
           {% endif %}
-        <ul class="contact-list">
+        <ul class="contact-list" style="float:right;">
           {% if block.settings.address %}
            <li style="color: {{ settings.footer_link_color }}">
                     <i class="fa fa-map-marker"></i>

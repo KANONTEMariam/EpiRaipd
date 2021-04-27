@@ -1,5 +1,9 @@
 {% if section.settings.enabled %}
-    <div class="container">
+    <div class="container" style="padding-top:-80px;">
+        <div style="padding-left:35px;width:85em;">
+<h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+          {{ section.settings.tab_title }}
+        </h2></div>
   <div class="row section-mix section-b-space product_mix_banner">
     {% for block in section.blocks %}
     {% if block.type == 'Banner' %}
@@ -326,6 +330,12 @@
       {
         "type": "header",
         "content": "Image Design Option"
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Product Tabs Heading",
+         "default":"Today's Hot Deal"
       },
       {
         "type": "checkbox",

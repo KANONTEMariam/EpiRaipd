@@ -1,8 +1,12 @@
 <!--small slider section-->
 {% if section.settings.enabled %}
-<section style="padding-bottom:40px; " class="sliders sliders-layout-2 section-b-space bg-colums mobile-coumns layout-4-banner{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}"
+<section style="padding-bottom:150px; " class="sliders sliders-layout-2 section-b-space bg-colums mobile-coumns layout-4-banner{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}"
         style=" {% if section.settings.enable_bg_img %}background-image: url({{ section.settings.slider | img_url: 'master' }});{% else %}
                 background-color: {{ section.settings.bg_color }};{% endif %}" >
+  <div style="padding-left:40px;width:87em;">
+<h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+          {{ section.settings.tab_title }}
+        </h2></div>
   <div class="container">
     <div class="row col-abjust section-mix new-demo-style">
        {% for block in section.blocks %}
@@ -236,6 +240,12 @@
          "id":"enable_bg_img",
          "default":true,
          "label":"Enabled  image"
+      },
+      {
+         "type":"text",
+         "id":"tab_title",
+         "label":"Product Tabs Heading",
+         "default":"Today's Hot Deal"
       },
     {
          "type":"checkbox",

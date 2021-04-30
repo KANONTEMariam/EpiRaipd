@@ -1,7 +1,7 @@
 <!--small slider section-->
 {% if section.settings.enabled %}
-<div style="padding-bottom:90px;">
-  <div style="padding-left:40px;width:87em;">
+<div style="padding-bottom:91px;">
+  <div style="padding-left:40px;width:87em;padding-bottom:7px;">
 <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
@@ -197,8 +197,8 @@
             </div>
             {% endif %}
           </div>
-          <div class="text-right">
-            <a href="{{ collection.url }}">View More</a>
+          <div class="text-right simpes_nav" style="background:#2B2015;height:40px;width:120px;border-radius:4px;">
+            <a href="{{ collection.url }}" style="text-align:center;color:white;padding-right:18px;">View More</a>
           </div>
         </div>
       </div>

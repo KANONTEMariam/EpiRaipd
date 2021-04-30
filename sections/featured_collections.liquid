@@ -1,10 +1,10 @@
 {%- if section.settings.enabled -%}
-<section style="margin-bottom:140px;margin-top:70px;" class="{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
+<section style="margin-bottom:137px;margin-top:-10px;" class="{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
   <div style="padding-left:40px;width:87em;">
 <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
-  <div class="container">
+  <div class="container" style="padding-top:17px;">
     <div class="row banners  layout-4-collection">
       {% assign block_size = section.blocks.size  %}
       {% for block in section.blocks %}
@@ -63,8 +63,10 @@
                     {% endif %}
 
                     {% if block.settings.btn_txt != blank %}
-                    <div style="text-align:center; background-color:#ff6e0b; color:white; height:40px;width:150px;padding-top:10px; border:radius:4px;" {% if settings.enable_lang_switcher %}class="banner-btn lang_trans"{% endif %} {% if settings.enable_lang_switcher %} data-trans="#collection_{{blockId}}btn_txt"{% endif %}>
+                  <div style="text-align:center; padding-left:75px;border:radius:10px;"> 
+                    <div style="text-align:center; background-color:#2B2015; color:white; height:40px;width:150px;padding-top:10px; " {% if settings.enable_lang_switcher %}class="banner-btn lang_trans"{% endif %} {% if settings.enable_lang_switcher %} data-trans="#collection_{{blockId}}btn_txt"{% endif %}>
                       {{ block.settings.btn_txt }}
+                    </div>
                     </div>
                       {% if settings.enable_lang_switcher %}
                        <span style="text-align:center;" class="hide" id="collection_{{blockId}}btn_txt">{{ block.settings.trans_btn_txt | raw }}</span>
@@ -80,6 +82,7 @@
     </div>
   </div>
 </section>
+
 <!--section id="Advantages">
         <div class="advantages-content">
             <img src="image/steps-1.png" alt="" class="image">

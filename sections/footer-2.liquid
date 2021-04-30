@@ -97,8 +97,9 @@
                 {% endif %}
       </div>
       {% elsif block.type == 'Menu' %}
-      <div class="col">
-        <h4  class="sub-title {% if settings.enable_lang_switcher %} lang_trans {% endif %}"{% if settings.enable_lang_switcher %} data-trans="#footer2_{{blockId}}_menu_title"{% endif %}>
+      <div class="col" >
+       <div >
+        <h4  style="float-right;" class="sub-title {% if settings.enable_lang_switcher %} lang_trans {% endif %}"{% if settings.enable_lang_switcher %} data-trans="#footer2_{{blockId}}_menu_title"{% endif %}>
                   {{ block.settings.title }}
                 </h4>
                 {% if settings.enable_lang_switcher %}
@@ -110,7 +111,7 @@
             {% if block.settings.footer_linklist != blank %} 
             {% assign footer_linklist = block.settings.footer_linklist -%}
             {% for link in linklists[footer_linklist].links %}
-            <li>
+            <li style="float-right;">
               {% assign data_title = link.title | split: '|' | first %}
               {% assign data_json = link.title | split: '|' | last %}
               <a href="{{ link.url }}" style="color: {{ settings.footer_link_color }}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#footer2_{{link.handle}}"{% endif %}>
@@ -123,16 +124,16 @@
             {% endfor %}
             {% endif %}
           </ul>
-
+		</div>
       {% else %}
-       <div class="col" >
-          <h4 class="sub-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#footer2_{{blockId}}info_title"{% endif %}>
+       <div class="col" style="float-right;">
+          <h4 style="float-right;" class="sub-title {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#footer2_{{blockId}}info_title"{% endif %}>
             {{ block.settings.title }}
           </h4>
           {% if settings.enable_lang_switcher %}
           <span class="hide" id="footer2_{{blockId}}info_title">{{ block.settings.trans_title | raw }}</span>
           {% endif %}
-        <ul class="contact-list" style="float:right;">
+        <ul class="contact-list" >
           {% if block.settings.address %}
            <li style="color: {{ settings.footer_link_color }}">
                     <i class="fa fa-map-marker"></i>
@@ -179,10 +180,10 @@
                   {% endif %}
         </ul>
       </div>
-
+</div>
       {% endif %}
       {% endfor %}
-    </div>
+    
     <div class="row">
       <div class="col-sm-12">
         {% if section.settings.show_social %}

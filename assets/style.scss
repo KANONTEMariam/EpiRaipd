@@ -35,8 +35,8 @@ $grey-shade: #7f786d;
 
 
 //fonts
-$font-montserrat: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif;
-$font-open-sans: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif;
+$font-montserrat: "Montserrat", "HelveticaNeue", "Helvetica Neue", sans-serif;
+$font-open-sans: "Montserrat", "HelveticaNeue", "Helvetica Neue", sans-serif;
 $font-sans: sans-serif;
 
 $font-themify: themify;
@@ -391,14 +391,14 @@ section{
 
 .btn-theme {
   padding: 10px 30px;
-  background-color: #ff6e0b;
+  background-color: #2b2015;
   border-radius: 5px;
   text-transform: uppercase;
   color: #eef2f4;
   font-size: 14px;
   display: inline-block;
   &:hover{
-    background-color: #333333;
+    background-color: #ff6e0b;
     color: #eef2f4;
   }
 }
@@ -734,7 +734,7 @@ section{
 }
 .top-header {
   /*   background-color: lighten($black, 93.5%); */
-  background-color: #ff6e0b;
+  background-color: #eef2f4;
   padding-top: 5px;
   padding-bottom: 5px;
   .header-dropdown {
@@ -760,7 +760,7 @@ section{
   ul
   {
     li {
-      color: #eef2f4;
+      color: #000000;
       text-transform: uppercase;
       font-size: 12px;
       line-height: 32px;
@@ -1041,7 +1041,7 @@ section{
 
   .input-group-append{
     .btn-layout-2{
-      background-color:#567e05;
+      background-color:#2b2015;
     }
   }
 }
@@ -1182,7 +1182,7 @@ section{
   }
 }
 .bottom-header {
-  background: #567e05;
+  background: #2b2015;
   border-bottom: 3px solid $selective-red-orange;
 }
 .home-slider {
@@ -2829,7 +2829,7 @@ section{
   -ms-transition: position 10s;
   -o-transition: position 10s;
   transition: all 0.5s ease;
-  background:#567e05;
+  background:#2b2015;
   border-bottom: 0;
   .sm-blue{
     a{
@@ -5793,7 +5793,7 @@ footer{
   padding: 10px;
 }
 .selected_currency{
-  color: #eef2f4 !important;
+  color: #000000 !important;
   font-weight: 400;
   font-size: 12px;
   line-height: 32px;
@@ -7245,7 +7245,7 @@ img{
       }
     }
     border-bottom: 0;
-    background-color:#567e05;
+    background-color:#2b2015;
     .offer-dropdown{
       span{
         color: $white;
@@ -13984,14 +13984,14 @@ body{
 }
 
 .selected {
-    background: #ff6e0b;
+    /*background: #fc9613;
     border-radius: 5px 0 0 5px;
     margin-bottom: 8px;
     color: #f5f6fa;
     position: relative;
     order: 0;
     height:40px;
-  text-align:5px;
+  text-align:5px;*/
 }
 
 .selected::after {
@@ -14203,10 +14203,22 @@ a {
         content: "\f107";
         font-family: $font-awesome;
         position: absolute;
-        right: 3px;
-        bottom:8px;
+        right: 15px;
+        bottom:0px;
       }
 }
+
+.fleches{
+  padding-right: 22px;
+      &:before {
+        content: "\f107";
+        font-family: $font-awesome;
+        position: absolute;
+        right: 40px;
+        bottom:0px;
+      }
+}
+
 
 .identification {
     background-color: #ff822e;

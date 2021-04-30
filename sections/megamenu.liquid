@@ -473,11 +473,17 @@
       </div>
       {% endif %}
      {% if section.settings.suumer_offer_enable %}
-      <div class="col text-right" style="padding-left:400px;">
+      <div class="col text-right" style="padding-left:250px;">
         <div class="onhover-dropdown offer-dropdown">
-          <i class="icon-gift" style="    font-size: 21px;
-    padding-right: 10px;
-    color: #f7ffff;"></i><span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#megamenu__{{blockId}}summer_offer_title"{% endif %}> {{ section.settings.summer_offer_title }}</span>
+          <div class="map"  style="margin-left:-4em;" >
+              
+              <a href="#">
+                <img src="{{ section.settings.guide_img | img_url: '15x' }}"  alt="Cart-icon" />
+                <span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#megamenu__{{blockId}}summer_offer_title"{% endif %}> {{ section.settings.summer_offer_title }}</span>
+              </a>
+
+          </div>
+          
            {% if settings.enable_lang_switcher %}
             <span class="hide" id="megamenu__{{blockId}}summer_offer_title">{{section.settings.trans_summer_offer_title}}</span>
             {% endif %}
@@ -501,6 +507,48 @@
             <li>
               <a href="{% if section.settings.offer_url_3 != blank %} {{ section.settings.offer_url_3 }} {% else %} # {% endif %}">
                 <img src="{{ section.settings.offer_bnr_3 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col text-right" style="padding-left:1px;">
+        <div class="onhover-dropdown offer-dropdown">
+          <div class="map"  style="margin-left:-4em;" >
+              
+              <a href="#">
+                <img src="{{ section.settings.guide_img_12 | img_url: '15x' }}"  alt="Cart-icon" />
+                <span {% if settings.enable_lang_switcher %}class="lang_trans simpe_nav" data-trans="#megamenu__{{blockId}}summer_offer_title"{% endif %}> {{ section.settings.summer_offer_title_12 }}</span>
+              </a>
+
+          </div>
+          
+          
+           {% if settings.enable_lang_switcher %}
+            <span class="hide" id="megamenu__{{blockId}}summer_offer_title">{{section.settings.trans_summer_offer_title_11}}</span>
+            {% endif %}
+          {% if section.settings.offer_bnr_11 or section.settings.offer_bnr_21 or section.settings.offer_bnr_31 %}
+          <ul class="onhover-show-div">
+            {% if section.settings.offer_bnr_11 %}
+            <li>
+              <a href=" {% if section.settings.offer_url_11 != blank %} {{ section.settings.offer_url_11 }} {% else %} # {% endif %}">
+                <img src="{{ section.settings.offer_bnr_11 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
+              </a>
+            </li>
+            {% endif %}
+            {% if section.settings.offer_bnr_21 %}
+            <li>
+              <a href="{% if section.settings.offer_url_21 != blank %} {{ section.settings.offer_url_21 }} {% else %} # {% endif %}">
+                <img src="{{ section.settings.offer_bnr_21 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
+              </a>
+            </li>
+            {% endif %}
+            {% if section.settings.offer_bnr_31 %}
+            <li>
+              <a href="{% if section.settings.offer_url_31 != blank %} {{ section.settings.offer_url_31 }} {% else %} # {% endif %}">
+                <img src="{{ section.settings.offer_bnr_31 | img_url: '300x' }}" class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" alt="{{ image.alt }}" />
               </a>
             </li>
             {% endif %}
@@ -588,9 +636,31 @@
          "default":"Title",
          "label":"Summer offer"
       },
+	  {
+         "type":"image_picker",
+         "id":"guide_img",
+         "label":"Map image"
+      },
+      {
+         "type":"text",
+         "id":"summer_offer_title_12",
+         "default":"Title",
+         "label":"Summer offer"
+      },
+	  {
+         "type":"image_picker",
+         "id":"guide_img_12",
+         "label":"Map image"
+      },
       {
          "type":"textarea",
          "id":"trans_summer_offer_title",
+         "default":" Title",
+         "label":"translate summer offer Title"
+      },
+      {
+         "type":"textarea",
+         "id":"trans_summer_offer_title_11",
          "default":" Title",
          "label":"translate summer offer Title"
       },
@@ -601,8 +671,19 @@
          "info":"( 300 X 130 PX )"
       },
       {
+         "type":"image_picker",
+         "id":"offer_bnr_11",
+         "label":"Offer Banner Image",
+         "info":"( 300 X 130 PX )"
+      },
+      {
          "type":"url",
          "id":"offer_url_1",
+         "label":"Offer Image link"
+      },
+      {
+         "type":"url",
+         "id":"offer_url_11",
          "label":"Offer Image link"
       },
       {
@@ -612,8 +693,19 @@
          "info":"( 300 X 130 PX )"
       },
       {
+         "type":"image_picker",
+         "id":"offer_bnr_21",
+         "label":"Offer Banner Image",
+         "info":"( 300 X 130 PX )"
+      },
+      {
          "type":"url",
          "id":"offer_url_2",
+         "label":"Offer Image link"
+      },
+      {
+         "type":"url",
+         "id":"offer_url_21",
          "label":"Offer Image link"
       },
       {
@@ -621,6 +713,17 @@
          "id":"offer_bnr_3",
          "label":"Offer Banner image",
          "info":"( 300 X 130 PX )"
+      },
+      {
+         "type":"image_picker",
+         "id":"offer_bnr_31",
+         "label":"Offer Banner image",
+         "info":"( 300 X 130 PX )"
+      },
+      {
+         "type":"url",
+         "id":"offer_url_31",
+         "label":"Offer Image link"
       },
       {
          "type":"url",

@@ -1315,7 +1315,7 @@
 /* 	==================== sm-blue css ====================== */
 
 .sm-blue {
-  font-family: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif; }
+  font-family: "Montserrat", "HelveticaNeue", "Helvetica Neue", sans-serif; }
 .sm-blue a, .sm-blue a:focus, .sm-blue a:active {
   padding: 15px 20px;
   color: #eef2f4;
@@ -1453,7 +1453,7 @@
     font-weight: 400;
     font-size: 14px;
     text-transform: capitalize;
-    font-family: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif;
+    font-family: "Montserrat", "HelveticaNeue", "Helvetica Neue", sans-serif;
     letter-spacing: 0; }
   .sm-blue ul a:hover, .sm-blue ul a:focus, .sm-blue ul a:active, .sm-blue ul a.highlighted {
     color: #0072bb; }
@@ -1773,7 +1773,7 @@ body.overflow_fixed{overflow:hidden;}
   font-weight: 400;
   color: #333;
   text-transform: capitalize;
-  font-family: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif;
+  font-family: "Montserrat", "HelveticaNeue", "Helvetica Neue", sans-serif;
   line-height: 36px;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;

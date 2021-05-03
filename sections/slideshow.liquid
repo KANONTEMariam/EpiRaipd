@@ -23,7 +23,7 @@
             <h4>{{ block.settings.sub_html }}</h4>
            {% endif  %}
             {% if block.settings.shop_btn_url != blank %}
-                <a style="color:white;margin-top:350px;" {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a>
+                <a style="color:white;border-radius:20px;" {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a>
                  {% if settings.enable_lang_switcher %}
             <span class="hide" id="slide_{{blockId}}shop_button">{{ block.settings.trans_shop_button | raw }}</span>
             {% endif %} 

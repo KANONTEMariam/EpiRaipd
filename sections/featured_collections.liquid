@@ -29,7 +29,8 @@
                        data-aspectratio="{{  block_image.aspect_ratio }}" 
                        data-sizes="auto" 
                        class="{% if forloop.last == true %} mb-0 {% endif %} lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
-                       width="100%">
+                       width="100%"
+                       style="height:300px;width:300px; border-radius:150px;">
                   {% endif %}
 
             {% endif %}

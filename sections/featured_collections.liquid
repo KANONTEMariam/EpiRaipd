@@ -1,10 +1,10 @@
 {%- if section.settings.enabled -%}
-<section style="margin-bottom:137px;margin-top:-10px;" class="{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}">
-  <div style="padding-left:40px;width:87em;">
-<h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+<section style="margin-bottom:137px;margin-top:-10px;" class="{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}" id="vouspouvez">
+  <div style="padding-left:230px;width:70em;text-align:center;">
+<h2 style="font-size:24px;" class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
-  <div class="container" style="padding-top:17px;">
+  <!--version originale div class="container" style="padding-top:17px;">
     <div class="row banners  layout-4-collection">
       {% assign block_size = section.blocks.size  %}
       {% for block in section.blocks %}
@@ -36,7 +36,7 @@
             {% endif %}
 
             {% if block.settings.enabled_info %}
-              <!--div class="banner-contain {% if section.settings.enabled_layout_2 %}banner-contain-layout-2 banner-mobile {% endif %} demo-style-2 {{ block.settings.banner_color_style }}"-->
+              
                 <div >
                 <div style="padding-top:40px;" >
                     {% if block.settings.title_top != blank %}
@@ -78,6 +78,148 @@
        {% endif %}
           </div>
         </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div-->
+  <div class="container" style="padding-top:17px;">
+    <div class="row banners  layout-4-collection">
+      {% assign block_size = section.blocks.size  %}
+      {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %} 
+      <div class="col-lg-{% if block_size == 2 %}{{ 6 }}{% elsif block_size == 3 %}{{ 4 }}{% elsif block_size == 4 %}{{ 3 }}{% endif %} " >
+        <!--a href="{{ collection.url }}"-->
+         
+        <!--div class="banner-effect  main-banner"-->
+          <div >
+            {% if block.settings.banner_image == blank %}
+              {% capture current %}{% cycle 1,2,3,4 %}{% endcapture %}
+              {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% else %}
+                 {% if section.settings.use_equal_height %}
+                  <div>
+                    <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: block.settings.banner_image %}" data-sizes="auto" data-parent-fit="cover"></span>
+                  </div>        
+                  {% else %}
+                  {% assign block_image = block.settings.banner_image %}
+                  {% assign img_url = block_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                  <img src="{{ block_image | img_url: 'original' }}" 
+                       data-src="{{ img_url }}" 
+                       data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                       data-aspectratio="{{  block_image.aspect_ratio }}" 
+                       data-sizes="auto" 
+                       class="{% if forloop.last == true %} mb-0 {% endif %} lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                       width="100%"
+                       style="height:300px;width:300px; border-radius:150px;">
+                  {% endif %}
+
+            {% endif %}
+
+            {% if block.settings.enabled_info %}
+              
+                <div >
+                <div style="padding-top:40px;" >
+                    {% if block.settings.title_top != blank %}
+                    <p  style="text-align:center;" {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#collection_{{blockId}}trans_title_top"{% endif %}>{{block.settings.title_top}}</p>
+                  {% endif %}
+                     {% if settings.enable_lang_switcher %}
+                    <span style="text-align:center;" class="hide" id="collection_{{blockId}}trans_title_top">{{ block.settings.trans_title_top | raw }}</span>
+                    {% endif %}
+
+                    {% if block.settings.title %}
+                     <h1 style="text-align:center;" class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#collection_{{blockId}}main_title"{% endif %}>
+                      {{ block.settings.title }}
+                    </h1>
+                    {% if settings.enable_lang_switcher %}
+                    <span style="text-align:center;" class="hide" id="collection_{{blockId}}main_title">{{ block.settings.trans_title | raw }}</span>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.title_bottom %}
+                    <h2 style="text-align:center;" {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#collection_{{blockId}}title_bottom"{% endif %}>{{block.settings.title_bottom}}
+                    </h2>
+                    {% if settings.enable_lang_switcher %}
+                    <span style="text-align:center;background-color:#ff6e0b; border-radius:4px;" class="hide" id="collection_{{blockId}}title_bottom">{{ block.settings.trans_title_bottom | raw }}</span>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.btn_txt != blank %}
+                  <!--div class="col-xl-3 servicess" id="services">
+                      <div class="banner-contain top-contain ">
+                        {{ block.settings.custom_html }}
+                      </div>
+                      {% if block.settings.banner_img_1 == blank %}
+                       <img src="{{ 'banner-left-layout-4.png' | asset_url }}" class="img-fluid" alt="Banner"/>
+                      {% else %}
+                        {% if section.settings.use_equal_height %}
+                        <div>
+                          <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: 'block.settings.banner_img%}" data-sizes="auto" data-parent-fit="cover"></span>
+                        </div>        
+                      {% else %}
+                    {% assign block_image_1 = block.settings.banner_img_1 %}
+                  {% assign img_url1 = block_image_1 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                      <img src="{{ block_image_1 | img_url: 'master' }}" 
+                         data-src="{{ img_url1 }}" 
+                         data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                         data-aspectratio="{{   article.image.aspect_ratio }}" 
+                         data-sizes="auto" 
+                         class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                         >
+                        {% endif %}
+                      {% endif %}
+      			</div-->
+                  
+                  <div class="popupservice" id="popupservice-1">
+                      <div class="overlayservice"></div>
+                    {% if block.settings.btn_txt != blank %}
+                      <div class="contentservice">
+                        
+                          <div class="close-btn" onclick="togglePopupservice()">&times;</div>
+                          <div class="servicecontenu">
+                              <div class="alignservice1">
+                                  {% if block.settings.banner_img_1 == blank %}
+                                     <img src="{{ 'banner-left-layout-4.png' | asset_url }}" class="img-fluid" alt="Banner"/>
+                                    {% else %}
+                                      {% if section.settings.use_equal_height %}
+                                      <div>
+                                        <span class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %}" data-bgset="{% include 'bg-set', image: 'block.settings.banner_img%}" data-sizes="auto" data-parent-fit="cover"></span>
+                                      </div>        
+                            {% else %}
+                          {% assign block_image_1 = block.settings.banner_img_1 %}
+                        {% assign img_url1 = block_image_1 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                            <img src="{{ block_image_1 | img_url: 'master' }}" 
+                               data-src="{{ img_url1 }}" 
+                               data-widths="[157, 270, 303, 370, 377, 670, 570, 720, 900, 1080, 1296, 1512, 1728, 2048]" 
+                               data-aspectratio="{{   article.image.aspect_ratio }}" 
+                               data-sizes="auto" 
+                               class="lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
+                               >
+                              {% endif %}
+                            {% endif %}
+                              </div>
+                              <div class="alignservice2">
+                                  {{ block.settings.custom_html }}
+                              </div>
+                          </div>
+                        {% endif %}
+                          </div>
+                  </div>
+                  <a href="#vouspouvez" onclick="togglePopupservice()">
+                  <div style="text-align:center; padding-left:75px;border:radius:10px;"> 
+                    <div style="text-align:center; background-color:#2B2015; color:white; height:40px;width:150px;padding-top:10px; " {% if settings.enable_lang_switcher %}class="banner-btn lang_trans"{% endif %} {% if settings.enable_lang_switcher %} data-trans="#collection_{{blockId}}btn_txt"{% endif %}>
+                      {{ block.settings.btn_txt }}
+                    </div>
+                    </div>
+                    </a>
+                      {% if settings.enable_lang_switcher %}
+                       <span style="text-align:center;" class="hide" id="collection_{{blockId}}btn_txt">{{ block.settings.trans_btn_txt | raw }}</span>
+                     {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+       {% endif %}
+          </div>
+        
       </div>
       {% endfor %}
     </div>
@@ -300,6 +442,17 @@
                "type": "textarea",
                "id": "trans_btn_txt",
                "label": "Translate shop now button"
+            },{
+               "type":"image_picker",
+               "id":"banner_img_1",
+               "label":"Banner Image",
+               "info": "Image Size (330x780PX)"
+            },
+            {
+               "type":"html",
+               "id":"custom_html",
+               "label":"Custom Html Text",
+               "default": "<h2> 100% <span>Natural</span></h2><h1>Farm Fresh</h1><span>Save up to 30% off</span>"
             },
             {
                "type":"select",

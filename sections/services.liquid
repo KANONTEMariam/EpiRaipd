@@ -1,6 +1,10 @@
 <!--small section start-->
-<div style="padding-bottom:60px; padding-left:40px;width:87em;">
+<!--div style="padding-bottom:60px; padding-left:40px;width:87em;">
 <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+          {{ section.settings.tab_title }}
+        </h2></div-->
+<div style="padding-bottom:60px; padding-left:230px;width:87em;">
+<h2 style="font-size:24px;" class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
 {% if section.settings.enabled %}

@@ -1536,7 +1536,7 @@
 .mega-menu:before {
   left: 40px !important; }
 .mega-menu h4 {
-  color: #ff4c3b;
+  color: #ff6e0b;
   font-weight: 600;
   padding-top: 0;
   font-size: 14px;
@@ -1555,7 +1555,7 @@
   transition: all 0.3s ease; }
 .mega-menu .menu-list li a:hover {
   padding-left: 10px;
-  color: #ff4c3b;
+  color: #81c41d;
   transition: all 0.3s ease; }
 .menu-full {
   width: 1000px !important;

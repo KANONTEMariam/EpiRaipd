@@ -3,8 +3,8 @@
 <!--div style="margin-bottom:-460px;padding-bottom:-460px;"-->
 <div style="padding-bottom:88px;">
 <section class="hot-deal mb-0 {% if section.settings.bottom_space %} section-b-space {% endif %}">
-  <div style="padding-left:40px;width:87em;padding-bottom:17px;">
-<h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+  <div style="padding-left:230px;width:87em;padding-bottom:17px;">
+<h2 class="{% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
   <div class="container" >
@@ -12,7 +12,7 @@
       {% if section.settings.enabled_slidercolums %}
       <div class="col-xl-3 col-md-12">
         <div class="theme-card">
-          <h2 class="title title-layout-2 mb-0 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}_title"{% endif %}>
+          <h2 style="color:#000514;font-size:17.5px;" class="title title-layout-2 mb-0 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}_title"{% endif %}>
             {{ section.settings.title }}
           </h2>
           {% if settings.enable_lang_switcher %}
@@ -183,16 +183,21 @@
             {% endif %}
              {% endif %}
           </div>
-          <div class="text-right" style="background:#2B2015;height:40px;width:120px;border-radius:4px;">
-              <a href="{{ collection.url }}" style="text-align:center;color:white;padding-right:18px;">View More</a>
-          </div>
+          <div class="map text-right simpes_nav" style="height:50px;width:80px;margin-left:140px;margin-top:10px;">
+
+                          <a href="{{ collection.url }}" style="color:black;text-align:center;">
+                            <img src="{{ section.settings.bnt_img | img_url: '90x 60x' }}"  alt="Cart-icon" />
+                        
+                          </a>
+
+           </div>
         </div>
       </div>
       {% endif %}
       <div  class=" {% if section.settings.enabled_slidercolums == false  %}col-xl-12 {% else %} col-xl-9 {% endif %} col-md-12">
         <div class="hot-deal-right hot-deal-right-layout-2">
            {% if section.settings.tab_title != "blank" %}
-             <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+             <h2 style="color:#000514;font-size:17.5px;" class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
                 {{ section.settings.tab_title }}
               </h2>
               {% if settings.enable_lang_switcher %}
@@ -210,7 +215,7 @@
               </li>
               {% else %}
               <li {% if forloop.first == true %} class="current" {% endif %}>
-                <a href="tab-{{forloop.index}}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#tab_slidr_{{blockId}}_title"{% endif %}>{{ block.settings.title }}</a>
+                <a style="color:#000514;font-size:17.5px;" href="tab-{{forloop.index}}" {% if settings.enable_lang_switcher %}class="lang_trans" data-trans="#tab_slidr_{{blockId}}_title"{% endif %}>{{ block.settings.title }}</a>
                  {% if settings.enable_lang_switcher %}
                 <span class="hide" id="tab_slidr_{{blockId}}_title">{{ block.settings.trans_title | raw }}</span>
                 {% endif %}
@@ -428,6 +433,11 @@ section.hot-deal {
          "type": "textarea",
          "id": "trans_tab_title",
          "label": "Today's Hot Deal"
+      },
+	  {
+         "type":"image_picker",
+         "id":"bnt_img",
+         "label":"Map image"
       },
       {
          "type":"checkbox",

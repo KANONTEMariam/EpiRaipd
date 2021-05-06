@@ -82,7 +82,7 @@
       {% endfor %}
     </div>
   </div-->
-  <div class="container" style="padding-top:17px;">
+  <div class="container" style="padding-top:17px;padding-left:60px;">
     <div class="row banners  layout-4-collection">
       {% assign block_size = section.blocks.size  %}
       {% for block in section.blocks %}
@@ -110,7 +110,7 @@
                        data-sizes="auto" 
                        class="{% if forloop.last == true %} mb-0 {% endif %} lazyload {% if settings.enable_blur_lazy_load %} blur-up {% endif %} img-fluid" alt="{{block_image.alt}}"
                        width="100%"
-                       style="height:300px;width:300px; border-radius:150px;">
+                       style="height:250px;width:250px; border-radius:125px;">
                   {% endif %}
 
             {% endif %}
@@ -118,18 +118,18 @@
             {% if block.settings.enabled_info %}
               
                 <div >
-                <div style="padding-top:40px;" >
+                <div style="padding-top:30px;" >
                     {% if block.settings.title_top != blank %}
-                    <p  style="text-align:center;" {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#collection_{{blockId}}trans_title_top"{% endif %}>{{block.settings.title_top}}</p>
+                    <p  style="text-align:center;width:260px;padding-left:30px;font-weight: bold; color:black;font-size:17px;" {% if settings.enable_lang_switcher %} class="lang_trans" data-trans="#collection_{{blockId}}trans_title_top"{% endif %}>{{block.settings.title_top}}</p>
                   {% endif %}
                      {% if settings.enable_lang_switcher %}
                     <span style="text-align:center;" class="hide" id="collection_{{blockId}}trans_title_top">{{ block.settings.trans_title_top | raw }}</span>
                     {% endif %}
 
                     {% if block.settings.title %}
-                     <h1 style="text-align:center;" class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#collection_{{blockId}}main_title"{% endif %}>
+                     <p style="text-align:center; font-size:14px" class=" {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#collection_{{blockId}}main_title"{% endif %}>
                       {{ block.settings.title }}
-                    </h1>
+                    </p>
                     {% if settings.enable_lang_switcher %}
                     <span style="text-align:center;" class="hide" id="collection_{{blockId}}main_title">{{ block.settings.trans_title | raw }}</span>
                     {% endif %}
@@ -197,19 +197,22 @@
                               {% endif %}
                             {% endif %}
                               </div>
-                              <div class="alignservice2">
+                              <!--div class="alignservice2">
                                   {{ block.settings.custom_html }}
-                              </div>
+                              </div-->
                           </div>
                         {% endif %}
                           </div>
                   </div>
                   <a href="#vouspouvez" onclick="togglePopupservice()">
-                  <div style="text-align:center; padding-left:75px;border:radius:10px;"> 
+                  <!--div style="text-align:center; padding-left:75px;border:radius:10px;"> 
                     <div style="text-align:center; background-color:#2B2015; color:white; height:40px;width:150px;padding-top:10px; " {% if settings.enable_lang_switcher %}class="banner-btn lang_trans"{% endif %} {% if settings.enable_lang_switcher %} data-trans="#collection_{{blockId}}btn_txt"{% endif %}>
                       {{ block.settings.btn_txt }}
                     </div>
-                    </div>
+                    </div-->
+                    <div class="map" style="padding-left:50px;">
+                            <img src="{{ section.settings.vpi_img | img_url: '105x' }}"  alt="Cart-icon" />
+                      </div>
                     </a>
                       {% if settings.enable_lang_switcher %}
                        <span style="text-align:center;" class="hide" id="collection_{{blockId}}btn_txt">{{ block.settings.trans_btn_txt | raw }}</span>
@@ -273,6 +276,11 @@
          "id":"tab_title",
          "label":"Product Tabs Heading",
          "default":"Today's Hot Deal"
+      },
+	  {
+         "type":"image_picker",
+         "id":"vpi_img",
+         "label":"Votre image"
       },
       {
         "type": "checkbox",

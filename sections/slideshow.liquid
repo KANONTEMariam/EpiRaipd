@@ -3,7 +3,7 @@
       <div class="home-slider home-slider-layout-2 slide-1" data-slick='{"autoplay": {{ section.settings.use_autoplay }}, "autoplaySpeed": {{ section.settings.slider_speed }}000, "infinite": {{section.settings.use_loop}}, "arrows": {{section.settings.use_arrows}},"dots": {{section.settings.use_dots}} }' >
         {% for block in section.blocks %} 
         {% if block.type == 'Image' %}
-        <div style="height:700px;margin-bottom:-10px;" class="main" >
+        <div style="margin-bottom:90px;" class="main" >
           {% if block.settings.show_info %}
           <div class="slider-contain" >
             <div class="inner" >
@@ -23,10 +23,18 @@
             <h4>{{ block.settings.sub_html }}</h4>
            {% endif  %}
             {% if block.settings.shop_btn_url != blank %}
-                <a style="color:white;border-radius:20px;" {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a>
+                <!--div><a style="color:white;border-radius:20px;" {% if settings.enable_lang_switcher %}class="btn btn-theme title-font lang_trans" data-trans="#slide_{{blockId}}shop_button"{% endif %} href="{{ block.settings.shop_btn_url }}" >{{ block.settings.shop_button }}</a>
                  {% if settings.enable_lang_switcher %}
             <span class="hide" id="slide_{{blockId}}shop_button">{{ block.settings.trans_shop_button | raw }}</span>
-            {% endif %} 
+            {% endif %} </div-->
+              <div class="map text-right simpes_nav" style="height:90px;width:120px;margin-top:200px;margin-right:120px;">
+
+                          <a href="{{ block.settings.shop_btn_url }}" style="height:90px;width:120px;">
+                            <img style="height:50px;width:220px;" src="{{ section.settings.bnt_img | img_url: '120x 100x' }}"  alt="Cart-icon" />
+                        
+                          </a>
+
+           </div>
             {% endif %}
             </div>
           </div>
@@ -76,6 +84,11 @@
                ],
                "default":"text-center"
             },
+	  {
+         "type":"image_picker",
+         "id":"bnt_img",
+         "label":"Map image"
+      },
             {
                "type":"select",
                "id":"position",

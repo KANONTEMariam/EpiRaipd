@@ -1,6 +1,6 @@
 {% if section.settings.enabled %}
     <div class="container" style="padding-top:-80px;padding-bottom:87px;">
-        <div style="padding-left:180px;width:85em;padding-bottom:17px;">
+        <div style="padding-left:200px;width:85em;padding-bottom:17px;">
 <h2 class="{% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
@@ -33,7 +33,7 @@
       <div class="col-xl-3 col-md-6">
         <div class="theme-card slider-product">
            {% if section.settings.slider_title != "blank" %}
-            <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#mixed_product_{{blockId}}_title"{% endif %}>
+            <h2 style="color:#000514;font-size:17.5px;" class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#mixed_product_{{blockId}}_title"{% endif %}>
             {{ block.settings.slider_title }}
            </h2>
           {% if settings.enable_lang_switcher %}
@@ -186,15 +186,20 @@
             </div>
             {% endif %}
           </div>
-          <div class="text-right simpes_nav" style="background:#2B2015;height:40px;width:120px;border-radius:4px;">
-            <a href="{{ collection.url }}" style="text-align:center;color:white;padding-right:18px;">View More</a>
-          </div>
+          <div class="map text-right simpes_nav" style="height:50px;width:80px;margin-left:100px;margin-top:10px;">
+
+                          <a href="{{ collection.url }}" style="color:black;text-align:center;">
+                            <img src="{{ section.settings.bnt_img | img_url: '90x 60x' }}"  alt="Cart-icon" />
+                        
+                          </a>
+
+           </div>
         </div>
       </div>
     {% elsif block.type == 'Product' %}
       <div class="col-xl-3 " >
         <div class="theme-card b-color b-layout-2 ">
-          <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#mixed_product{{blockId}}_title"{% endif %}>
+          <h2 style="color:#000514;font-size:18px;" class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#mixed_product{{blockId}}_title"{% endif %}>
             {{ block.settings.title }}
           </h2>
           {% if settings.enable_lang_switcher %}
@@ -342,6 +347,11 @@
         "id": "use_equal_height",
         "label": "Use height Option for images?",
         "default": false
+      },
+	  {
+         "type":"image_picker",
+         "id":"bnt_img",
+         "label":"Map image"
       },
       {
         "type": "select",

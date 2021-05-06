@@ -126,7 +126,7 @@ h5 {
   font-size: 16px;
 }
 h6 {
-  font-size: 14px;
+  font-size: 18px;
   color: $selective-green;
   margin-bottom: 0;
   line-height: 24px;
@@ -518,8 +518,10 @@ section{
     height: auto;
     &:before {
       font-family: $font-themify;
-      color: $black;
+      color: $green;
+      //color: #81c41d;
       font-size: 18px;
+      //font-style: bold;
     }
   }
 }
@@ -798,7 +800,8 @@ section{
       line-height: 14px;
       vertical-align: middle;
       color: $white;
-      background: #ff4c3b;
+      //background: #ff4c3b;
+      background: #81c41d;
       &:after{
         content: "";
         position: absolute;
@@ -1010,6 +1013,7 @@ section{
   .input-group {
     height: 50px;
     font-family: $font-montserrat;
+    margin-bottom:25px;
   }
   input {
     border-radius: 5px 0 0 5px;
@@ -2839,7 +2843,7 @@ section{
       a{
         color:#333333;
         &:hover,&:focus,&:active{
-          color: #ff4c3b;
+          color: #81c41d;
         }
         .sub-arrow{
           border-color: transparent transparent transparent $selective_yellow;
@@ -2847,7 +2851,7 @@ section{
       }
     }
     h4,h2{
-      color: #ff4c3b;
+      color: #ff6e0b;
     }
     >li{
       > a{
@@ -3993,7 +3997,7 @@ footer {
         color: #999999;
         font-weight: 600;
         &:hover{
-          color: #ff4c3b;
+          color: #81c41d;
         }
       }
     }
@@ -5032,7 +5036,7 @@ footer {
           }
         }
         h4,h2{
-          color: #ff4c3b;
+          color: #ff6e0b;
         }
       }
       ul{
@@ -5091,7 +5095,7 @@ h2{
 }
 .offer-dropdown{
   &.offer-dropdown-layout-2{
-    background-color:#ff4c3b;
+    background-color:#81c41d;
     border-radius: 3px;
     margin-top: -2px;
     .title-font{
@@ -5527,6 +5531,7 @@ h2{
         padding-right: 15px;
         color: $selective-green;
         text-transform: capitalize;
+        
       }
     }
     h1{
@@ -14218,7 +14223,7 @@ a {
 }
 
 .fleches{
-  padding-right: 22px;
+  padding-right: 41px;
       &:before {
         content: "\f107";
         font-family: $font-awesome;
@@ -14395,7 +14400,8 @@ a {
 
 .alignservice1 {
     margin-right: 25px;
-    width: 300px;
+  	margin-left: 25px;
+    width: 900px;
     height:450px;
 }
 

@@ -3,8 +3,8 @@
 <section style="padding-bottom:142px; " class="sliders sliders-layout-2 section-b-space bg-colums mobile-coumns layout-4-banner{% if section.settings.use_equal_height %}equal_height {{ section.settings.image_ratio }} {{ section.settings.image_size }} bg_pos_{{ section.settings.image_position }}{% endif %}"
         style=" {% if section.settings.enable_bg_img %}background-image: url({{ section.settings.slider | img_url: 'master' }});{% else %}
                 background-color: {{ section.settings.bg_color }};{% endif %}" >
-  <div style="padding-left:40px;width:87em;padding-bottom:17px;">
-<h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
+  <div style="padding-left:230px;width:87em;padding-bottom:17px;">
+<h2 class="{% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#hot_deal{{sectionId}}trans_tab_title"{% endif %}>
           {{ section.settings.tab_title }}
         </h2></div>
   <div class="container">
@@ -30,7 +30,7 @@
       {% assign collection = collections[block.settings.collection] %}
       <div class="col-xl-2  col-md-6 col-sm-12 {% if forloop.index == 2 %} mt-0 mobile-colums-layout-4{% endif %}">
         <div class="theme-card">
-          <h2 class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#trans_title{{blockId}}_title"{% endif %}>
+          <h2 style="color:#000514;font-size:17.5px;" class="title title-layout-2 {% if settings.enable_lang_switcher %}lang_trans{% endif %}" {% if settings.enable_lang_switcher %}data-trans="#trans_title{{blockId}}_title"{% endif %}>
             {{ block.settings.title }}
           </h2>
           {% if settings.enable_lang_switcher %}
@@ -78,8 +78,8 @@
                 <div class="media-body align-self-center">
                   <a href="{{ product.url | within: collection }}" >
                     {% assign data_title = product.title | split: '|' | first %}
-                    {% assign data_json = product.title | split: '|' | last %}
-                    <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="title-font product-title product-space" data-trans="#{{product.id}}_pro_title"{% endif %} style="font-size: {{ section.settings.pro_title_fontsize}};">
+                    {% assign data_json = product.title | split: '|' | last %}<!--h6 itemprop="name" {% if settings.enable_lang_switcher %}class="title-font product-title product-space" data-trans="#{{product.id}}_pro_title"{% endif %} style="font-size: {{ section.settings.pro_title_fontsize}};"-->
+                    <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="title-font product-title product-space" data-trans="#{{product.id}}_pro_title"{% endif %} style="font-size: 18px;">
                       {{ data_title | truncatewords: 10 }}
                     </h6>
                     {% if settings.enable_lang_switcher %}
@@ -159,7 +159,7 @@
                   <a href="{{ product.url | within: collection }}" >
                     {% assign data_title = product.title | split: '|' | first %}
                     {% assign data_json = product.title | split: '|' | last %}
-                    <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="title-font product-title product-space" data-trans="#{{product.id}}_pro_title"{% endif %} style="font-size: {{ section.settings.pro_title_fontsize}};">
+                    <h6 itemprop="name" {% if settings.enable_lang_switcher %}class="title-font product-title product-space" data-trans="#{{product.id}}_pro_title"{% endif %} style="font-size: 18px;">
                       {{ data_title | truncatewords: 10 }}
                     </h6>
                     {% if settings.enable_lang_switcher %}
@@ -211,9 +211,14 @@
             </div>
             {% endif %}
           </div>
-          <div class="text-right " style="background:#2B2015;height:40px;width:120px;border-radius:4px;">
-            <a href="{{ collection.url }}" style="text-align:center;color:white;padding-right:18px;">View More</a>
-          </div>
+          <div class="map text-right simpes_nav" style="height:50px;width:80px;margin-left:60px;margin-top:10px;">
+
+                          <a href="{{ collection.url }}" style="color:black;text-align:center;">
+                            <img src="{{ section.settings.bnt_img | img_url: '90x 60x' }}"  alt="Cart-icon" />
+                        
+                          </a>
+
+           </div>
         </div>
       </div>
       {% endif %}
@@ -261,6 +266,11 @@
         "default": "#f2f2f2",
         "info": "Default Value: #f2f2f2"
         },
+	  {
+         "type":"image_picker",
+         "id":"bnt_img",
+         "label":"Map image"
+      },
         {  
         "type":"image_picker",
         "id":"slider",
